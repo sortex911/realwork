@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | LNDSCP.</title>
+  <meta name="description" content="Explore our portfolio of premium landscaping projects including residential, commercial, and ongoing projects.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .portfolio-hero {
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: var(--color-accent);
+      color: var(--color-white);
+      text-align: center;
+    }
+    .portfolio-tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+      cursor: pointer;
+      padding: 5px 10px;
+      position: relative;
+      transition: var(--transition-fast);
+    }
+    .tab-btn.active, .tab-btn:hover {
+      color: var(--color-text);
+    }
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--color-accent);
+      transition: var(--transition-fast);
+    }
+    .tab-btn.active::after, .tab-btn:hover::after {
+      width: 100%;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--spacing-md);
+    }
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+    .project-card:hover .project-img {
+      transform: scale(1.05);
+    }
+    .project-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: var(--spacing-md);
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: var(--color-white);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: var(--transition-fast);
+    }
+    .project-card:hover .project-info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    .project-category {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.8);
+    }
+    .ongoing-banner {
+      background-color: var(--color-accent);
+      color: var(--color-white);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      margin-top: var(--spacing-xl);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="custom-cursor"></div>
+
+  <header class="header">
+    <a href="index.html" class="logo">LNDSCP.</a>
+    <div class="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <nav class="fullscreen-menu">
+    <ul class="menu-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="portfolio-hero fade-up">
+      <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop" alt="Portfolio Hero" class="hero-bg">
+      <div class="hero-content">
+        <h1 class="hero-title">Our Work</h1>
+        <p class="hero-subtitle">Curated Landscaping Excellence</p>
+      </div>
+    </section>
+
+    <section class="fade-up">
+      <div class="portfolio-tabs">
+        <button class="tab-btn active">All Projects</button>
+        <button class="tab-btn">Residential</button>
+        <button class="tab-btn">Commercial</button>
+        <button class="tab-btn">Resorts</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop" alt="Modern Villa" class="project-img">
+          <div class="project-info">
+            <h3 class="project-title">The Glass Villa</h3>
+            <span class="project-category">Residential</span>
+          </div>
+        </div>
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4ce88?q=80&w=800&auto=format&fit=crop" alt="Corporate Park" class="project-img">
+          <div class="project-info">
+            <h3 class="project-title">Tech Park Greens</h3>
+            <span class="project-category">Commercial</span>
+          </div>
+        </div>
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1499803270242-467f08117f16?q=80&w=800&auto=format&fit=crop" alt="Resort" class="project-img">
+          <div class="project-info">
+            <h3 class="project-title">Azure Wellness Resort</h3>
+            <span class="project-category">Resorts</span>
+          </div>
+        </div>
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop" alt="Urban Forest" class="project-img">
+          <div class="project-info">
+            <h3 class="project-title">City Miyawaki</h3>
+            <span class="project-category">Commercial</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ongoing-banner fade-up">
+      <h2 class="section-title" style="color: white;">Ongoing Projects</h2>
+      <p style="margin: 0 auto; color: rgba(255,255,255,0.8);">We are currently conceptualizing and designing cutting-edge landscapes for several high-profile clients.</p>
+      
+      <div class="portfolio-grid" style="margin-top: 3rem;">
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop" alt="Concept 1" class="project-img" style="filter: sepia(0.3) blur(1px);">
+          <div class="project-info" style="opacity: 1; transform: none; background: rgba(0,0,0,0.5);">
+            <h3 class="project-title">Eco-Living Project</h3>
+            <span class="project-category">In Progress</span>
+          </div>
+        </div>
+        <div class="project-card fade-up">
+          <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800&auto=format&fit=crop" alt="Concept 2" class="project-img" style="filter: sepia(0.3) blur(1px);">
+          <div class="project-info" style="opacity: 1; transform: none; background: rgba(0,0,0,0.5);">
+            <h3 class="project-title">Sky Garden Tower</h3>
+            <span class="project-category">In Progress</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-info">
+      <h3>LNDSCP.</h3>
+      <p>Premium Landscaping Architecture.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | LNDSCP.</title>
+  <meta name="description" content="Get in touch with LNDSCP. We're here to help transform your outdoor spaces.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-hero {
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: var(--color-bg);
+      color: var(--color-text);
+      text-align: center;
+      padding-top: 100px;
+    }
+    .contact-hero .hero-title {
+      font-size: clamp(3rem, 5vw, 5rem);
+    }
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    .info-block h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: var(--color-accent);
+    }
+    .info-block p {
+      font-size: 1.1rem;
+      color: var(--color-text);
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text-light);
+    }
+    .form-group input, .form-group textarea {
+      padding: 15px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: var(--color-white);
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      transition: var(--transition-fast);
+      outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--color-accent);
+    }
+    .submit-btn {
+      padding: 15px 30px;
+      background: var(--color-accent);
+      color: var(--color-white);
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      margin-top: 10px;
+    }
+    .submit-btn:hover {
+      background: var(--color-accent-light);
+    }
+    @media (max-width: 768px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="custom-cursor"></div>
+
+  <header class="header" style="mix-blend-mode: normal; color: var(--color-text);">
+    <a href="index.html" class="logo" style="color: var(--color-text);">LNDSCP.</a>
+    <div class="menu-toggle">
+      <span style="background-color: var(--color-text);"></span>
+      <span style="background-color: var(--color-text);"></span>
+      <span style="background-color: var(--color-text);"></span>
+    </div>
+  </header>
+
+  <nav class="fullscreen-menu">
+    <ul class="menu-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="contact-hero fade-up">
+      <div class="hero-content" style="color: var(--color-text);">
+        <h1 class="hero-title">Get in Touch</h1>
+        <p class="hero-subtitle" style="color: var(--color-text-light);">Let's create something beautiful together.</p>
+      </div>
+    </section>
+
+    <section class="fade-up">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2>Our Studio</h2>
+          <p>We'd love to hear from you. Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.</p>
+          
+          <div class="info-block" style="margin-top: 2rem;">
+            <h3>Location</h3>
+            <p>123 Landscape Avenue, Design District<br>Kochi, Kerala 682001</p>
+          </div>
+          <div class="info-block">
+            <h3>Email</h3>
+            <p>hello@lndscp.com</p>
+          </div>
+          <div class="info-block">
+            <h3>Phone</h3>
+            <p>+91 98765 43210</p>
+          </div>
+        </div>
+
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell us about your project..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-info">
+      <h3>LNDSCP.</h3>
+      <p>Premium Landscaping Architecture.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Adjust menu toggle colors for light background
+    const toggleSpans = document.querySelectorAll('.menu-toggle span');
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      if(this.classList.contains('active')){
+        toggleSpans.forEach(s => s.style.backgroundColor = 'var(--color-text)');
+      } else {
+        toggleSpans.forEach(s => s.style.backgroundColor = 'var(--color-text)');
+      }
+    });
+  </script>
+</body>
+</html>
