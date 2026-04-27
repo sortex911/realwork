@@ -19,7 +19,7 @@ import AdminDashboard from './pages/AdminDashboard';
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/realwork">
         <ScrollToTop />
         <CustomCursor />
 
