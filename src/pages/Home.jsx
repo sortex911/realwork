@@ -46,7 +46,7 @@ const Home = () => {
     <>
       <FadeUp className="hero">
         <video autoPlay muted loop playsInline className="hero-bg">
-          <source src="/assets/video/home-hero.mp4" type="video/mp4" />
+          <source src="assets/video/home-hero.mp4" type="video/mp4" />
         </video>
         <div className="hero-content">
           <h1 className="hero-title">Let’s Celebrate<br />Landscape with us</h1>
@@ -127,7 +127,7 @@ const Home = () => {
       </section>
 
       <FadeUp>
-        <img src="/assets/home-images/imgland.png" alt="Landscape Architecture" className="full-width-img" />
+        <img src="assets/home-images/imgland.png" alt="Landscape Architecture" className="full-width-img" />
       </FadeUp>
     </>
   );
