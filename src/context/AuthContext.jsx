@@ -23,12 +23,21 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);  // true until both auth + role resolved
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
         try {
-          const snap = await getDoc(doc(db, 'users', firebaseUser.uid));
-          setRole(snap.exists() ? (snap.data().role ?? null) : null);
+          if (db) {
+            const snap = await getDoc(doc(db, 'users', firebaseUser.uid));
+            setRole(snap.exists() ? (snap.data().role ?? null) : null);
+          } else {
+            setRole(null);
+          }
         } catch {
           setRole(null);
         }

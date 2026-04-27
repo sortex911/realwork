@@ -9,7 +9,6 @@ import { useAuth } from '../context/AuthContext';
 import {
   addProject, updateProject, deleteProject,
   addCategory, deleteCategory,
-  uploadProjectImage,
   COL_PROJECTS, COL_CATEGORIES
 } from '../services/adminService';
 
@@ -63,6 +62,8 @@ const AdminDashboard = () => {
 
   // ── Realtime listeners ──────────────────────────────────────────────────────
   useEffect(() => {
+    if (!db) return;
+
     const unsubP = onSnapshot(
       query(collection(db, COL_PROJECTS), orderBy('createdAt', 'desc')),
       snap => setProjects(snap.docs.map(d => ({ id: d.id, ...d.data() })))
@@ -90,10 +91,8 @@ const AdminDashboard = () => {
 
   // ── Delete ──────────────────────────────────────────────────────────────────
   const confirmDelete = async () => {
-    const project = projects.find(p => p.id === deleteTarget);
-    if (!project) return setDeleteTarget(null);
     try {
-      await deleteProject(project);
+      await deleteProject(deleteTarget);
       toast('Project deleted.', 'info');
     } catch {
       toast('Failed to delete project.', 'error');
@@ -408,53 +407,20 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
     categoryId:  project?.categoryId  ?? '',
     imageUrl:    project?.imageUrl    ?? '',
   });
-  const [uploadFile,     setUploadFile]     = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploading,      setUploading]      = useState(false);
-  const [saving,         setSaving]         = useState(false);
-  const [previewSrc,     setPreviewSrc]     = useState(project?.imageUrl ?? '');
-  const fileRef = useRef();
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploadFile(file);
-    setPreviewSrc(URL.createObjectURL(file));
-  };
-
-  const clearFile = () => {
-    setUploadFile(null);
-    setPreviewSrc(form.imageUrl);
-    if (fileRef.current) fileRef.current.value = '';
-  };
+  const [saving, setSaving] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState(project?.imageUrl ?? '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.imageUrl.trim()) return onError('Image URL is required.');
+    
     setSaving(true);
-
     try {
-      let imageUrl    = form.imageUrl;
-      let storagePath = project?.storagePath ?? '';
-
-      if (uploadFile) {
-        setUploading(true);
-        const projectId = mode === 'edit' ? project.id : genId();
-        const result = await uploadProjectImage(
-          uploadFile,
-          projectId,
-          (pct) => setUploadProgress(pct)
-        );
-        imageUrl    = result.downloadURL;
-        storagePath = result.storagePath;
-        setUploading(false);
-      }
-
       const payload = {
         title:       form.title.trim(),
         description: form.description.trim(),
         categoryId:  form.categoryId,
-        imageUrl,
-        storagePath,
+        imageUrl:    form.imageUrl.trim(),
       };
 
       if (mode === 'edit') {
@@ -466,13 +432,11 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
       }
     } catch (err) {
       onError('Error: ' + err.message);
-      setUploading(false);
     } finally {
       setSaving(false);
     }
   };
 
-  const isLoading = saving || uploading;
   const title = mode === 'edit' ? '✏️ Edit Project' : '➕ Add New Project';
 
   return (
@@ -519,80 +483,44 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
           />
         </div>
 
-        {/* Image upload section */}
-        <div className="upload-section">
-          <div className="admin-form-row">
-            <div className="admin-form-group">
-              <label>Upload Image</label>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-              {uploadFile && (
-                <button
-                  type="button"
-                  className="clear-file-btn"
-                  onClick={clearFile}
-                >
-                  ✕ Clear file
-                </button>
-              )}
-            </div>
-            <div className="admin-form-group">
-              <label>— or Image URL</label>
-              <input
-                type="url"
-                placeholder="https://…"
-                value={form.imageUrl}
-                onChange={e => {
-                  setForm(f => ({ ...f, imageUrl: e.target.value }));
-                  setPreviewSrc(e.target.value);
-                }}
-                disabled={!!uploadFile}
-              />
-            </div>
-          </div>
-
-          {/* Upload progress bar */}
-          {uploading && (
-            <div className="upload-progress-bar" role="progressbar"
-              aria-valuenow={uploadProgress} aria-valuemin="0" aria-valuemax="100">
-              <div
-                className="upload-progress-fill"
-                style={{ width: `${uploadProgress}%` }}
-              />
-              <span>{uploadProgress}%</span>
-            </div>
-          )}
-
-          {/* Image Preview */}
-          {previewSrc && (
-            <div className="admin-img-preview">
-              <img src={previewSrc} alt="Preview" onError={() => setPreviewSrc('')} />
-              <div className="img-preview-label">Image Preview</div>
-            </div>
-          )}
+        <div className="admin-form-group">
+          <label htmlFor="pf-image">Image URL *</label>
+          <input
+            id="pf-image"
+            type="url"
+            placeholder="https://images.unsplash.com/..."
+            value={form.imageUrl}
+            onChange={e => {
+              setForm(f => ({ ...f, imageUrl: e.target.value }));
+              setPreviewSrc(e.target.value);
+            }}
+            required
+          />
         </div>
+
+        {/* Image Preview */}
+        {previewSrc && (
+          <div className="admin-img-preview">
+            <img src={previewSrc} alt="Preview" onError={() => setPreviewSrc('')} />
+            <div className="img-preview-label">Image Preview</div>
+          </div>
+        )}
 
         <div className="modal-actions">
           <button
             type="button"
             className="admin-btn-secondary"
             onClick={onClose}
-            disabled={isLoading}
+            disabled={saving}
           >
             Cancel
           </button>
           <button
             type="submit"
             className="admin-btn-primary"
-            disabled={isLoading}
+            disabled={saving}
           >
-            {isLoading ? (
-              <><span className="btn-spinner" /> {uploading ? `Uploading ${uploadProgress}%…` : 'Saving…'}</>
-            ) : mode === 'edit' ? 'Update Project' : 'Add Project'}
+            {saving ? <><span className="btn-spinner" /> Saving…</> : mode === 'edit' ? 'Update Project' : 'Add Project'}
           </button>
         </div>
       </form>

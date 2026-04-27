@@ -32,12 +32,15 @@ const Portfolio = () => {
 
   // ── Live Firestore listeners ──────────────────────────────────────────────
   useEffect(() => {
+    if (!db) {
+      setLoading(false);
+      return;
+    }
+
     const unsubCats = onSnapshot(collection(db, 'categories'), (snap) => {
       const dbCats = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      // Use DB categories if available, otherwise fallback to default
       const finalCats = dbCats.length > 0 ? dbCats : defaultCategories;
       setCategories(finalCats);
-      // Default to first category if not set yet
       if (finalCats.length > 0 && !activeCategory) setActiveCategory(finalCats[0].id);
     });
 
@@ -51,7 +54,7 @@ const Portfolio = () => {
     );
 
     return () => { unsubCats(); unsubProjects(); };
-  }, []);
+  }, [activeCategory]);
 
   const openGallery = (project) => {
     setSelectedProject(project);
