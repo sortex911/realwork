@@ -5,13 +5,13 @@ import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDCCC0hKAT7ZK7F0uLPINBUB7cIF__llFU",
-  authDomain: "green-realm-landscape.firebaseapp.com",
-  projectId: "green-realm-landscape",
-  storageBucket: "green-realm-landscape.firebasestorage.app",
-  messagingSenderId: "873248022322",
-  appId: "1:873248022322:web:3052314f4cd6048170012b",
-  measurementId: "G-BHE7W793JN"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
