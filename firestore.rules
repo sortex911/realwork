@@ -1,0 +1,39 @@
+// firestore.rules
+// Paste into: Firebase Console → Firestore Database → Rules → Edit rules → Publish
+//
+// Structure expected:
+//   users/{uid}      → { email: string, role: "admin" | string }
+//   projects/{id}    → { title, description, imageUrl, storagePath, categoryId, createdAt }
+//   categories/{id}  → { name: string }
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper: is the caller a Firestore-role admin? ──────────────────
+    function isAdmin() {
+      return request.auth != null
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    // ── Portfolio projects ──────────────────────────────────────────────
+    match /projects/{projectId} {
+      allow read:            if true;          // Public read
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── Categories ──────────────────────────────────────────────────────
+    match /categories/{catId} {
+      allow read:            if true;          // Public read
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── Users (roles) ───────────────────────────────────────────────────
+    // Authenticated users can read their own document (for role check).
+    // Only admins can create/modify user role documents.
+    match /users/{uid} {
+      allow read:   if request.auth != null && request.auth.uid == uid;
+      allow write:  if isAdmin();
+    }
+  }
+}
