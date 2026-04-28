@@ -1,6 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  getDocs,
+  getDoc,
+  query,
+  orderBy
+} from "firebase/firestore";
 import { auth, db } from '../firebase';
 
 /**

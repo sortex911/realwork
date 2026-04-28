@@ -4,7 +4,17 @@ import {
   signInWithEmailAndPassword,
   signOut 
 } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy
+} from "firebase/firestore";
 
 // --- STEP 3: Signup + Login ---
 

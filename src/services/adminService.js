@@ -4,13 +4,16 @@
  */
 
 import {
-  collection, addDoc, updateDoc, deleteDoc,
-  doc, serverTimestamp, query, orderBy, getDocs
-} from 'firebase/firestore';
-import {
-  collection, addDoc, updateDoc, deleteDoc,
-  doc, serverTimestamp, getDocs
-} from 'firebase/firestore';
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy
+} from "firebase/firestore";
 import { db } from '../firebase';
 
 // ─── Collection names ───────────────────────────────────────────────────────

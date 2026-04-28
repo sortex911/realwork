@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy,
+  onSnapshot
+} from "firebase/firestore";
 import { db } from '../firebase';
 import FadeUp from '../components/FadeUp';
 
@@ -63,7 +74,7 @@ const Portfolio = () => {
 
   const closeGallery = () => setGalleryActive(false);
 
-  const filteredProjects = projects.filter(p => p.category === activeCategory);
+  const filteredProjects = projects.filter(p => (p.categoryId || p.category) === activeCategory);
 
   return (
     <div className="portfolio-page">
@@ -125,7 +136,8 @@ const Portfolio = () => {
             <div className="gallery-header">
               <div className="gallery-title-group">
                 <span className="gallery-category">
-                  {categories.find(c => c.id === selectedProject.category)?.name || categories.find(c => c.id === selectedProject.category)?.label}
+                  {categories.find(c => c.id === (selectedProject.categoryId || selectedProject.category))?.name || 
+                   categories.find(c => c.id === (selectedProject.categoryId || selectedProject.category))?.label}
                 </span>
                 <h2 className="gallery-title">{selectedProject.title}</h2>
                 {selectedProject.description && (
