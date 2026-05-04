@@ -1,64 +1,92 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import GooeyNav from './GooeyNav';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const [headerStyle, setHeaderStyle] = useState({ mixBlendMode: 'difference', color: 'var(--color-white)' });
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Portfolio', href: '/portfolio' },
+    { label: 'News', href: '/news' },
+    { label: 'Procedure', href: '/procedure' },
+    { label: 'Contact', href: '/contact' },
+  ];
+
+  if (isAdmin) {
+    navItems.push({ label: 'Dashboard', href: '/dashboard' });
+  } else {
+    navItems.push({ label: 'Admin', href: '/admin' });
+  }
+
+  const activeIndex = navItems.findIndex(item => item.href === location.pathname);
+
+  const handleNavItemClick = (item) => {
+    navigate(item.href);
+    setMenuOpen(false);
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      setHeaderStyle({ mixBlendMode: 'normal', color: 'var(--color-text)' });
-    } else {
-      const timer = setTimeout(() => {
-        // Only pages with light background should have normal blend mode
-        const lightPages = ['/contact', '/news'];
-        if (lightPages.includes(location.pathname)) {
-          setHeaderStyle({ mixBlendMode: 'normal', color: 'var(--color-text)' });
-        } else {
-          setHeaderStyle({ mixBlendMode: 'difference', color: 'var(--color-white)' });
-        }
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, location.pathname]);
-
-  // Handle immediate style change on route change
-  useEffect(() => {
-    const lightPages = ['/contact', '/news'];
-    if (lightPages.includes(location.pathname)) {
-      setHeaderStyle({ mixBlendMode: 'normal', color: 'var(--color-text)' });
-    } else {
-      setHeaderStyle({ mixBlendMode: 'difference', color: 'var(--color-white)' });
-    }
-    setIsOpen(false);
-  }, [location.pathname]);
-
   return (
-    <>
-      <header className="header" style={headerStyle}>
-        <Link to="/" className="logo" style={location.pathname === '/contact' || location.pathname === '/news' ? {color: 'var(--color-text)'} : {}}>LNDSCP.</Link>
-        <div className={`menu-toggle ${isOpen ? 'active' : ''}`} onClick={toggleMenu}>
-          <span style={(location.pathname === '/contact' || location.pathname === '/news') && !isOpen ? {backgroundColor: 'var(--color-text)'} : {}}></span>
-          <span style={(location.pathname === '/contact' || location.pathname === '/news') && !isOpen ? {backgroundColor: 'var(--color-text)'} : {}}></span>
-          <span style={(location.pathname === '/contact' || location.pathname === '/news') && !isOpen ? {backgroundColor: 'var(--color-text)'} : {}}></span>
-        </div>
-      </header>
+    <header className="header">
+      <div className="logo-container">
+        <Link to="/">
+          <video autoPlay muted loop playsInline className="logo-video">
+            <source src="assets/video/logo.mp4" type="video/mp4" />
+          </video>
+        </Link>
+      </div>
 
-      <nav className={`fullscreen-menu ${isOpen ? 'active' : ''}`}>
-        <ul className="menu-links">
-          <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
-          <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
-          <li><Link to="/portfolio" onClick={() => setIsOpen(false)}>Portfolio</Link></li>
-          <li><Link to="/news" onClick={() => setIsOpen(false)}>News</Link></li>
-          <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
-        </ul>
-      </nav>
-    </>
+      <div className="nav-controls" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.nav 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 20, scale: 0.95 }}
+              className="inline-menu"
+              style={{ position: 'relative' }}
+            >
+              <GooeyNav
+                items={navItems}
+                initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
+                onItemClick={handleNavItemClick}
+                particleCount={12}
+                animationTime={500}
+              />
+            </motion.nav>
+          )}
+        </AnimatePresence>
+
+        <button 
+          className="menu-trigger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            color: 'white',
+            width: '45px',
+            height: '45px',
+            borderRadius: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: 'pointer',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s ease',
+            zIndex: 1000
+          }}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+    </header>
   );
 };
 

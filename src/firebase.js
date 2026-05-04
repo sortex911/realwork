@@ -1,28 +1,25 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDCCC0hKAT7ZK7F0uLPINBUB7cIF__llFU",
+  authDomain: "green-realm-landscape.firebaseapp.com",
+  projectId: "green-realm-landscape",
+  storageBucket: "green-realm-landscape.firebasestorage.app",
+  messagingSenderId: "873248022322",
+  appId: "1:873248022322:web:3052314f4cd6048170012b",
+  measurementId: "G-BHE7W793JN"
 };
 
-// Initialize Firebase with safety check
-let app;
-try {
-  if (!firebaseConfig.apiKey) {
-    throw new Error("Firebase API Key is missing. Check your environment variables.");
-  }
-  app = initializeApp(firebaseConfig);
-} catch (error) {
-  console.error("Firebase initialization failed:", error);
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-// Initialize Services (exported safely)
-export const db = app ? getFirestore(app) : null;
-export const auth = app ? getAuth(app) : null;
+// Initialize Services
+export const db      = getFirestore(app);
+export const auth    = getAuth(app);
+export const storage = getStorage(app);
 
 export default app;

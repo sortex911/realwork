@@ -1,0 +1,24 @@
+.marquee-container {
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.marquee-container.pause-on-hover:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+/* We'll use JS for the animation to have more control, 
+   but we can also use CSS if we want simpler logic. 
+   The JS version I wrote handles the infinite cloning better. */

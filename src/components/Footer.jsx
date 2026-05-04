@@ -2,7 +2,6 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-info">
-        <h3>LNDSCP.</h3>
         <p>Premium Landscaping Architecture.</p>
       </div>
       <div className="footer-links">

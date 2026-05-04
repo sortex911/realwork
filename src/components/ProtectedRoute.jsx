@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (!user) return <Navigate to="/control-panel-9x7k2-hidden" replace />;
+  if (!user) return <Navigate to="/admin" replace />;
   if (!isAdmin) return <Navigate to="/" replace />;
   return children;
 };

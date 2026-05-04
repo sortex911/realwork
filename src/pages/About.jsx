@@ -1,28 +1,53 @@
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
+import { COL_TEAM } from '../services/adminService';
 import FadeUp from '../components/FadeUp';
 
 const About = () => {
-  const team = [
-    { name: 'Sabu Mathew', role: 'Founder and Landscape Engineer , Thrissur', img: 'assets/team-members/Sabu Mathew.jpeg' },
-    { name: 'Seema K Sabu', role: 'Horticulturist , Thrissur', img: 'assets/team-members/Seema K Sabu.jpeg' },
-    { name: 'Sibin.M.Sabu', role: 'Principle Architect , Kochi', img: 'assets/team-members/Sibin.M.Sabu.jpeg' },
-    { name: 'Jiby Anonty', role: 'Project Architect , Kochi', img: 'assets/team-members/Jiby Anonty.jpg' },
-    { name: 'Anandhakrishnan K', role: 'Landscape Architect , Kochi', img: 'assets/team-members/Anandhakrishnan K.jpg' },
-    { name: 'Kaveri', role: 'Architect , Kochi', img: 'assets/team-members/Kaveri.jpg' },
-    { name: 'Arun Vr', role: 'Project Manager , Thrissur', img: 'assets/team-members/Arun Vr.avif' },
-    { name: 'Najiya Kareem', role: 'Landscape Engineer, Thrissur', img: 'assets/team-members/Najiya Kareem.jpg' },
-    { name: 'Ashique', role: 'Irrigation Engineer', img: 'assets/team-members/Ashique.jpg' },
-    { name: 'Ajayan', role: 'Landscape Supervisor', img: 'assets/team-members/ajayan.jpg' },
-    { name: 'Ratheesh', role: 'Landscape Supervisor', img: 'assets/team-members/ratheesh.jpg' },
-    { name: 'Sreekumar', role: 'Landscape Supervisor', img: 'assets/team-members/sreekumar.avif' },
-    { name: 'Gopan', role: 'Landscape Supervisor', img: 'assets/team-members/gopan.avif' },
-    { name: 'Unnikrishnan', role: 'Landscape Supervisor', img: 'assets/team-members/unnikrishnan.avif' },
-    { name: 'Vishnu', role: 'Landscape Supervisor', img: 'assets/team-members/visnu.avif' },
-    { name: 'Deepak Gopal', role: 'Landscape Supervisor', img: 'assets/team-members/deepak gopal.avif' },
-    { name: 'Vishal', role: 'Gardener', img: 'assets/team-members/vishal.avif' },
-    { name: 'Babu', role: 'Gardener', img: 'assets/team-members/babu.avif' },
-    { name: 'Koyal', role: 'Gardener', img: 'assets/team-members/koyal.avif' },
-    { name: 'Vivek Gopal', role: 'Gardener', img: 'assets/team-members/vivek gopal.avif' },
-  ];
+  const [showGallery, setShowGallery] = useState(false);
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (showGallery) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+    };
+  }, [showGallery]);
+
+  useEffect(() => {
+    if (!db) return;
+    const q = query(collection(db, COL_TEAM), orderBy('createdAt', 'asc'));
+    const unsub = onSnapshot(q, (snap) => {
+      const docs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const sorted = docs.sort((a, b) => {
+        const oa = a.order ?? 999;
+        const ob = b.order ?? 999;
+        if (oa !== ob) return oa - ob;
+        const ta = a.createdAt?.seconds ?? 0;
+        const tb = b.createdAt?.seconds ?? 0;
+        return ta - tb;
+      });
+      setTeamMembers(sorted);
+      setLoading(false);
+    });
+    return unsub;
+  }, []);
+
+  // Separate founders (those marked as isFounder, or fallback to first 3)
+  const founders = teamMembers.some(m => m.isFounder)
+    ? teamMembers.filter(m => m.isFounder)
+    : teamMembers.slice(0, 3);
+  const fullTeam = teamMembers;
 
   const clients = [
     'assets/our-clients/Joyalukkas-logo.jpg',
@@ -40,28 +65,37 @@ const About = () => {
     'assets/our-clients/unnamed.jpg',
   ];
 
+  const textRef = useRef(null);
+
   return (
     <>
       <FadeUp className="about-hero">
-        <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=2000" alt="About Us" className="hero-bg" />
+        <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
+          <source src="assets/video/about-hero.mp4" type="video/mp4" />
+        </video>
         <div className="hero-content">
           <h1 className="hero-title">About Us</h1>
           <p className="hero-subtitle">Crafting Nature's Masterpieces</p>
         </div>
       </FadeUp>
 
-      <section>
-        <div className="about-intro">
-          <FadeUp><div className="section-dot"></div></FadeUp>
-          <FadeUp><h2 className="section-title">Who We Are</h2></FadeUp>
-          <FadeUp><div className="about-subtitle">DESIGN – CONSTRUCT – MAINTAIN<br />Green Realm Landscape</div></FadeUp>
+      <section ref={textRef}>
+        <div className="about-intro" style={{ maxWidth: '1100px', margin: '0 auto', padding: 'var(--spacing-xxl) var(--spacing-md)', textAlign: 'center' }}>
+          <div className="section-dot"></div>
+          <h2 className="section-title" style={{ marginBottom: 'var(--spacing-sm)' }}>About Us</h2>
+          <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-lg)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
 
-          <div className="about-text-content">
-            <FadeUp><p>Green Realm Landscape in Thrissur, Kochi, and Bangalore is one of Kerala’s foremost landscaping and maintenance companies.</p></FadeUp>
-            <FadeUp><p>Formed through the merger of Garden City Gardens, founded by Mr. Sabu Mathew in 2009, and Green Realm Landscape, founded by Ar. Sibin M. Sabu in 2015, the companies have been working collaboratively since 2017 onwards.</p></FadeUp>
-            <FadeUp><p>The firm is driven by client satisfaction and quality service, supported by a team of experienced, young, energetic, and passionate professionals.</p></FadeUp>
-            <FadeUp><p>For the past 15 years, the company has maintained a strong commitment to excellence, integrity, and service.</p></FadeUp>
-          </div>
+          <FadeUp>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300' }}>
+              Green Realm Landscape, based in Thrissur and Kochi, stands as one of Kerala’s foremost landscaping and maintenance companies. Established in 2009, the company has built a strong reputation over the past 15 years by consistently delivering high-quality services and ensuring complete client satisfaction. This success is driven by a dedicated team of experienced, young, energetic, and passionate professionals who bring creativity and technical expertise to every project.
+              <br /><br />
+              The firm comprises skilled Landscape Architects, Landscape Engineers, Botanists, and well-trained landscape workers, all working together to create sustainable and aesthetically pleasing outdoor environments. Their collaborative approach ensures that every project reflects both functional excellence and natural beauty.
+              <br /><br />
+              Green Realm Landscape specializes in a wide range of projects, including residential landscapes, resorts, children’s parks, schools, and hospitality spaces. Their comprehensive services cover every stage of landscaping, from design and construction to long-term maintenance. In addition, the company offers expertise in hardscaping, mixed farming, horticulture consultancy, and irrigation hydraulic design and installation.
+              <br /><br />
+              With a continued commitment to superiority, integrity, and exceptional service, Green Realm Landscape has established itself as a trusted name in the industry, transforming outdoor spaces into vibrant and sustainable environments.
+            </p>
+          </FadeUp>
         </div>
       </section>
 
@@ -83,20 +117,78 @@ const About = () => {
         </div>
       </section>
 
-      <section>
-        <FadeUp><h2 className="section-title">Meet the Team</h2></FadeUp>
-        <div className="team-grid">
-          {team.map((member, index) => (
-            <FadeUp key={index} className="team-card">
-              <div className="team-img-wrapper">
-                <img src={member.img} alt={member.name} className="team-img" />
-              </div>
-              <h3>{member.name}</h3>
-              <p>{member.role}</p>
+      {teamMembers.length > 0 && (
+        <section>
+          <FadeUp><h2 className="section-title">Founders</h2></FadeUp>
+          <div className="team-grid">
+            {founders.map((member) => (
+              <FadeUp key={member.id} className="team-card">
+                <div className="team-img-wrapper">
+                  <img src={member.image || 'assets/team-members/placeholder.jpg'} alt={member.name} className="team-img" />
+                </div>
+                <h3>{member.name}</h3>
+                <p>{member.role}</p>
+              </FadeUp>
+            ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
+            <FadeUp>
+              <button
+                onClick={() => setShowGallery(true)}
+                className="meet-team-btn"
+              >
+                Meet the Team
+              </button>
             </FadeUp>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
+
+      <AnimatePresence>
+        {showGallery && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="team-gallery-overlay"
+          >
+            <div className="gallery-container" data-lenis-prevent>
+              <div className="team-gallery-header">
+                <h2 className="section-title">Our Dedicated Team</h2>
+                <button onClick={() => setShowGallery(false)} className="close-gallery-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <div className="gallery-content">
+                <div className="team-gallery-grid">
+                  {fullTeam.map((member, index) => (
+                    <motion.div
+                      key={member.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="team-gallery-card"
+                    >
+                      <div className="team-gallery-img-wrapper">
+                        <img src={member.image || 'assets/team-members/placeholder.jpg'} alt={member.name} />
+                      </div>
+                      <div className="team-gallery-info">
+                        <h3>{member.name}</h3>
+                        <p>{member.role}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <section className="partners-section">
         <div className="partners-wrapper">

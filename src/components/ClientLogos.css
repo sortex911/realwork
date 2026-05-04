@@ -1,0 +1,90 @@
+.client-logos-section {
+  padding: 40px 0 80px;
+  background-color: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+
+.logos-marquee-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+}
+
+/* Optional gradient masks for the sides */
+.logos-marquee-container::before,
+.logos-marquee-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logos-marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, transparent);
+}
+
+.logos-marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, transparent);
+}
+
+.logos-marquee {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 100%;
+  gap: 60px;
+  animation: horizontal-scroll 40s linear infinite;
+  padding: 0 30px;
+}
+
+.logos-marquee-container:hover .logos-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes horizontal-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.client-logo-item {
+  height: 80px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  opacity: 1;
+}
+
+.client-logo-item:hover {
+  transform: scale(1.1);
+}
+
+.client-logo-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  max-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .client-logo-item {
+    height: 60px;
+  }
+  .logos-marquee {
+    gap: 40px;
+  }
+}

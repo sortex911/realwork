@@ -1,0 +1,33 @@
+// storage.rules
+// ─────────────────────────────────────────────────────────────────────────────
+// HOW TO DEPLOY:
+//   Firebase Console → Storage → Rules tab → paste this → Publish
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Public users can view/download all images.
+// Only the authenticated admin (by email) can upload or delete files.
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ── Admin check via Firebase Auth JWT email ─────────────────────────────
+    // Change the email below to your actual admin email address.
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.email == "truquenco@gmail.com";
+    }
+
+    // ── All paths under /projects/ ──────────────────────────────────────────
+    match /projects/{fileName} {
+      allow read:  if true;       // Anyone can download images
+      allow write: if isAdmin();  // Only admin can upload / delete
+    }
+
+    // ── Catch-all: deny everything else by default ──────────────────────────
+    match /{allPaths=**} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+  }
+}

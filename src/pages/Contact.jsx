@@ -1,32 +1,72 @@
+import React, { useState } from 'react';
 import FadeUp from '../components/FadeUp';
+import ImagesSlider from '../components/ImagesSlider';
 
 const Contact = () => {
+  const [parallaxImages] = useState([
+    { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.avif', alt: 'Contact 1' },
+    { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.avif', alt: 'Contact 2' },
+    { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.avif', alt: 'Contact 3' },
+  ]);
+
   return (
     <>
-      <FadeUp className="contact-hero">
-        <div className="hero-content" style={{ color: 'var(--color-text)' }}>
-          <h1 className="hero-title">Get in Touch</h1>
-          <p className="hero-subtitle" style={{ color: 'var(--color-text-light)' }}>Let's create something beautiful together.</p>
-        </div>
-      </FadeUp>
+      <div style={{ 
+        position: 'relative', 
+        height: '100vh', 
+        width: '100vw', 
+        overflow: 'hidden',
+        margin: 0,
+        padding: 0
+      }}>
+        <ImagesSlider 
+          images={parallaxImages.map(img => img.src)}
+          autoplay={true}
+          direction="up"
+          overlay={true}
+        >
+          <div style={{ 
+            textAlign: 'center', 
+            color: '#fff', 
+            zIndex: 50, 
+            position: 'relative',
+            padding: '0 20px'
+          }}>
+            <h1 style={{ 
+              fontSize: 'clamp(3.5rem, 10vw, 7rem)', 
+              fontFamily: 'var(--font-serif)', 
+              marginBottom: '1rem',
+              textShadow: '0 4px 10px rgba(0,0,0,0.3)'
+            }}>Get in Touch</h1>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              opacity: 0.9, 
+              letterSpacing: '4px', 
+              textTransform: 'uppercase',
+              fontWeight: '500',
+              textShadow: '0 2px 5px rgba(0,0,0,0.3)'
+            }}>Let's create something beautiful together</p>
+          </div>
+        </ImagesSlider>
+      </div>
 
       <section>
         <div className="contact-container">
           <div className="contact-info">
-            <FadeUp><h2>Our Studio</h2></FadeUp>
+            <FadeUp><h2>GREEN REALM LANDSCAPE</h2></FadeUp>
             <FadeUp><p>We'd love to hear from you. Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.</p></FadeUp>
             
             <div className="info-block" style={{ marginTop: '2rem' }}>
-              <FadeUp><h3>Location</h3></FadeUp>
-              <FadeUp><p>123 Landscape Avenue, Design District<br />Kochi, Kerala 682001</p></FadeUp>
+              <FadeUp><h3>Locations</h3></FadeUp>
+              <FadeUp><p>Kochi, Thrissur, Bangalore</p></FadeUp>
             </div>
             <div className="info-block">
               <FadeUp><h3>Email</h3></FadeUp>
-              <FadeUp><p>hello@lndscp.com</p></FadeUp>
+              <FadeUp><p>greenrealmlandscape@gmail.com</p></FadeUp>
             </div>
             <div className="info-block">
               <FadeUp><h3>Phone</h3></FadeUp>
-              <FadeUp><p>+91 98765 43210</p></FadeUp>
+              <FadeUp><p>+91 90720 47272<br />+91 85470 87690</p></FadeUp>
             </div>
           </div>
 
