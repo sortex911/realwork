@@ -7,48 +7,75 @@ import ImagesSlider from '../components/ImagesSlider';
 
 // ─── Component ────────────────────────────────────────────────────────────────
 // ─── Memoized Project Card ───────────────────────────────────────────────────
-const ProjectCardItem = memo(({ project, onClick }) => (
-  <FadeUp
-    className="project-card"
-    onClick={() => onClick(project)}
-  >
-    <div className="project-img-container" style={{ width: '100%', height: '100%', background: '#1c3528' }}>
-      {project.imageUrl ? (
-        <img
-          src={project.imageUrl}
-          alt={project.title}
-          className="project-img"
-          loading="lazy"
-          decoding="async"
-          onLoad={(e) => e.target.style.opacity = 1}
-          style={{ opacity: 0, transition: 'opacity 0.4s ease' }}
-        />
-      ) : (
-        <div className="project-img-placeholder">No Image</div>
-      )}
-    </div>
-    <div className="project-info">
-      <h3 className="project-title">{project.title}</h3>
-      <div className="view-details">View Gallery</div>
-    </div>
-  </FadeUp>
-));
+const ProjectCardItem = memo(({ project, onClick }) => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <FadeUp
+      className="project-card"
+      onClick={() => onClick(project)}
+    >
+      <div className={`project-img-container ${!loaded ? 'skeleton-loading' : ''}`} style={{ width: '100%', height: '100%' }}>
+        {project.imageUrl ? (
+          <img
+            src={project.imageUrl}
+            alt={project.title}
+            className="project-img"
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+            style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.6s ease' }}
+          />
+        ) : (
+          <div className="project-img-placeholder">No Image</div>
+        )}
+      </div>
+      <div className="project-info">
+        <h3 className="project-title">{project.title}</h3>
+        <div className="view-details">View Gallery</div>
+      </div>
+    </FadeUp>
+  );
+});
 
 // ─── Gallery Modal with Slider ──────────────────────────────────────────────
+const GalleryItem = memo(({ url, project, idx, onOpen }) => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div 
+      className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`} 
+      style={{ borderRadius: '12px', overflow: 'hidden', height: '100%', cursor: 'pointer' }}
+      onClick={() => onOpen(url)}
+    >
+      <img 
+        src={url} 
+        alt={`${project.title} — photo ${idx + 1}`} 
+        loading="lazy" 
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.8s ease' }}
+      />
+      <div className="gallery-item-overlay">
+        <span>View Full</span>
+      </div>
+    </div>
+  );
+});
+
 const GalleryModal = ({ project, onClose, getCatName }) => {
   const images = useMemo(() => {
     return (project.images?.length > 0 ? project.images : [project.imageUrl]).filter(Boolean);
   }, [project]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [fullscreenImage, setFullscreenImage] = useState(null);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (images.length <= 1 || fullscreenImage) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [images]);
+  }, [images, fullscreenImage]);
 
   return (
     <div id="project-gallery" className="project-gallery active">
@@ -111,23 +138,61 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
         <div className="gallery-grid">
           {images.map((url, idx) => (
             <FadeUp key={idx} className="gallery-item">
-              <div className="gallery-item-inner">
-                <img 
-                  src={url} 
-                  alt={`${project.title} — photo ${idx + 1}`} 
-                  loading="lazy" 
-                  decoding="async"
-                  onLoad={(e) => e.target.style.opacity = 1}
-                  style={{ opacity: 0, transition: 'opacity 0.6s ease' }}
-                />
-                <div className="gallery-item-overlay">
-                  <span>View Full</span>
-                </div>
-              </div>
+              <GalleryItem url={url} project={project} idx={idx} onOpen={setFullscreenImage} />
             </FadeUp>
           ))}
         </div>
       </div>
+
+      {/* Lightbox / Fullscreen Image View */}
+      <AnimatePresence>
+        {fullscreenImage && (
+          <motion.div 
+            className="lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setFullscreenImage(null)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.95)',
+              zIndex: 2000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'zoom-out',
+              padding: '40px'
+            }}
+          >
+            <motion.img 
+              src={fullscreenImage}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+              }}
+            />
+            <button 
+              style={{
+                position: 'absolute', top: '30px', right: '30px',
+                background: 'white', color: 'black', border: 'none',
+                width: '40px', height: '40px', borderRadius: '50%',
+                fontSize: '1.5rem', cursor: 'pointer', display: 'flex',
+                alignItems: 'center', justifyCenter: 'center', padding: 0
+              }}
+              onClick={() => setFullscreenImage(null)}
+            >
+              &times;
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -47,6 +47,12 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();  // Only admin can modify
     }
 
+    // ── Clients ─────────────────────────────────────────────────────────────
+    match /clients/{clientId} {
+      allow read:                   if true;       // Anyone can view
+      allow create, update, delete: if isAdmin();  // Only admin can modify
+    }
+
     // ── Users (roles) ───────────────────────────────────────────────────────
     // Admin can manage all user role documents.
     // A logged-in user can read their own document (for role display).

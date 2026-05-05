@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 import './ClientLogos.css';
 
-const logos = [
-  '/assets/our-clients/Joyalukkas-logo.jpg',
-  '/assets/our-clients/viibee.png',
-  '/assets/our-clients/homestay-logo.jpg',
-  '/assets/our-clients/logo-1.png',
-  '/assets/our-clients/logo-2.png',
-  '/assets/our-clients/logo-3.png',
-  '/assets/our-clients/logo-4.png',
-  '/assets/our-clients/logo-5.png',
-  '/assets/our-clients/455T5Y.jpg',
-  '/assets/our-clients/45yy.jpg',
-  '/assets/our-clients/EFRGG.jpg',
-  '/assets/our-clients/FE224TT4_edited.jpg',
-  '/assets/our-clients/FGR.jpg',
-  '/assets/our-clients/OIP.jpeg',
-  '/assets/our-clients/RFGGR.jpg',
-  '/assets/our-clients/TRHRHJ6.jpg',
-  '/assets/our-clients/cdWF.jpg',
-  '/assets/our-clients/unnamed.jpg'
-];
-
 const ClientLogos = () => {
+  const [logos, setLogos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!db) return;
+
+    const q = query(collection(db, 'clients'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const logosData = snapshot.docs.map(doc => doc.data().imageUrl);
+      setLogos(logosData);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching client logos: ", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading || logos.length === 0) {
+    return null; // Or a placeholder if desired
+  }
+
   return (
     <section className="client-logos-section">
       <div className="logos-marquee-container">

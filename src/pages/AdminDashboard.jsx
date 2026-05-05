@@ -15,7 +15,8 @@ import {
   addCategory, deleteCategory, updateCategoriesOrder,
   addTeamMember, updateTeamMember, deleteTeamMember, updateTeamOrder,
   addNews, updateNews, deleteNews, updateNewsOrder,
-  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS,
+  addClientLogo, deleteClientLogo, updateClientsOrder,
+  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS, COL_CLIENTS,
   NEWS_CAT_RECENT, NEWS_CAT_PUBLICATIONS, NEWS_CAT_INTERVIEWS, NEWS_CAT_ONLINE,
   uploadImagesToSupabase, uploadImageToSupabase
 } from '../services/adminService';
@@ -58,6 +59,7 @@ const AdminDashboard = () => {
   const [categories, setCategories] = useState([]);
   const [team, setTeam] = useState([]);
   const [news, setNews] = useState([]);
+  const [clients, setClients] = useState([]);
 
   // ── UI state ──
   const [activeTab, setActiveTab] = useState('projects');
@@ -72,6 +74,8 @@ const AdminDashboard = () => {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleteTeamTarget, setDeleteTeamTarget] = useState(null);
   const [deleteNewsTarget, setDeleteNewsTarget] = useState(null);
+  const [deleteClientTarget, setDeleteClientTarget] = useState(null);
+  const [addingClientModal, setAddingClientModal] = useState(false);
   const [filterNewsCat, setFilterNewsCat] = useState('all');
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [showProjectOrderModal, setShowProjectOrderModal] = useState(false);
@@ -99,7 +103,11 @@ const AdminDashboard = () => {
       query(collection(db, COL_NEWS), orderBy('createdAt', 'desc')),
       snap => setNews(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     );
-    return () => { unsubP(); unsubC(); unsubT(); unsubN(); };
+    const unsubClients = onSnapshot(
+      query(collection(db, COL_CLIENTS), orderBy('createdAt', 'desc')),
+      snap => setClients(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+    return () => { unsubP(); unsubC(); unsubT(); unsubN(); unsubClients(); };
   }, []);
 
   // ── Filtered projects ───────────────────────────────────────────────────────
@@ -204,6 +212,17 @@ const AdminDashboard = () => {
     }
   };
 
+  const confirmDeleteClient = async () => {
+    try {
+      await deleteClientLogo(deleteClientTarget);
+      toast('Client logo removed.', 'info');
+    } catch {
+      toast('Failed to remove client logo.', 'error');
+    } finally {
+      setDeleteClientTarget(null);
+    }
+  };
+
   // ── Add Category ─────────────────────────────────────────────────────────────
   const handleAddCategory = async (e) => {
     e.preventDefault();
@@ -269,6 +288,12 @@ const AdminDashboard = () => {
               id: 'news', label: 'News', icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>)
+            },
+            {
+              id: 'clients', label: 'Clients', icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v14.25A2.25 2.25 0 006 19.5h12a2.25 2.25 0 002.25-2.25V3m-18 18h18M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h8.25c.621 0 1.125.504 1.125 1.125V21M3 3h18" />
                 </svg>)
             },
           ].map(tab => (
@@ -564,6 +589,42 @@ const AdminDashboard = () => {
             )}
           </>
         )}
+
+        {/* ══ Clients Tab ══ */}
+        {activeTab === 'clients' && (
+          <>
+            <div className="admin-toolbar">
+              <div className="admin-toolbar-left">
+                <h2 className="admin-page-title">
+                  Client Logos
+                  <span className="admin-badge">{clients.length}</span>
+                </h2>
+              </div>
+              <div className="admin-toolbar-right">
+                <button
+                  className="admin-btn-primary"
+                  onClick={() => setAddingClientModal(true)}
+                >
+                  + Add Client Logo
+                </button>
+              </div>
+            </div>
+
+            {clients.length === 0 ? (
+              <div className="admin-empty">No client logos yet. Click "+ Add Client Logo" to get started.</div>
+            ) : (
+              <div className="admin-project-grid">
+                {clients.map(client => (
+                  <ClientLogoCard
+                    key={client.id}
+                    client={client}
+                    onDelete={() => setDeleteClientTarget(client.id)}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </main>
 
       {/* ══ Add Project Modal ══ */}
@@ -654,6 +715,15 @@ const AdminDashboard = () => {
         />
       )}
 
+      {/* ══ Add Client Logo Modal ══ */}
+      {addingClientModal && (
+        <ClientLogoFormModal
+          onClose={() => setAddingClientModal(false)}
+          onSuccess={(msg) => { toast(msg); setAddingClientModal(false); }}
+          onError={(msg) => toast(msg, 'error')}
+        />
+      )}
+
       {/* ══ Team Order Modal ══ */}
       {showTeamOrderModal && (
         <TeamOrderModal
@@ -672,6 +742,25 @@ const AdminDashboard = () => {
           onSuccess={(msg) => { toast(msg); setShowCatOrderModal(false); }}
           onError={(msg) => toast(msg, 'error')}
         />
+      )}
+
+      {/* ══ Delete Client Confirmation Modal ══ */}
+      {deleteClientTarget && (
+        <Modal title="Confirm Remove" onClose={() => setDeleteClientTarget(null)}>
+          <p className="modal-confirm-text">
+            Are you sure you want to remove this client logo?
+            <br />
+            <span className="modal-confirm-sub">This action cannot be undone.</span>
+          </p>
+          <div className="modal-actions">
+            <button className="admin-btn-secondary" onClick={() => setDeleteClientTarget(null)}>
+              Cancel
+            </button>
+            <button className="admin-btn-danger" onClick={confirmDeleteClient}>
+              Yes, Remove
+            </button>
+          </div>
+        </Modal>
       )}
 
       {/* ══ Delete News Confirmation Modal ══ */}
@@ -1616,6 +1705,139 @@ const CategoryOrderModal = ({ categories, onClose, onSuccess, onError }) => {
           </button>
         </div>
       </div>
+    </Modal>
+  );
+};
+
+// ─── ClientLogoCard ──────────────────────────────────────────────────────────
+const ClientLogoCard = ({ client, onDelete }) => {
+  return (
+    <div className="admin-project-card">
+      <div style={{ position: 'relative', paddingTop: '10px' }}>
+        <img src={client.imageUrl} alt="Client Logo" className="admin-project-img" style={{ objectFit: 'contain', background: 'white', padding: '10px' }} loading="lazy" />
+      </div>
+      <div className="admin-project-info" style={{ padding: '12px' }}>
+        <div className="admin-project-actions" style={{ justifyContent: 'center' }}>
+          <button className="admin-btn-danger" onClick={onDelete} style={{ width: '100%' }}>🗑️ Remove</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── ClientLogoFormModal ───────────────────────────────────────────────────────
+const ClientLogoFormModal = ({ onClose, onSuccess, onError }) => {
+  const [images, setImages] = useState([]); // Array of { preview, file }
+  const [saving, setSaving] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files ?? []);
+    if (files.some(f => !f.type.startsWith('image/'))) {
+      onError('Only image files are allowed.');
+      return;
+    }
+    
+    const newEntries = files.map(file => ({
+      preview: URL.createObjectURL(file),
+      file,
+    }));
+    
+    setImages(prev => [...prev, ...newEntries]);
+    e.target.value = '';
+  };
+
+  const handleRemove = (idx) => {
+    setImages(prev => {
+      const copy = [...prev];
+      URL.revokeObjectURL(copy[idx].preview);
+      copy.splice(idx, 1);
+      return copy;
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (images.length === 0) return onError('Please select at least one image.');
+    setSaving(true);
+
+    try {
+      const uploadPromises = images.map(img => uploadImageToSupabase(img.file));
+      const urls = await Promise.all(uploadPromises);
+
+      // Add each logo as a separate document
+      const savePromises = urls.map(url => addClientLogo({ imageUrl: url }));
+      await Promise.all(savePromises);
+
+      onSuccess(`${images.length} logo(s) added!`);
+    } catch (err) {
+      onError('Action failed: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title="➕ Add Client Logos" onClose={onClose}>
+      <form className="admin-form" onSubmit={handleSubmit}>
+        <div className="admin-form-group">
+          <label>Select Logos * <span style={{ opacity: 0.5, fontWeight: 400 }}>({images.length} selected)</span></label>
+          <div 
+            className="image-upload-zone"
+            onClick={() => fileInputRef.current?.click()}
+            style={{
+              border: '2px dashed rgba(61,122,94,0.5)', borderRadius: '10px',
+              padding: '30px', textAlign: 'center', cursor: 'pointer',
+              background: 'rgba(61,122,94,0.04)', marginBottom: '12px'
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <span style={{ fontSize: '2rem' }}>📷</span>
+              <span style={{ opacity: 0.6 }}>Click to upload multiple client logos</span>
+            </div>
+          </div>
+          <input ref={fileInputRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={handleFileChange} />
+        </div>
+
+        {/* Previews grid */}
+        {images.length > 0 && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+            gap: '10px',
+            marginBottom: '20px',
+            maxHeight: '200px',
+            overflowY: 'auto',
+            padding: '10px',
+            background: 'rgba(0,0,0,0.1)',
+            borderRadius: '8px'
+          }}>
+            {images.map((img, idx) => (
+              <div key={idx} style={{ position: 'relative', aspectRatio: '1', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <img src={img.preview} alt={`preview-${idx}`} style={{ width: '100%', height: '100%', objectFit: 'contain', background: 'white', padding: '5px' }} />
+                <button 
+                  type="button" 
+                  onClick={() => handleRemove(idx)}
+                  style={{
+                    position: 'absolute', top: '2px', right: '2px',
+                    background: 'rgba(239,68,68,0.9)', border: 'none',
+                    borderRadius: '50%', width: '18px', height: '18px',
+                    color: 'white', fontSize: '12px', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}
+                >×</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="modal-actions">
+          <button type="button" className="admin-btn-secondary" onClick={onClose} disabled={saving}>Cancel</button>
+          <button type="submit" className="admin-btn-primary" disabled={saving}>
+            {saving ? 'Uploading...' : 'Add Logos'}
+          </button>
+        </div>
+      </form>
     </Modal>
   );
 };

@@ -24,6 +24,7 @@ export const COL_CATEGORIES = 'categories';
 export const COL_USERS = 'users';
 export const COL_TEAM = 'team';
 export const COL_NEWS = 'news';
+export const COL_CLIENTS = 'clients';
 
 // ─── News Categories ─────────────────────────────────────────────────────────
 export const NEWS_CAT_RECENT = 'recent_news';
@@ -173,5 +174,34 @@ export const deleteCategory = (id) =>
 export const fetchCategories = async () => {
   const snap = await getDocs(collection(db, COL_CATEGORIES));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+};
+
+// ─── Clients ─────────────────────────────────────────────────────────────────
+
+/**
+ * Add a new client logo.
+ * @param {{ imageUrl }} payload
+ */
+export const addClientLogo = (payload) =>
+  addDoc(collection(db, COL_CLIENTS), {
+    ...payload,
+    order: payload.order ?? 999,
+    createdAt: serverTimestamp(),
+  });
+
+/**
+ * Delete a client logo.
+ */
+export const deleteClientLogo = (id) =>
+  deleteDoc(doc(db, COL_CLIENTS, id));
+
+/**
+ * Bulk update clients order.
+ */
+export const updateClientsOrder = async (items) => {
+  const promises = items.map(item => 
+    updateDoc(doc(db, COL_CLIENTS, item.id), { order: item.order })
+  );
+  return Promise.all(promises);
 };
 
