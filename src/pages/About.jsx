@@ -10,11 +10,32 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 const About = () => {
   const [showGallery, setShowGallery] = useState(false);
+  const [selectedFounder, setSelectedFounder] = useState(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const founderDetails = {
+    'Sibin.M.Sabu': {
+      fullName: 'Sibin M. Sabu',
+      role: 'Principal Architect, Kochi',
+      bio: `Completed Architecture graduate specialized in Landscape Architecture, with hands-on experience across diverse landscape projects and scales. He has worked under the guidance of renowned architect Ar. B. V. Doshi (Sangath, Ahmedabad) and respected architects in Kerala.
+
+His project experience spans residential landscapes, resorts, parks, schools, herbal gardens, butterfly gardens, edible landscapes, Miyawaki forests, design sensibility, technical expertise, and adaptability across context.`
+    },
+    'Sabu Mathew': {
+      fullName: 'Sabu Mathew',
+      role: 'Landscape Engineer, Thrissur',
+      bio: `He has over 30 years of experience in the landscape field, including 20 years as a Landscaping Engineer and Consultant with multinational companies such as Saudi ARAMCO, WESCO (England), and KEO International Consultants (UAE). He founded the firm in 2009, and for the past 14 years it has maintained a strong commitment to quality, integrity, and excellence, delivering projects across residences, resorts, parks, institutions, gardens, Miyawaki, and government sectors.`
+    },
+    'Seema K Sabu': {
+      fullName: 'Seema K Sabu',
+      role: 'Horticulturist, Thrissur',
+      bio: `She graduated in 1986 with a degree in Horticulture from Thrissur. With a deep interest in plant studies, her extensive knowledge and experience are a true asset to our firm. She is the key decision-maker for all plant selection and horticultural aspects of our projects. She has collaborated on projects of various scales and plays a major role in site supervision and ongoing project maintenance, ensuring long-term health and quality of the landscape.`
+    }
+  };
+
   useEffect(() => {
-    if (showGallery) {
+    if (showGallery || selectedFounder) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     } else {
@@ -25,7 +46,7 @@ const About = () => {
       document.body.style.overflow = 'unset';
       document.documentElement.style.overflow = 'unset';
     };
-  }, [showGallery]);
+  }, [showGallery, selectedFounder]);
 
   useEffect(() => {
     if (!db) return;
@@ -127,7 +148,12 @@ const About = () => {
             margin: '0 auto',
           }}>
             {founders.map((member, index) => (
-              <FadeUp key={member.id} className="team-card" style={{ flex: '0 0 auto' }}>
+              <FadeUp 
+                key={member.id} 
+                className="team-card" 
+                style={{ flex: '0 0 auto' }}
+                onClick={() => setSelectedFounder(member)}
+              >
                 <div className="team-img-wrapper">
                   <OptimizedImage
                     src={member.image || 'assets/team-members/placeholder.jpg'}
@@ -224,6 +250,52 @@ const About = () => {
           </div>
         </section>
       )}
+
+      <AnimatePresence>
+        {selectedFounder && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="founder-modal-overlay"
+            onClick={() => setSelectedFounder(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="founder-modal-content"
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                className="founder-modal-close"
+                onClick={() => setSelectedFounder(null)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+
+              <div className="founder-modal-image">
+                <OptimizedImage
+                  src={selectedFounder.image || 'assets/team-members/placeholder.jpg'}
+                  alt={selectedFounder.name}
+                  width={400}
+                />
+              </div>
+
+              <div className="founder-modal-info">
+                <h2>{founderDetails[selectedFounder.name]?.fullName || selectedFounder.name}</h2>
+                <span className="role">{founderDetails[selectedFounder.name]?.role || selectedFounder.role}</span>
+                <div className="founder-modal-bio">
+                  {founderDetails[selectedFounder.name]?.bio || "Biography details coming soon."}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {showGallery && (
