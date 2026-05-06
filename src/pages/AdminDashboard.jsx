@@ -16,7 +16,8 @@ import {
   addTeamMember, updateTeamMember, deleteTeamMember, updateTeamOrder,
   addNews, updateNews, deleteNews, updateNewsOrder,
   addClientLogo, deleteClientLogo, updateClientsOrder,
-  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS, COL_CLIENTS,
+  deleteInquiry,
+  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS, COL_CLIENTS, COL_INQUIRIES,
   NEWS_CAT_RECENT, NEWS_CAT_PUBLICATIONS, NEWS_CAT_INTERVIEWS, NEWS_CAT_ONLINE,
   uploadImagesToSupabase, uploadImageToSupabase
 } from '../services/adminService';
@@ -60,6 +61,7 @@ const AdminDashboard = () => {
   const [team, setTeam] = useState([]);
   const [news, setNews] = useState([]);
   const [clients, setClients] = useState([]);
+  const [inquiries, setInquiries] = useState([]);
 
   // ── UI state ──
   const [activeTab, setActiveTab] = useState('projects');
@@ -82,6 +84,7 @@ const AdminDashboard = () => {
   const [showTeamOrderModal, setShowTeamOrderModal] = useState(false);
   const [showCatOrderModal, setShowCatOrderModal] = useState(false);
   const [newCatName, setNewCatName] = useState('');
+  const [deleteInquiryTarget, setDeleteInquiryTarget] = useState(null);
 
   // ── Realtime listeners ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -107,7 +110,11 @@ const AdminDashboard = () => {
       query(collection(db, COL_CLIENTS), orderBy('createdAt', 'desc')),
       snap => setClients(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     );
-    return () => { unsubP(); unsubC(); unsubT(); unsubN(); unsubClients(); };
+    const unsubInquiries = onSnapshot(
+      query(collection(db, COL_INQUIRIES), orderBy('createdAt', 'desc')),
+      snap => setInquiries(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+    return () => { unsubP(); unsubC(); unsubT(); unsubN(); unsubClients(); unsubInquiries(); };
   }, []);
 
   // ── Filtered projects ───────────────────────────────────────────────────────
@@ -223,6 +230,17 @@ const AdminDashboard = () => {
     }
   };
 
+  const confirmDeleteInquiry = async () => {
+    try {
+      await deleteInquiry(deleteInquiryTarget);
+      toast('Inquiry deleted.', 'info');
+    } catch {
+      toast('Failed to delete inquiry.', 'error');
+    } finally {
+      setDeleteInquiryTarget(null);
+    }
+  };
+
   // ── Add Category ─────────────────────────────────────────────────────────────
   const handleAddCategory = async (e) => {
     e.preventDefault();
@@ -294,6 +312,12 @@ const AdminDashboard = () => {
               id: 'clients', label: 'Clients', icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v14.25A2.25 2.25 0 006 19.5h12a2.25 2.25 0 002.25-2.25V3m-18 18h18M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h8.25c.621 0 1.125.504 1.125 1.125V21M3 3h18" />
+                </svg>)
+            },
+            {
+              id: 'inquiries', label: 'Inquiries', icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>)
             },
           ].map(tab => (
@@ -624,6 +648,52 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
+        {/* ══ Inquiries Tab ══ */}
+        {activeTab === 'inquiries' && (
+          <>
+            <div className="admin-toolbar">
+              <div className="admin-toolbar-left">
+                <h2 className="admin-page-title">
+                  Contact Inquiries
+                  <span className="admin-badge">{inquiries.length}</span>
+                </h2>
+              </div>
+            </div>
+
+            {inquiries.length === 0 ? (
+              <div className="admin-empty">No inquiries yet. New contact form submissions will appear here.</div>
+            ) : (
+              <div className="admin-inquiry-list">
+                {inquiries.map(inquiry => (
+                  <div key={inquiry.id} className="admin-inquiry-card">
+                    <div className="inquiry-header">
+                      <div className="inquiry-user">
+                        <h3>{inquiry.name}</h3>
+                        <div className="inquiry-meta">
+                          <span>📧 {inquiry.email}</span>
+                          <span>📱 {inquiry.phone}</span>
+                        </div>
+                      </div>
+                      <div className="inquiry-date">
+                        {inquiry.createdAt?.toDate ? inquiry.createdAt.toDate().toLocaleString() : 'Just now'}
+                      </div>
+                    </div>
+                    <div className="inquiry-message">
+                      <p>{inquiry.message}</p>
+                    </div>
+                    <div className="inquiry-actions">
+                      <button 
+                        className="admin-btn-danger admin-btn-sm"
+                        onClick={() => setDeleteInquiryTarget(inquiry.id)}
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </main>
 
@@ -776,6 +846,25 @@ const AdminDashboard = () => {
               Cancel
             </button>
             <button className="admin-btn-danger" onClick={confirmDeleteNews}>
+              Yes, Delete
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {/* ══ Delete Inquiry Confirmation Modal ══ */}
+      {deleteInquiryTarget && (
+        <Modal title="Confirm Delete" onClose={() => setDeleteInquiryTarget(null)}>
+          <p className="modal-confirm-text">
+            Are you sure you want to delete this inquiry?
+            <br />
+            <span className="modal-confirm-sub">This action cannot be undone.</span>
+          </p>
+          <div className="modal-actions">
+            <button className="admin-btn-secondary" onClick={() => setDeleteInquiryTarget(null)}>
+              Cancel
+            </button>
+            <button className="admin-btn-danger" onClick={confirmDeleteInquiry}>
               Yes, Delete
             </button>
           </div>

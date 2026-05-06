@@ -25,6 +25,7 @@ export const COL_USERS = 'users';
 export const COL_TEAM = 'team';
 export const COL_NEWS = 'news';
 export const COL_CLIENTS = 'clients';
+export const COL_INQUIRIES = 'inquiries';
 
 // ─── News Categories ─────────────────────────────────────────────────────────
 export const NEWS_CAT_RECENT = 'recent_news';
@@ -204,4 +205,12 @@ export const updateClientsOrder = async (items) => {
   );
   return Promise.all(promises);
 };
+
+// ─── Inquiries ───────────────────────────────────────────────────────────────
+
+/**
+ * Delete a contact inquiry.
+ */
+export const deleteInquiry = (id) =>
+  deleteDoc(doc(db, COL_INQUIRIES, id));
 

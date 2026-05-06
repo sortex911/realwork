@@ -1,13 +1,46 @@
 import React, { useState } from 'react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+
   const [parallaxImages] = useState([
     { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.avif', alt: 'Contact 1' },
     { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.avif', alt: 'Contact 2' },
     { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.avif', alt: 'Contact 3' },
   ]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('submitting');
+    try {
+      await addDoc(collection(db, 'inquiries'), {
+        ...formData,
+        createdAt: serverTimestamp(),
+        status: 'new'
+      });
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('error');
+    }
+  };
 
   return (
     <>
@@ -70,25 +103,61 @@ const Contact = () => {
             </div>
           </div>
 
-          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="contact-form" onSubmit={handleSubmit}>
             <FadeUp className="form-group">
               <label htmlFor="name">Name</label>
-              <input type="text" id="name" placeholder="John Doe" required />
+              <input 
+                type="text" 
+                id="name" 
+                placeholder="John Doe" 
+                required 
+                value={formData.name}
+                onChange={handleChange}
+              />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" id="email" placeholder="john@example.com" required />
+              <input 
+                type="email" 
+                id="email" 
+                placeholder="john@example.com" 
+                required 
+                value={formData.email}
+                onChange={handleChange}
+              />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="phone">Mobile Number</label>
-              <input type="tel" id="phone" placeholder="+91 98765 43210" required />
+              <input 
+                type="tel" 
+                id="phone" 
+                placeholder="+91 98765 43210" 
+                required 
+                value={formData.phone}
+                onChange={handleChange}
+              />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="message">Message</label>
-              <textarea id="message" rows="5" placeholder="Tell us about your project..." required></textarea>
+              <textarea 
+                id="message" 
+                rows="5" 
+                placeholder="Tell us about your project..." 
+                required
+                value={formData.message}
+                onChange={handleChange}
+              ></textarea>
             </FadeUp>
             <FadeUp>
-              <button type="submit" className="submit-btn">Send Message</button>
+              <button 
+                type="submit" 
+                className={`submit-btn ${status === 'submitting' ? 'submitting' : ''}`}
+                disabled={status === 'submitting'}
+              >
+                {status === 'submitting' ? 'Sending...' : 'Send Message'}
+              </button>
+              {status === 'success' && <p style={{ color: '#2c5545', marginTop: '10px', fontWeight: '500' }}>Message sent successfully!</p>}
+              {status === 'error' && <p style={{ color: '#ef4444', marginTop: '10px', fontWeight: '500' }}>Failed to send message. Please try again.</p>}
             </FadeUp>
           </form>
         </div>

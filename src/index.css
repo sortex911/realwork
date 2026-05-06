@@ -3670,3 +3670,86 @@ section {
 .team-card {
   cursor: pointer;
 }
+
+/* Admin Inquiry Section */
+.admin-inquiry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.admin-inquiry-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.admin-inquiry-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-accent);
+}
+
+.inquiry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.inquiry-user h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #0f1a15;
+  margin: 0 0 8px 0;
+}
+
+.inquiry-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.inquiry-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inquiry-date {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  background: #f8fafc;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.inquiry-message {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.inquiry-message p {
+  margin: 0;
+  line-height: 1.6;
+  color: #334155;
+  white-space: pre-wrap;
+}
+
+.inquiry-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
