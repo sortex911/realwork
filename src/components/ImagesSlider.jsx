@@ -125,7 +125,7 @@ export const ImagesSlider = ({
           {children}
         </div>
       )}
-      
+
       {areImagesLoaded && overlay && (
         <div
           className={overlayClassName}

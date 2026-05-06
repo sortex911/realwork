@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
+import OptimizedImage from '../components/OptimizedImage';
 
 // ─── Component ────────────────────────────────────────────────────────────────
 // ─── Memoized Project Card ───────────────────────────────────────────────────
@@ -16,14 +17,11 @@ const ProjectCardItem = memo(({ project, onClick }) => {
     >
       <div className={`project-img-container ${!loaded ? 'skeleton-loading' : ''}`} style={{ width: '100%', height: '100%' }}>
         {project.imageUrl ? (
-          <img
+          <OptimizedImage
             src={project.imageUrl}
             alt={project.title}
             className="project-img"
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setLoaded(true)}
-            style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.6s ease' }}
+            width={600}
           />
         ) : (
           <div className="project-img-placeholder">No Image</div>
@@ -41,18 +39,16 @@ const ProjectCardItem = memo(({ project, onClick }) => {
 const GalleryItem = memo(({ url, project, idx, onOpen }) => {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div 
-      className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`} 
+    <div
+      className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`}
       style={{ borderRadius: '12px', overflow: 'hidden', height: '100%', cursor: 'pointer' }}
       onClick={() => onOpen(url)}
     >
-      <img 
-        src={url} 
-        alt={`${project.title} — photo ${idx + 1}`} 
-        loading="lazy" 
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.8s ease' }}
+      <OptimizedImage
+        src={url}
+        alt={`${project.title} — photo ${idx + 1}`}
+        className="gallery-img"
+        width={800}
       />
       <div className="gallery-item-overlay">
         <span>View Full</span>
@@ -75,35 +71,64 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [images, fullscreenImage]);
+  }, [images, fullscreenImage, currentIndex]);
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
     <div id="project-gallery" className="project-gallery active">
       <div className="gallery-hero">
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.div
             key={currentIndex}
-            src={images[currentIndex]}
-            alt={`${project.title} slide ${currentIndex + 1}`}
-            className="gallery-hero-bg"
+            className="gallery-hero-bg-wrapper"
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-          />
+            style={{ position: 'absolute', inset: 0 }}
+          >
+            <OptimizedImage
+              src={images[currentIndex]}
+              alt={`${project.title} slide ${currentIndex + 1}`}
+              priority={true}
+              width={1600}
+            />
+          </motion.div>
         </AnimatePresence>
-        
+
         <div className="gallery-hero-overlay" />
-        
+
+        {/* Navigation Arrows */}
+        {images.length > 1 && (
+          <>
+            <button className="gallery-nav-btn prev" onClick={prevImage} aria-label="Previous image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button className="gallery-nav-btn next" onClick={nextImage} aria-label="Next image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </>
+        )}
+
         <div className="gallery-hero-content">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <span className="gallery-category-badge">
-              {getCatName(project.categoryId ?? project.category)}
-            </span>
             <h1 className="gallery-hero-title">{project.title}</h1>
             {project.description && (
               <p className="gallery-hero-desc">{project.description}</p>
@@ -114,8 +139,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
         {images.length > 1 && (
           <div className="gallery-slider-dots">
             {images.map((_, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`slider-dot ${i === currentIndex ? 'active' : ''}`}
                 onClick={() => setCurrentIndex(i)}
               />
@@ -134,7 +159,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
           <span>Full Collection</span>
           <div className="line" />
         </div>
-        
+
         <div className="gallery-grid">
           {images.map((url, idx) => (
             <FadeUp key={idx} className="gallery-item">
@@ -147,7 +172,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       {/* Lightbox / Fullscreen Image View */}
       <AnimatePresence>
         {fullscreenImage && (
-          <motion.div 
+          <motion.div
             className="lightbox-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -165,26 +190,18 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
               padding: '40px'
             }}
           >
-            <motion.img 
+            <OptimizedImage
               src={fullscreenImage}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
-              }}
+              width={2000}
+              objectFit="contain"
             />
-            <button 
+            <button
               style={{
                 position: 'absolute', top: '30px', right: '30px',
                 background: 'white', color: 'black', border: 'none',
                 width: '40px', height: '40px', borderRadius: '50%',
                 fontSize: '1.5rem', cursor: 'pointer', display: 'flex',
-                alignItems: 'center', justifyCenter: 'center', padding: 0
+                alignItems: 'center', justifyContent: 'center', padding: 0
               }}
               onClick={() => setFullscreenImage(null)}
             >
@@ -403,15 +420,16 @@ const Portfolio = () => {
 
         {/* Project Gallery Detail */}
         {galleryActive && selectedProject && (
-          <GalleryModal 
-            project={selectedProject} 
-            onClose={closeGallery} 
-            getCatName={getCatName} 
+          <GalleryModal
+            project={selectedProject}
+            onClose={closeGallery}
+            getCatName={getCatName}
           />
         )}
       </section>
     </div>
   );
 };
+
 
 export default Portfolio;

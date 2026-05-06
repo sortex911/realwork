@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 export const ServiceCard = ({ images, title, description, icon }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,10 +56,8 @@ export const ServiceCard = ({ images, title, description, icon }) => {
       {/* Image Carousel Section */}
       <div className="service-card-carousel">
         <AnimatePresence initial={false} custom={direction}>
-          <motion.img
+          <motion.div
             key={currentIndex}
-            src={images[currentIndex]}
-            alt={title}
             custom={direction}
             variants={carouselVariants}
             initial="enter"
@@ -68,8 +67,15 @@ export const ServiceCard = ({ images, title, description, icon }) => {
               x: { type: 'spring', stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 },
             }}
-            className="service-card-img"
-          />
+            className="service-card-img-wrapper"
+            style={{ position: 'absolute', inset: 0 }}
+          >
+            <OptimizedImage
+              src={images[currentIndex]}
+              alt={title}
+              width={600}
+            />
+          </motion.div>
         </AnimatePresence>
         
         {/* Carousel Navigation */}

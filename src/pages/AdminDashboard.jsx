@@ -943,7 +943,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
       let uploadedUrls = [];
       if (fileEntries.length > 0) {
         console.log('[handleSubmit] Uploading', fileEntries.length, 'file(s) to Supabase…');
-        uploadedUrls = await uploadImagesToSupabase(fileEntries.map(i => i.file));
+        uploadedUrls = await uploadImagesToSupabase(fileEntries.map(i => i.file), 'projects');
         console.log('[handleSubmit] ✅ Supabase uploads resolved. URLs:', uploadedUrls);
       }
 
@@ -1166,7 +1166,7 @@ const TeamFormModal = ({ mode, member, onClose, onSuccess, onError }) => {
 
     setSaving(true);
     try {
-      const [url] = await uploadImagesToSupabase([file]);
+      const [url] = await uploadImagesToSupabase([file], 'team');
       setForm(prev => ({ ...prev, image: url }));
       // onSuccess('Photo uploaded!'); // Removed to prevent premature closing of the modal
     } catch (err) {
@@ -1331,7 +1331,7 @@ const NewsFormModal = ({ mode, item, onClose, onSuccess, onError }) => {
       let imageUrl = image.preview;
       // Only upload if it's not Recent News (as requested)
       if (!isRecentNews && image.type === 'file' && image.file) {
-        imageUrl = await uploadImageToSupabase(image.file);
+        imageUrl = await uploadImageToSupabase(image.file, 'news');
       }
 
       const payload = { 
@@ -1762,7 +1762,7 @@ const ClientLogoFormModal = ({ onClose, onSuccess, onError }) => {
     setSaving(true);
 
     try {
-      const uploadPromises = images.map(img => uploadImageToSupabase(img.file));
+      const uploadPromises = images.map(img => uploadImageToSupabase(img.file, 'clients'));
       const urls = await Promise.all(uploadPromises);
 
       // Add each logo as a separate document

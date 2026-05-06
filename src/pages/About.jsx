@@ -4,6 +4,9 @@ import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { COL_TEAM } from '../services/adminService';
 import FadeUp from '../components/FadeUp';
+import ClientLogos from '../components/ClientLogos';
+import OptimizedImage from '../components/OptimizedImage';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 const About = () => {
   const [showGallery, setShowGallery] = useState(false);
@@ -49,21 +52,7 @@ const About = () => {
     : teamMembers.slice(0, 3);
   const fullTeam = teamMembers;
 
-  const clients = [
-    'assets/our-clients/Joyalukkas-logo.jpg',
-    'assets/our-clients/homestay-logo.jpg',
-    'assets/our-clients/viibee.png',
-    'assets/our-clients/455T5Y.jpg',
-    'assets/our-clients/45yy.jpg',
-    'assets/our-clients/EFRGG.jpg',
-    'assets/our-clients/FE224TT4_edited.jpg',
-    'assets/our-clients/FGR.jpg',
-    'assets/our-clients/OIP.jpeg',
-    'assets/our-clients/RFGGR.jpg',
-    'assets/our-clients/TRHRHJ6.jpg',
-    'assets/our-clients/cdWF.jpg',
-    'assets/our-clients/unnamed.jpg',
-  ];
+
 
   const textRef = useRef(null);
 
@@ -118,21 +107,112 @@ const About = () => {
       </section>
 
       {teamMembers.length > 0 && (
-        <section>
-          <FadeUp><h2 className="section-title">Founders</h2></FadeUp>
-          <div className="team-grid">
-            {founders.map((member) => (
-              <FadeUp key={member.id} className="team-card">
+        <section style={{ textAlign: 'center', padding: '80px 40px' }}>
+
+          {/* Section Header */}
+          <FadeUp>
+            <h2 style={{
+              fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 400, color: '#0f1a15', marginBottom: '60px',
+            }}>Our Founders</h2>
+          </FadeUp>
+
+          {/* Founder Cards */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '32px',
+            maxWidth: '1100px',
+            margin: '0 auto',
+          }}>
+            {founders.map((member, index) => (
+              <FadeUp key={member.id} className="team-card" style={{ flex: '0 0 auto' }}>
                 <div className="team-img-wrapper">
-                  <img src={member.image || 'assets/team-members/placeholder.jpg'} alt={member.name} className="team-img" />
+                  <OptimizedImage
+                    src={member.image || 'assets/team-members/placeholder.jpg'}
+                    alt={member.name}
+                    className="team-img"
+                    width={320}
+                    noBg
+                  />
                 </div>
                 <h3>{member.name}</h3>
                 <p>{member.role}</p>
+                {member.name === 'Sabu Mathew' && (
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '12px' }}>
+                    <a href="https://www.facebook.com/share/1BmRq29mBX/?mibextid=wwXIfr"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#1877f2'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaFacebookF size={18} />
+                    </a>
+                    <a href="https://www.instagram.com/sabu.m.mathew?igsh=MTVhb2VyNGhxOXIwNA%3D%3D&utm_source=qr"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#e4405f'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaInstagram size={18} />
+                    </a>
+                  </div>
+                )}
+                {member.name === 'Seema K Sabu' && (
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '12px' }}>
+                    <a href="https://www.facebook.com/share/1DuMcwgYp3/?mibextid=wwXIfr"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#1877f2'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaFacebookF size={18} />
+                    </a>
+                    <a href="https://www.instagram.com/seemaksabu2013?igsh=dWRiMXQwOXR0aWds"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#e4405f'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaInstagram size={18} />
+                    </a>
+                  </div>
+                )}
+                {member.name === 'Sibin.M.Sabu' && (
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '12px' }}>
+                    <a href="https://www.facebook.com/share/1DwMa1Yyxq/?mibextid=wwXIfr"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#1877f2'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaFacebookF size={18} />
+                    </a>
+                    <a href="https://www.instagram.com/sibin.m.sabu?igsh=dDFiYmVrZ2EzNTJo&utm_source=qr"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#e4405f'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaInstagram size={18} />
+                    </a>
+                    <a href="https://www.linkedin.com/in/sibin-m-sabu?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+                      target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#6b7280', transition: 'color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#0077b5'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}
+                    >
+                      <FaLinkedinIn size={18} />
+                    </a>
+                  </div>
+                )}
               </FadeUp>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
+          {/* CTA Button */}
+          <div style={{ marginTop: '56px' }}>
             <FadeUp>
               <button
                 onClick={() => setShowGallery(true)}
@@ -175,7 +255,11 @@ const About = () => {
                       className="team-gallery-card"
                     >
                       <div className="team-gallery-img-wrapper">
-                        <img src={member.image || 'assets/team-members/placeholder.jpg'} alt={member.name} />
+                        <OptimizedImage
+                          src={member.image || 'assets/team-members/placeholder.jpg'}
+                          alt={member.name}
+                          width={300}
+                        />
                       </div>
                       <div className="team-gallery-info">
                         <h3>{member.name}</h3>
@@ -190,16 +274,7 @@ const About = () => {
         )}
       </AnimatePresence>
 
-      <section className="partners-section">
-        <div className="partners-wrapper">
-          <div className="partners-track">
-            {clients.map((src, i) => <img key={i} src={src} alt="Partner Logo" className="partner-logo" />)}
-          </div>
-          <div className="partners-track">
-            {clients.map((src, i) => <img key={i + 'copy'} src={src} alt="Partner Logo" className="partner-logo" />)}
-          </div>
-        </div>
-      </section>
+      <ClientLogos />
     </>
   );
 };

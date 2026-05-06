@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+import OptimizedImage from './OptimizedImage';
 import './ClientLogos.css';
 
 const ClientLogos = () => {
@@ -33,7 +34,13 @@ const ClientLogos = () => {
         <div className="logos-marquee">
           {logos.map((logo, index) => (
             <div key={`logo-a-${index}`} className="client-logo-item">
-              <img src={logo} alt={`Client ${index + 1}`} loading="lazy" />
+              <OptimizedImage 
+                src={logo} 
+                alt={`Client ${index + 1}`} 
+                width={200}
+                objectFit="contain"
+                noBg
+              />
             </div>
           ))}
         </div>
@@ -41,7 +48,13 @@ const ClientLogos = () => {
         <div className="logos-marquee" aria-hidden="true">
           {logos.map((logo, index) => (
             <div key={`logo-b-${index}`} className="client-logo-item">
-              <img src={logo} alt={`Client ${index + 1}`} loading="lazy" />
+              <OptimizedImage 
+                src={logo} 
+                alt={`Client ${index + 1}`} 
+                width={200}
+                objectFit="contain"
+                noBg
+              />
             </div>
           ))}
         </div>

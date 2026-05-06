@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { COL_NEWS, NEWS_CAT_RECENT } from '../services/adminService';
 import VariableProximity from '../components/VariableProximity';
 import ServiceCard from '../components/ServiceCard';
+import OptimizedImage from '../components/OptimizedImage';
 
 const Home = () => {
   const containerRef = useRef(null);
@@ -187,7 +188,12 @@ const Home = () => {
 
 
       <FadeUp>
-        <img src="assets/home-images/imgland.png" alt="Landscape Architecture" className="full-width-img" />
+        <OptimizedImage 
+          src="assets/home-images/imgland.png" 
+          alt="Landscape Architecture" 
+          className="full-width-img" 
+          width={1550}
+        />
       </FadeUp>
     </>
   );
