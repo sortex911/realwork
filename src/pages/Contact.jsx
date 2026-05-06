@@ -80,6 +80,10 @@ const Contact = () => {
               <input type="email" id="email" placeholder="john@example.com" required />
             </FadeUp>
             <FadeUp className="form-group">
+              <label htmlFor="phone">Mobile Number</label>
+              <input type="tel" id="phone" placeholder="+91 98765 43210" required />
+            </FadeUp>
+            <FadeUp className="form-group">
               <label htmlFor="message">Message</label>
               <textarea id="message" rows="5" placeholder="Tell us about your project..." required></textarea>
             </FadeUp>
