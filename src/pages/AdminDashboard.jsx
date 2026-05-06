@@ -648,6 +648,7 @@ const AdminDashboard = () => {
               </div>
             )}
           </>
+        )}
         {/* ══ Inquiries Tab ══ */}
         {activeTab === 'inquiries' && (
           <>

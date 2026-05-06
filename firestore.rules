@@ -60,5 +60,11 @@ service cloud.firestore {
       allow read:  if request.auth != null && request.auth.uid == uid;
       allow write: if isAdmin();
     }
+
+    // ── Inquiries ───────────────────────────────────────────────────────────
+    match /inquiries/{inquiryId} {
+      allow create:                 if true;       // Anyone can submit
+      allow read, update, delete:   if isAdmin();  // Only admin can view/manage
+    }
   }
 }
