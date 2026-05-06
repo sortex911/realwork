@@ -5,7 +5,7 @@ import ClientLogos from '../components/ClientLogos';
 import { collection, query, where, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { COL_NEWS, NEWS_CAT_RECENT } from '../services/adminService';
-import VariableProximity from '../components/VariableProximity';
+import { Typewriter } from '../components/Typewriter';
 import ServiceCard from '../components/ServiceCard';
 import OptimizedImage from '../components/OptimizedImage';
 
@@ -13,11 +13,12 @@ const Home = () => {
   const containerRef = useRef(null);
 
   const [news, setNews] = useState([]);
+  const [firstComplete, setFirstComplete] = useState(false);
 
   useEffect(() => {
     if (!db) return;
     const q = query(
-      collection(db, COL_NEWS), 
+      collection(db, COL_NEWS),
       where('category', '==', NEWS_CAT_RECENT)
     );
     const unsub = onSnapshot(q, (snap) => {
@@ -30,7 +31,7 @@ const Home = () => {
         const timeB = b.createdAt?.seconds ?? 0;
         return timeB - timeA;
       });
-      setNews(sorted.slice(0, 4));
+      setNews(sorted.slice(0, 3));
     });
     return () => unsub();
   }, []);
@@ -94,28 +95,28 @@ const Home = () => {
           <source src="assets/video/home-hero.mp4" type="video/mp4" />
         </video>
         <div className="hero-content" ref={containerRef} style={{ position: 'relative' }}>
-          <h1 className="hero-title">
-            <VariableProximity
-              label={'Let’s Celebrate'}
-              className={'variable-proximity-demo'}
-              fromFontVariationSettings="'wght' 400, 'opsz' 9"
-              toFontVariationSettings="'wght' 1000, 'opsz' 40"
-              containerRef={containerRef}
-              radius={100}
-              falloff='linear'
-              style={{ color: '#ffffff' }}
+          <h1 className="hero-title" style={{ color: '#ffffff' }}>
+            <Typewriter 
+              words={['Let’s Celebrate']} 
+              speed={150} 
+              loop={false}
+              cursor={false}
+              mode="glitch"
+              onComplete={() => setFirstComplete(true)}
             />
             <br />
-            <VariableProximity
-              label={'Landscape with us'}
-              className={'variable-proximity-demo'}
-              fromFontVariationSettings="'wght' 400, 'opsz' 9"
-              toFontVariationSettings="'wght' 1000, 'opsz' 40"
-              containerRef={containerRef}
-              radius={100}
-              falloff='linear'
-              style={{ color: '#ffffff' }}
-            />
+            {firstComplete && (
+              <Typewriter 
+                words={['Landscape with us']} 
+                speed={100} 
+                delayBetweenWords={1000}
+                loop={false}
+                cursor={true}
+                cursorChar="_"
+                mode="typewriter"
+              />
+            )}
+
           </h1>
           <p className="hero-subtitle"></p>
         </div>
@@ -131,7 +132,7 @@ const Home = () => {
         </FadeUp>
         <div className="news-grid-new">
           {news.map((item) => (
-            <div key={item.id} className="news-card-minimal" style={{ 
+            <div key={item.id} className="news-card-minimal" style={{
               opacity: 1,
               padding: '0 20px'
             }}>
@@ -171,8 +172,8 @@ const Home = () => {
       <section id="services">
         <FadeUp><h2 className="section-title">Services</h2></FadeUp>
         <div className="services-grid-new">
-          {services.map((service, index) => (
-            <ServiceCard 
+          {services.slice(0, 3).map((service, index) => (
+            <ServiceCard
               key={index}
               title={service.title}
               description={service.desc}
@@ -183,15 +184,19 @@ const Home = () => {
         </div>
       </section>
 
-      <ClientStories />
-      <ClientLogos />
+      <div style={{ marginTop: '100px' }}>
+        <ClientStories />
+        <div style={{ marginTop: '100px' }}>
+          <ClientLogos />
+        </div>
+      </div>
 
 
       <FadeUp>
-        <OptimizedImage 
-          src="assets/home-images/imgland.png" 
-          alt="Landscape Architecture" 
-          className="full-width-img" 
+        <OptimizedImage
+          src="assets/home-images/imgland.png"
+          alt="Landscape Architecture"
+          className="full-width-img"
           width={1550}
         />
       </FadeUp>

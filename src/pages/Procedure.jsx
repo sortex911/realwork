@@ -2,6 +2,7 @@ import React from 'react';
 import FadeUp from '../components/FadeUp';
 import { ContainerScroll, CardSticky } from '../components/CardsStack';
 import { AuroraHero } from '../components/AuroraHero';
+import ImagesSlider from '../components/ImagesSlider';
 
 const Procedure = () => {
   const services = [
@@ -33,32 +34,26 @@ const Procedure = () => {
 
   return (
     <>
-      <FadeUp className="about-hero" style={{ height: '50vh' }}>
-        <div className="hero-bg" style={{ backgroundColor: '#0f1a15', zIndex: -1 }}></div>
-        <div className="hero-content">
-          <h1 className="hero-title">Our Procedure</h1>
-          <p className="hero-subtitle">Transforming our surroundings</p>
-        </div>
-      </FadeUp>
+      <div style={{ position: 'relative', height: '50vh', width: '100vw', overflow: 'hidden' }}>
+        <ImagesSlider 
+          images={[
+            'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.avif',
+            'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.avif',
+            'assets/photos/4d869c_d0b4c72f0a3c4dea96407244c270603e~mv2.avif'
+          ]}
+          autoplay={true}
+          direction="up"
+          overlay={true}
+        >
+          <div className="hero-content" style={{ zIndex: 10, textAlign: 'center', color: '#fff' }}>
+            <h1 className="hero-title" style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>Our Procedure</h1>
+            <p className="hero-subtitle" style={{ letterSpacing: '4px' }}>Transforming our surroundings</p>
+          </div>
+        </ImagesSlider>
+      </div>
 
       <AuroraHero>
-        <section>
-          <div className="about-intro" style={{ maxWidth: '1100px', margin: '0 auto', padding: 'var(--spacing-xl) var(--spacing-md)', textAlign: 'center' }}>
-            <div className="section-dot"></div>
-            <h2 className="section-title" style={{ marginBottom: 'var(--spacing-sm)' }}>Green Realm Landscape</h2>
-            <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-lg)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
 
-            <FadeUp>
-              <p style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300' }}>
-                Green Realm Landscape Architects in Thrissur and Ernakulam India, founded in 1990 and rebranded in 2012. Company with 30 years of Kerala foremost landscaping and Maintenance Company.
-                <br /><br />
-                We are the leading landscaping company in Kerala, offering landscape consultation, design and installation, as well as full service maintenance for all your lawn and garden needs. Client satisfaction and quality in service, backed by a Crew of young, energetic & passionate people. The firm consist of Landscape Architects, Landscape engineer Botanist and trained landscape workers of energetic and passionate people.
-                <br /><br />
-                We promise to continue our dedicated service to our clients, and look forward to welcoming new partners on our journey to transform our surroundings.
-              </p>
-            </FadeUp>
-          </div>
-        </section>
 
         <section style={{ backgroundColor: 'transparent' }}>
           <FadeUp><h2 className="section-title">Our Services</h2></FadeUp>
@@ -163,6 +158,78 @@ const Procedure = () => {
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.1rem', margin: '0 auto' }}>
               Any additions or alterations requested by the client after the approval of the drawing will incur additional charges. Drawings will be submitted only after the contract is approved and the advance payment has been received.
             </p>
+          </FadeUp>
+        </div>
+      </section>
+      <section style={{ padding: 'var(--spacing-xxl) 0', textAlign: 'center', backgroundColor: 'rgba(44, 85, 69, 0.05)' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 var(--spacing-md)' }}>
+          <FadeUp>
+            <h2 style={{ marginBottom: 'var(--spacing-md)', fontSize: '2.5rem' }}>Full Procedure & Profile</h2>
+            <p style={{ margin: '0 auto var(--spacing-lg) auto', color: 'var(--color-text-light)', fontSize: '1.1rem' }}>
+              For a comprehensive overview of our design methodology and company profile, please view or download our official documentation.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '30px' }}>
+              <a 
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '16px 40px',
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'white',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '2px solid var(--color-accent)',
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  letterSpacing: '1px',
+                  boxShadow: '0 10px 20px rgba(44, 85, 69, 0.15)'
+                }}
+                onMouseOver={(e) => {
+                  /* e.currentTarget.style.transform = 'translateY(-3px)'; */
+                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(44, 85, 69, 0.25)';
+                }}
+                onMouseOut={(e) => {
+                  /* e.currentTarget.style.transform = 'translateY(0)'; */
+                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(44, 85, 69, 0.15)';
+                }}
+              >
+                View Procedure
+              </a>
+              <a 
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+                download="Green_Realm_Landscape_Procedure.pdf"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '16px 40px',
+                  backgroundColor: 'transparent',
+                  color: 'var(--color-accent)',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '2px solid var(--color-accent)',
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  letterSpacing: '1px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-accent)';
+                  e.currentTarget.style.color = 'white';
+                  /* e.currentTarget.style.transform = 'translateY(-3px)'; */
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--color-accent)';
+                  /* e.currentTarget.style.transform = 'translateY(0)'; */
+                }}
+              >
+                Download Procedure
+              </a>
+            </div>
           </FadeUp>
         </div>
       </section>

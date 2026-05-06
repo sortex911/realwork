@@ -163,8 +163,9 @@ const ClientStories = () => {
   return (
     <section className="client-stories-modern">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
+        <div className="text-center mb-40">
           <h2 className="text-3xl md:text-4xl font-bold mt-2 text-slate-900" style={{ textAlign: "center" }}>What our clients say</h2>
+          <div style={{ marginTop: '150px' }}></div>
         </div>
 
         <div className="testimonials-grid-container">

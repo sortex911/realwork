@@ -3,6 +3,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -149,17 +150,126 @@ const Contact = () => {
               ></textarea>
             </FadeUp>
             <FadeUp>
-              <button 
-                type="submit" 
-                className={`submit-btn ${status === 'submitting' ? 'submitting' : ''}`}
-                disabled={status === 'submitting'}
-              >
-                {status === 'submitting' ? 'Sending...' : 'Send Message'}
-              </button>
+              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <button 
+                  type="submit" 
+                  className={`submit-btn ${status === 'submitting' ? 'submitting' : ''}`}
+                  disabled={status === 'submitting'}
+                  style={{ margin: 0 }}
+                >
+                  {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                </button>
+                
+                <a 
+                  href="https://wa.me/919072047272" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whatsapp-btn"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    backgroundColor: '#25D366',
+                    color: 'white',
+                    padding: '0.9rem 2rem',
+                    borderRadius: '8px',
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 12px rgba(37, 211, 102, 0.2)'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(37, 211, 102, 0.3)';
+                    e.currentTarget.style.backgroundColor = '#22c35e';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 211, 102, 0.2)';
+                    e.currentTarget.style.backgroundColor = '#25D366';
+                  }}
+                >
+                  <FaWhatsapp size={22} />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
               {status === 'success' && <p style={{ color: '#2c5545', marginTop: '10px', fontWeight: '500' }}>Message sent successfully!</p>}
               {status === 'error' && <p style={{ color: '#ef4444', marginTop: '10px', fontWeight: '500' }}>Failed to send message. Please try again.</p>}
             </FadeUp>
           </form>
+        </div>
+      </section>
+      <section style={{ padding: 'var(--spacing-xxl) 0', textAlign: 'center', backgroundColor: 'rgba(44, 85, 69, 0.05)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 var(--spacing-md)' }}>
+          <FadeUp>
+            <h2 style={{ marginBottom: 'var(--spacing-md)', fontSize: '2.5rem' }}>Company Procedure</h2>
+            <p style={{ margin: '0 auto var(--spacing-lg) auto', color: 'var(--color-text-light)', fontSize: '1.1rem' }}>
+              Interested in our workflow? Download or view our complete procedure and profile documentation.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '30px' }}>
+              <a 
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '16px 40px',
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'white',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '2px solid var(--color-accent)',
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  letterSpacing: '1px',
+                  boxShadow: '0 10px 20px rgba(44, 85, 69, 0.15)'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(44, 85, 69, 0.25)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(44, 85, 69, 0.15)';
+                }}
+              >
+                View Procedure
+              </a>
+              <a 
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+                download="Green_Realm_Landscape_Procedure.pdf"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '16px 40px',
+                  backgroundColor: 'transparent',
+                  color: 'var(--color-accent)',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '2px solid var(--color-accent)',
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  letterSpacing: '1px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-accent)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--color-accent)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                Download Procedure
+              </a>
+            </div>
+          </FadeUp>
         </div>
       </section>
     </>

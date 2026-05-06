@@ -37,14 +37,14 @@ His project experience spans residential landscapes, resorts, parks, schools, he
   useEffect(() => {
     if (showGallery || selectedFounder) {
       document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
     } else {
       document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
+      document.body.style.height = 'unset';
     }
     return () => {
       document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
+      document.body.style.height = 'unset';
     };
   }, [showGallery, selectedFounder]);
 
@@ -143,8 +143,8 @@ His project experience spans residential landscapes, resorts, parks, schools, he
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            gap: '32px',
-            maxWidth: '1100px',
+            gap: '95px',
+            maxWidth: '1300px',
             margin: '0 auto',
           }}>
             {founders.map((member, index) => (

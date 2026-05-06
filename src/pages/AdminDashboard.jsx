@@ -953,6 +953,11 @@ const ProjectCard = ({ project, categories, onEdit, onDelete }) => {
           <span className="admin-project-date">{createdAt}</span>
         </div>
         <h3 className="admin-project-title">{project.title}</h3>
+        {project.location && (
+          <p className="admin-project-location" style={{ fontSize: '0.85rem', color: 'var(--color-accent)', marginBottom: '8px', fontWeight: '500' }}>
+            📍 {project.location}
+          </p>
+        )}
         {project.description && (
           <p className="admin-project-desc">{project.description}</p>
         )}
@@ -970,6 +975,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
 
   const [form, setForm] = useState({
     title: project?.title ?? '',
+    location: project?.location ?? '',
     description: project?.description ?? '',
     categoryId: project?.categoryId ?? '',
   });
@@ -1047,6 +1053,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
       // Step 3 — Save to Firestore
       const payload = {
         title: form.title.trim(),
+        location: form.location.trim(),
         description: form.description.trim(),
         categoryId: form.categoryId,
         images: finalImages,
@@ -1084,6 +1091,14 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               required
+            />
+          </div>
+          <div className="admin-form-group">
+            <label htmlFor="pf-location">Location</label>
+            <input id="pf-location" type="text"
+              placeholder="e.g. Palakkad"
+              value={form.location}
+              onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
             />
           </div>
           <div className="admin-form-group">

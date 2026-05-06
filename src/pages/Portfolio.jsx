@@ -66,6 +66,21 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
   const [fullscreenImage, setFullscreenImage] = useState(null);
 
   useEffect(() => {
+    // The "Nuclear" Body Lock
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    const originalHeight = window.getComputedStyle(document.body).height;
+    
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+    
+    return () => {
+      // Restore styles when gallery is closed
+      document.body.style.overflow = originalStyle;
+      document.body.style.height = originalHeight;
+    };
+  }, []);
+
+  useEffect(() => {
     if (images.length <= 1 || fullscreenImage) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -84,7 +99,16 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
   };
 
   return (
-    <div id="project-gallery" className="project-gallery active">
+    <motion.div
+      id="project-gallery"
+      className="project-gallery active"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      style={{ zIndex: 9999 }}
+      onWheel={(e) => e.stopPropagation()} // Stop event propagation
+    >
       <div className="gallery-hero">
         <AnimatePresence mode="wait">
           <motion.div
@@ -124,16 +148,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
         )}
 
         <div className="gallery-hero-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <h1 className="gallery-hero-title">{project.title}</h1>
-            {project.description && (
-              <p className="gallery-hero-desc">{project.description}</p>
-            )}
-          </motion.div>
+          {/* Title and Description removed from here as per user request */}
         </div>
 
         {images.length > 1 && (
@@ -156,9 +171,15 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       <div className="gallery-body">
         <div className="gallery-section-label">
           <div className="line" />
-          <span>Full Collection</span>
+          <span>{project.title} {project.location && `— ${project.location}`}</span>
           <div className="line" />
         </div>
+
+        {(project.description || project.location) && (
+          <div className="gallery-project-description">
+            <p>{project.description}</p>
+          </div>
+        )}
 
         <div className="gallery-grid">
           {images.map((url, idx) => (
@@ -181,7 +202,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'rgba(0,0,0,0.95)',
+              background: 'rgba(255,255,255,0.98)',
               zIndex: 2000,
               display: 'flex',
               alignItems: 'center',
@@ -198,10 +219,11 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             <button
               style={{
                 position: 'absolute', top: '30px', right: '30px',
-                background: 'white', color: 'black', border: 'none',
+                background: 'white', color: 'black', border: '1px solid rgba(0,0,0,0.1)',
                 width: '40px', height: '40px', borderRadius: '50%',
                 fontSize: '1.5rem', cursor: 'pointer', display: 'flex',
-                alignItems: 'center', justifyContent: 'center', padding: 0
+                alignItems: 'center', justifyContent: 'center', padding: 0,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
               }}
               onClick={() => setFullscreenImage(null)}
             >
@@ -210,7 +232,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

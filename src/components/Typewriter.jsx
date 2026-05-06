@@ -7,75 +7,95 @@ export function Typewriter({
   cursor = true,
   cursorChar = "|",
   loop = true,
+  mode = "typewriter", // "typewriter", "glitch", "fade"
+  className = "",
+  style = {}
 }) {
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
+  const [glitchChar, setGlitchChar] = useState("");
 
   const currentWord = words[wordIndex];
+  const glitchChars = "ABCDEFGHJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
   useEffect(() => {
-    // If not looping and we've reached the end of the last word, stop.
     if (!loop && !isDeleting && charIndex === currentWord.length) {
       return;
     }
 
-    const timeout = setTimeout(
-      () => {
-        // Typing logic
-        if (!isDeleting) {
-          if (charIndex < currentWord.length) {
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (charIndex < currentWord.length) {
+          if (mode === "glitch" && Math.random() > 0.7) {
+            setGlitchChar(glitchChars[Math.floor(Math.random() * glitchChars.length)]);
+            setTimeout(() => {
+              setDisplayText(currentWord.substring(0, charIndex + 1));
+              setCharIndex(charIndex + 1);
+              setGlitchChar("");
+            }, 50);
+          } else {
             setDisplayText(currentWord.substring(0, charIndex + 1));
             setCharIndex(charIndex + 1);
-          } else {
-            // Word is complete, wait before deleting
-            if (loop || wordIndex < words.length - 1) {
-              setTimeout(() => {
-                setIsDeleting(true);
-              }, delayBetweenWords);
-            }
           }
-        } else {
-          // Deleting logic
-          if (charIndex > 0) {
-            setDisplayText(currentWord.substring(0, charIndex - 1));
-            setCharIndex(charIndex - 1);
-          } else {
-            // Word is deleted, move to next word
-            setIsDeleting(false);
-            setWordIndex((prev) => (prev + 1) % words.length);
-          }
+        } else if (loop) {
+          setTimeout(() => setIsDeleting(true), delayBetweenWords);
         }
-      },
-      isDeleting ? speed / 2 : speed
-    );
+      } else {
+        if (charIndex > 0) {
+          setDisplayText(currentWord.substring(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        } else {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, isDeleting ? speed / 2 : speed);
 
-    return () => clearTimeout(timeout);
-  }, [charIndex, currentWord, isDeleting, speed, delayBetweenWords, wordIndex, words, loop]);
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, wordIndex, words, loop, speed, delayBetweenWords, currentWord, mode]);
 
-  // Cursor blinking effect
   useEffect(() => {
     if (!cursor) return;
-
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorInterval);
+    const interval = setInterval(() => setShowCursor((prev) => !prev), 530);
+    return () => clearInterval(interval);
   }, [cursor]);
 
   return (
-    <div className="inline-block">
-      <span>
+    <div className={`typewriter-container ${className}`} style={{ ...style, display: 'inline-block' }}>
+      <span className={`typewriter-text ${mode === 'fade' ? 'fade-mode' : ''}`}>
         {displayText}
+        {glitchChar && <span className="glitch-char" style={{ color: 'var(--color-accent)', opacity: 0.7 }}>{glitchChar}</span>}
         {cursor && (
-          <span className="ml-1 transition-opacity duration-75" style={{ opacity: showCursor ? 1 : 0 }}>
+          <span
+            className="typewriter-cursor"
+            style={{
+              opacity: showCursor ? 1 : 0,
+              marginLeft: '2px',
+              fontWeight: 'bold',
+              color: 'inherit'
+            }}
+          >
             {cursorChar}
           </span>
         )}
       </span>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        .fade-mode {
+          animation: typewriterFade 0.3s ease-out;
+        }
+        @keyframes typewriterFade {
+          from { opacity: 0; transform: translateY(2px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .glitch-char {
+          font-family: monospace;
+          filter: blur(0.5px);
+        }
+      `}} />
     </div>
   );
 }
