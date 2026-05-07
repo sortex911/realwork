@@ -392,6 +392,10 @@ section {
   text-transform: uppercase;
 }
 
+.news-section {
+  padding-bottom: 15px !important;
+}
+
 .news-grid-new {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -494,7 +498,7 @@ section {
 }
 
 .news-image-wrapper {
-  position: relative;
+  position: center;
   width: 100%;
   height: 200px;
 }
@@ -726,7 +730,7 @@ section {
 .concept-section {
   width: 100%;
   padding: 0;
-  margin: 120px 0;
+  margin: 60px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -4403,37 +4407,42 @@ section {
     display: flex !important;
     flex-wrap: nowrap !important;
     justify-content: center !important;
-    gap: 8px !important;
-    padding: 0 5px !important;
+    gap: 12px !important;
+    padding: 0 10px !important;
     margin-bottom: 40px !important;
     width: 100% !important;
   }
-  
+
   .founders-grid .team-card {
-    flex: 0 0 32% !important;
-    width: 32% !important;
+    flex: 0 0 30% !important;
+    width: 30% !important;
     min-width: 0 !important;
   }
-  
+
   .founders-grid .team-img-wrapper {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 1/1.2 !important;
-    margin-bottom: 6px !important;
+    aspect-ratio: 1/1 !important;
+    margin-bottom: 8px !important;
   }
-  
+
+  .founders-grid .team-img {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
   .founders-grid .team-card h3 {
-    font-size: 0.65rem !important;
-    margin-bottom: 1px !important;
+    font-size: 0.6rem !important;
+    margin-bottom: 2px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .founders-grid .team-card p {
-    font-size: 0.45rem !important;
+    font-size: 0.4rem !important;
     line-height: 1.1 !important;
-    padding: 0 2px !important;
+    padding: 0 1px !important;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -4441,7 +4450,8 @@ section {
   }
 
   .founders-grid .team-card div[style*="display: flex"] {
-    display: none !important; /* Hide social icons on mobile */
+    display: none !important;
+    /* Hide social icons on mobile */
   }
 }
 
@@ -4452,7 +4462,7 @@ section {
    your index.css file. These only ADD new styles — nothing is
    removed or overwritten.
 ════════════════════════════════════════════════════════════════ */
- 
+
 /* ──────────────────────────────────────────────────────────────
    1. CONTACT PAGE — Button row fix on mobile
    (Submit + WhatsApp side by side breaks on very small screens)
@@ -4461,47 +4471,48 @@ section {
   .contact-container {
     padding: 0 4px;
   }
- 
+
   /* Make submit + whatsapp buttons stack vertically */
-  .contact-form > div[style*="display: flex"][style*="gap: 15px"],
-  .contact-form .fade-up > div {
+  .contact-form>div[style*="display: flex"][style*="gap: 15px"],
+  .contact-form .fade-up>div {
     flex-direction: column !important;
     align-items: stretch !important;
   }
- 
+
   .submit-btn {
     width: 100%;
     font-size: 1rem;
     padding: 14px 20px;
-    min-height: 48px; /* touch-friendly */
+    min-height: 48px;
+    /* touch-friendly */
   }
- 
+
   .whatsapp-btn {
     width: 100% !important;
     justify-content: center !important;
     padding: 14px 20px !important;
     min-height: 48px !important;
   }
- 
+
   /* Contact info section spacing */
   .contact-info h2 {
     font-size: 1.4rem;
   }
- 
+
   .contact-info .info-block h3 {
     font-size: 0.9rem;
     letter-spacing: 1px;
   }
- 
+
   .contact-info .info-block p {
     font-size: 0.95rem;
   }
- 
+
   /* Procedure/Download buttons in Contact page */
   section div[style*="display: flex"][style*="gap: 20px"][style*="flexWrap: wrap"] {
     gap: 12px !important;
   }
- 
+
   section a[style*="padding: 16px 40px"] {
     padding: 13px 20px !important;
     font-size: 0.9rem !important;
@@ -4509,71 +4520,73 @@ section {
     justify-content: center !important;
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    2. PROCEDURE PAGE — CardSticky / Project Stages mobile fix
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
+
   /* Stage cards: reduce padding & font */
   .procedure-stage-card,
   [style*="maxWidth: 800px"][style*="borderRadius: 16px"] {
     padding: 1.2rem !important;
     width: 95% !important;
   }
- 
+
   /* Stage title font size */
   [style*="fontSize: 1.8rem"][style*="fontFamily: var(--font-serif)"] {
     font-size: 1.2rem !important;
   }
- 
+
   /* Stage number badge */
   [style*="fontSize: 2rem"][style*="fontWeight: '800'"] {
     font-size: 1.5rem !important;
   }
- 
+
   /* Stage header: stack on mobile */
   [style*="display: flex"][style*="justifyContent: space-between"][style*="marginBottom: 1rem"] {
     flex-direction: column !important;
     gap: 0.3rem !important;
   }
- 
+
   /* Aurora Hero services grid fix */
   .services-grid-new[style*="gridTemplateColumns: repeat(auto-fit"] {
     grid-template-columns: 1fr !important;
   }
- 
+
   /* Procedure hero title */
   .hero-title[style*="fontSize: 50px"],
   [style*="fontSize: '50px'"] {
     font-size: clamp(1.6rem, 7vw, 2.5rem) !important;
   }
- 
+
   /* Planning methodology list */
   [style*="paddingLeft: 20px"][style*="fontSize: 1.1rem"] {
     font-size: 0.95rem !important;
     padding-left: 14px !important;
   }
- 
+
   /* Terms section */
   [style*="backgroundColor: var(--color-text)"][style*="color: var(--color-white)"] h2 {
     font-size: 1.8rem !important;
   }
 }
- 
+
 @media (max-width: 480px) {
+
   /* Procedure view/download button group */
   [style*="display: flex"][style*="justifyContent: center"][style*="gap: 20px"][style*="flexWrap: wrap"] {
     flex-direction: column !important;
     align-items: center !important;
     gap: 12px !important;
   }
- 
+
   [style*="padding: 16px 40px"] {
     padding: 13px 24px !important;
     font-size: 0.9rem !important;
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    3. NEWS PAGE — lightbox & grid improvements
 ────────────────────────────────────────────────────────────── */
@@ -4582,34 +4595,35 @@ section {
     grid-template-columns: 1fr !important;
     gap: var(--spacing-md);
   }
- 
+
   .news-card-img-wrapper {
     height: 220px;
   }
- 
+
   .news-category-title {
     font-size: 1.5rem;
     text-align: center;
   }
- 
+
   .news-section {
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding-top: var(--spacing-xl) !important;
+    padding-bottom: 10px !important;
   }
 }
- 
+
 @media (max-width: 480px) {
   .news-card-img-wrapper {
     height: 180px;
   }
- 
+
   .news-card-title {
     font-size: 1rem;
   }
- 
+
   .news-card-location {
     font-size: 0.85rem;
   }
- 
+
   /* Lightbox close button — larger touch target */
   button[style*="borderRadius: 50%"][style*="width: 40px"] {
     width: 48px !important;
@@ -4618,33 +4632,34 @@ section {
     right: 12px !important;
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    4. HOME PAGE — News cards & Services layout polish
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 360px) {
+
   /* Very small phones (Galaxy A series etc.) */
   .news-grid-new {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 6px;
     padding: 0 6px;
   }
- 
+
   .news-card-minimal div[style*="font-size: 4rem"] {
     font-size: 1.4rem !important;
   }
- 
+
   .services-grid-new {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 6px;
   }
- 
+
   .service-card-title {
     font-size: 0.7rem !important;
   }
 }
- 
- 
+
+
 /* ──────────────────────────────────────────────────────────────
    6. ABOUT PAGE — Team grid & intro polish
 ────────────────────────────────────────────────────────────── */
@@ -4655,29 +4670,29 @@ section {
     max-width: 100%;
     padding: 0 var(--spacing-sm);
   }
- 
+
   .team-img-wrapper {
     height: 200px !important;
     width: 100% !important;
   }
- 
+
   .about-intro h2 {
     font-size: 1.4rem;
   }
- 
+
   .about-intro p {
     font-size: 0.9rem;
   }
- 
+
   .timeline {
     padding-left: 14px;
   }
- 
+
   .timeline-item::before {
     left: calc(14px * -1 - 7px);
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    7. PORTFOLIO — Category header wrap on narrow screens
 ────────────────────────────────────────────────────────────── */
@@ -4686,70 +4701,72 @@ section {
     padding: 0 var(--spacing-sm);
     gap: 10px;
   }
- 
+
   .category-title {
     font-size: 1.1rem;
     white-space: normal;
   }
- 
+
   .portfolio-nav-sticky {
     padding: 0.6rem 0;
   }
- 
+
   .portfolio-tabs {
     gap: 0.2rem;
     padding: 0 var(--spacing-sm);
   }
- 
+
   .tab-btn {
     font-size: 0.65rem;
     padding: 5px 7px;
     letter-spacing: 0;
   }
- 
+
   /* Project list item touch area */
   .project-list-item {
     padding: 1.2rem 0;
   }
- 
+
   .project-list-title {
     font-size: 1.2rem;
   }
- 
+
   .project-list-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
   }
- 
+
   .project-list-action {
     opacity: 1;
     transform: none;
     font-size: 0.7rem;
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    8. GLOBAL — Touch targets, scrollbar, misc polish
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
+
   /* Prevent horizontal scroll globally */
-  html, body {
+  html,
+  body {
     overflow-x: hidden;
     max-width: 100vw;
   }
- 
+
   /* Better touch tap color */
   * {
     -webkit-tap-highlight-color: rgba(44, 85, 69, 0.15);
   }
- 
+
   /* Smoother scroll on iOS */
   .project-gallery,
   .mobile-menu-drawer {
     -webkit-overflow-scrolling: touch;
   }
- 
+
   /* Prevent text overflow in cards */
   .news-card-title,
   .service-title-new,
@@ -4758,45 +4775,46 @@ section {
     overflow-wrap: break-word;
     word-break: break-word;
   }
- 
+
   /* Client logos marquee — slightly smaller on mobile */
   .partner-logo {
     height: 55px;
   }
 }
- 
+
 @media (max-width: 480px) {
+
   /* Client logos */
   .partner-logo {
     height: 42px;
   }
- 
+
   /* Reduce partners-track gap on mobile */
   .partners-track {
     gap: var(--spacing-lg);
   }
- 
+
   /* Section title spacing */
   .section-title {
     font-size: clamp(1.4rem, 7vw, 2rem);
     margin-bottom: var(--spacing-lg);
   }
- 
+
   .section-header {
     gap: 10px;
     margin-bottom: var(--spacing-lg);
   }
- 
+
   .section-header .line {
     width: 30px;
   }
- 
+
   .section-title-small {
     font-size: 0.85rem;
     letter-spacing: 2.5px;
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    9. ADMIN LOGIN — Mobile card padding
 ────────────────────────────────────────────────────────────── */
@@ -4804,47 +4822,49 @@ section {
   .admin-login-page {
     padding: 1rem;
   }
- 
+
   .admin-login-card {
     padding: 2rem 1.2rem;
   }
- 
+
   .admin-login-header h1 {
     font-size: 1.4rem;
   }
- 
+
   .admin-login-btn {
     min-height: 48px;
   }
- 
+
   .input-icon-wrap input {
-    font-size: 16px; /* prevents iOS zoom on focus */
+    font-size: 16px;
+    /* prevents iOS zoom on focus */
   }
 }
- 
+
 /* ──────────────────────────────────────────────────────────────
    10. LANDSCAPE BANNER + CONCEPT SECTION — mobile heights
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
+
   .landscape-banner,
   .landscape-banner .opt-img-container {
     height: 40vw !important;
     min-height: 160px !important;
     max-height: 220px;
   }
- 
+
   .landscape-banner-title {
     font-size: clamp(1.2rem, 7vw, 2rem) !important;
     line-height: 1.2;
   }
- 
+
   .concept-section {
-    margin: 20px 0 !important;
+    margin: 10px 0 !important;
   }
- 
+
   .concept-container {
     width: 100% !important;
   }
 }
- 
-/* END OF MOBILE RESPONSIVE ADDITIONS */
+
+/* END OF MOBILE RESPONSIVE ADDITIONS */

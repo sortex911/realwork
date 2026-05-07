@@ -158,7 +158,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                     className="team-img"
                     width={320}
                     noBg
-                    objectPosition="center bottom"
+                    objectPosition="center"
                   />
                 </div>
                 <h3>{member.name}</h3>
