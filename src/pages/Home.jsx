@@ -162,18 +162,18 @@ const Home = () => {
           ))}
         </div>
       </section>
-
-      <section className="concept-section" style={{ width: '100%', margin: '40px 0', display: 'flex', justifyContent: 'center' }}>
-        <FadeUp style={{ width: '100%' }}>
-          <div className="concept-container" style={{ width: '100%', margin: '0 auto', textAlign: 'center' }}>
-            <img
-              src="/assets/home-images/CONCEPT 2.jpg.png"
-              alt="Landscape Concept"
-              className="concept-img"
-              style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
-            />
-          </div>
-        </FadeUp>
+      <section>
+  <div className="concept-container" style={{ textAlign: 'left' }}>
+    <img
+          src="/assets/home-images/CONCEPT 2.jpg.png"
+          style={{ 
+          width: '1200px',      // 'x' matti 'px' aakkuka
+          marginLeft: '40px',   // Left side-il ninnu 40px gap
+          height: 'auto',       // Image valiyaathe ratio maintain cheyyaan
+          display: 'block'      // Margin krithyamaayi work cheyyaan
+            }}
+          />
+        </div>
       </section>
 
       <section id="services">
