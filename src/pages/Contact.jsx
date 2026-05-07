@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
 import { FaWhatsapp } from 'react-icons/fa';
+import CornerLogo from '../components/CornerLogo';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -59,6 +60,7 @@ const Contact = () => {
           direction="up"
           overlay={true}
         >
+          <CornerLogo />
           <div style={{ 
             textAlign: 'center', 
             color: '#fff', 

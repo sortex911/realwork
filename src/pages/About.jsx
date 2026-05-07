@@ -148,9 +148,9 @@ His project experience spans residential landscapes, resorts, parks, schools, he
             margin: 'auto',
           }}>
             {founders.map((member, index) => (
-              <FadeUp 
-                key={member.id} 
-                className="team-card" 
+              <FadeUp
+                key={member.id}
+                className="team-card"
                 style={{ flex: '0 0 auto' }}
                 onClick={() => setSelectedFounder(member)}
               >
@@ -268,7 +268,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
               className="founder-modal-content"
               onClick={e => e.stopPropagation()}
             >
-              <button 
+              <button
                 className="founder-modal-close"
                 onClick={() => setSelectedFounder(null)}
               >

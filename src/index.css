@@ -267,19 +267,24 @@ section {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.05),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.05),
+      transparent);
   /* Pulse instead of slide */
   animation: pulse-opacity 2s infinite ease-in-out;
 }
 
 @keyframes pulse-opacity {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Home: Recent News */
@@ -3257,7 +3262,7 @@ section {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.03),
     inset 0 0 15px rgba(255, 255, 255, 0.5);
   position: relative;
@@ -3274,7 +3279,7 @@ section {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -3285,7 +3290,7 @@ section {
   background: rgba(44, 85, 69, 0.05);
   border-color: var(--color-accent);
   color: var(--color-accent);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(44, 85, 69, 0.1),
     inset 0 0 20px rgba(255, 255, 255, 0.8);
 }

@@ -35,7 +35,7 @@ const Procedure = () => {
   return (
     <>
       <div style={{ position: 'relative', height: '50vh', width: '100vw', overflow: 'hidden' }}>
-        <ImagesSlider 
+        <ImagesSlider
           images={[
             'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.avif',
             'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.avif',
@@ -79,7 +79,7 @@ const Procedure = () => {
             <li>After agreement with the client, start preparation of 3D views and preparing other details of work specified.</li>
             <li>The payment of each stage requires confirmation before proceeding.</li>
           </ol>
-          
+
           <div style={{ marginTop: 'var(--spacing-xl)', padding: 'var(--spacing-md)', background: 'var(--color-accent)', color: '#fff', borderRadius: '8px', textAlign: 'center' }}>
             <p style={{ color: '#fff', margin: 0, fontStyle: 'italic', fontSize: '1rem' }}>
               "We are truly honored to be entrusted as the landscape architects for your project and sincerely appreciate your confidence in our expertise."
@@ -169,9 +169,9 @@ const Procedure = () => {
               For a comprehensive overview of our design methodology and company profile, please view or download our official documentation.
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '30px' }}>
-              <a 
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
-                target="_blank" 
+              <a
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
+                target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex',
@@ -199,8 +199,8 @@ const Procedure = () => {
               >
                 View Procedure
               </a>
-              <a 
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+              <a
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
                 download="Green_Realm_Landscape_Procedure.pdf"
                 style={{
                   display: 'inline-flex',
