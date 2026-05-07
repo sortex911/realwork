@@ -94,10 +94,11 @@ const Navbar = () => {
 
         <button
           className="menu-trigger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open Menu"
+          style={{ display: menuOpen ? 'none' : 'flex' }}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          <Menu size={24} />
         </button>
       </div>
     </header>

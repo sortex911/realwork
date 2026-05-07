@@ -59,7 +59,7 @@ const Procedure = () => {
           <FadeUp><h2 className="section-title">Our Services</h2></FadeUp>
           <div className="services-grid-new" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-xl)' }}>
             {services.map((service, idx) => (
-              <FadeUp key={idx} className="service-item" style={{ alignItems: 'flex-start', textAlign: 'left', padding: '20px', background: 'rgba(255, 255, 255, 0.4)', borderRadius: '12px', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.5)' }}>
+              <FadeUp key={idx} className="service-item" style={{ alignItems: 'flex-start', textAlign: 'left', padding: '20px', background: 'rgba(255, 255, 255, 0.4)', borderRadius: '0', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.5)' }}>
                 <h3 className="service-title-new" style={{ color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '10px', width: '100%' }}>{service.title}</h3>
                 <p className="service-desc" style={{ marginTop: '15px' }}>{service.desc}</p>
               </FadeUp>
@@ -70,7 +70,7 @@ const Procedure = () => {
 
       <section style={{ backgroundColor: 'rgba(44, 85, 69, 0.03)' }}>
         <FadeUp><h2 className="section-title">Planning Methodology</h2></FadeUp>
-        <div style={{ maxWidth: '900px', margin: '0 auto', background: '#fff', padding: 'var(--spacing-xl)', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', background: '#fff', padding: 'var(--spacing-xl)', borderRadius: '0', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
           <ol style={{ paddingLeft: '20px', fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--color-text-light)', display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <li>Collection of site photos and small video of the site, including specific measurements of the site.</li>
             <li>Meeting with client for gathering initials details - Clients specific requirements etc.</li>
@@ -80,7 +80,7 @@ const Procedure = () => {
             <li>The payment of each stage requires confirmation before proceeding.</li>
           </ol>
 
-          <div style={{ marginTop: 'var(--spacing-xl)', padding: 'var(--spacing-md)', background: 'var(--color-accent)', color: '#fff', borderRadius: '8px', textAlign: 'center' }}>
+          <div style={{ marginTop: 'var(--spacing-xl)', padding: 'var(--spacing-md)', background: 'var(--color-accent)', color: '#fff', borderRadius: '0', textAlign: 'center' }}>
             <p style={{ color: '#fff', margin: 0, fontStyle: 'italic', fontSize: '1rem' }}>
               "We are truly honored to be entrusted as the landscape architects for your project and sincerely appreciate your confidence in our expertise."
             </p>
@@ -127,7 +127,7 @@ const Procedure = () => {
               incrementY={35}
               style={{
                 background: '#fff',
-                borderRadius: '16px',
+                borderRadius: '0',
                 border: '1px solid rgba(0,0,0,0.08)',
                 padding: 'var(--spacing-xl)',
                 boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
@@ -179,7 +179,7 @@ const Procedure = () => {
                   padding: '16px 40px',
                   backgroundColor: 'var(--color-accent)',
                   color: 'white',
-                  borderRadius: '12px',
+                  borderRadius: '0',
                   fontWeight: '600',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '2px solid var(--color-accent)',
@@ -208,7 +208,7 @@ const Procedure = () => {
                   padding: '16px 40px',
                   backgroundColor: 'transparent',
                   color: 'var(--color-accent)',
-                  borderRadius: '12px',
+                  borderRadius: '0',
                   fontWeight: '600',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '2px solid var(--color-accent)',
