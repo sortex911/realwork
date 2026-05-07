@@ -4389,6 +4389,62 @@ section {
   }
 }
 
+.founders-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 95px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .founders-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 0 5px !important;
+    margin-bottom: 40px !important;
+    width: 100% !important;
+  }
+  
+  .founders-grid .team-card {
+    flex: 0 0 32% !important;
+    width: 32% !important;
+    min-width: 0 !important;
+  }
+  
+  .founders-grid .team-img-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1/1.2 !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .founders-grid .team-card h3 {
+    font-size: 0.65rem !important;
+    margin-bottom: 1px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .founders-grid .team-card p {
+    font-size: 0.45rem !important;
+    line-height: 1.1 !important;
+    padding: 0 2px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .founders-grid .team-card div[style*="display: flex"] {
+    display: none !important; /* Hide social icons on mobile */
+  }
+}
+
 /* ════════════════════════════════════════════════════════════════
    GREEN REALM LANDSCAPE — MOBILE RESPONSIVE ADDITIONS
    
