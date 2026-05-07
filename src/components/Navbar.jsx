@@ -43,45 +43,64 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="nav-controls" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="nav-controls">
+        {/* Desktop Menu */}
+        <div className="desktop-nav">
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.nav 
+                initial={{ opacity: 0, x: 20, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                className="inline-menu"
+              >
+                <GooeyNav
+                  items={navItems}
+                  initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
+                  onItemClick={handleNavItemClick}
+                  particleCount={12}
+                  animationTime={500}
+                />
+              </motion.nav>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Mobile Menu Drawer */}
         <AnimatePresence>
           {menuOpen && (
-            <motion.nav 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.95 }}
-              className="inline-menu"
-              style={{ position: 'relative' }}
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="mobile-menu-drawer"
             >
-              <GooeyNav
-                items={navItems}
-                initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
-                onItemClick={handleNavItemClick}
-                particleCount={12}
-                animationTime={500}
-              />
-            </motion.nav>
+              <div className="mobile-menu-header">
+                <button className="close-menu" onClick={() => setMenuOpen(false)}>
+                  <X size={30} />
+                </button>
+              </div>
+              <nav className="mobile-nav-links">
+                {navItems.map((item, index) => (
+                  <Link 
+                    key={index} 
+                    to={item.href} 
+                    className={`mobile-nav-link ${location.pathname === item.href ? 'active' : ''}`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </motion.div>
           )}
         </AnimatePresence>
 
         <button 
           className="menu-trigger"
           onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            background: 'transparent',
-            border: 'none',
-            color: 'white',
-            width: '45px',
-            height: '45px',
-            borderRadius: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            cursor: 'pointer',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s ease',
-            zIndex: 1000
-          }}
+          aria-label="Toggle Menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
