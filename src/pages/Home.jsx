@@ -170,6 +170,7 @@ const Home = () => {
               src="assets/home-images/CONCEPT 2.jpg.jpeg"
               alt="Landscape Concept"
               className="concept-img"
+              position={"center"}
               noBg={true}
             />
           </div>
