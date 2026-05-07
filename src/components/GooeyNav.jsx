@@ -103,9 +103,12 @@ const GooeyNav = ({
       particles.forEach(p => filterRef.current.removeChild(p));
     }
 
+    // makeParticles call removed to disable animation
+    /*
     if (filterRef.current) {
       makeParticles(filterRef.current);
     }
+    */
     
     // Call external onItemClick if provided
     if (onItemClick) {

@@ -20,6 +20,9 @@ const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 import SmoothScroll from './components/SmoothScroll';
 import ContentProtection from './components/ContentProtection';
+import FadeUp from './components/FadeUp';
+import ClientLogos from './components/ClientLogos';
+import OptimizedImage from './components/OptimizedImage';
 
 // ─── Public layout wrapper (Navbar + Footer) ─────────────────────────────────
 // Uses <Outlet /> so nested public routes render inside it automatically.
@@ -30,6 +33,17 @@ const PublicLayout = () => (
     <main>
       <Outlet />
     </main>
+    <div style={{ marginTop: '80px' }}>
+      <ClientLogos />
+      <FadeUp>
+        <OptimizedImage
+          src="assets/home-images/imgland.png"
+          alt="Landscape Architecture"
+          className="full-width-img"
+          width={1550}
+        />
+      </FadeUp>
+    </div>
     <Footer />
   </>
 );

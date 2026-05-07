@@ -79,15 +79,15 @@ His project experience spans residential landscapes, resorts, parks, schools, he
 
   return (
     <>
-      <FadeUp className="about-hero">
+      <div className="about-hero">
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
           <source src="assets/video/about-hero.mp4" type="video/mp4" />
         </video>
-        <div className="hero-content">
+        <FadeUp className="hero-content">
           <h1 className="hero-title">About Us</h1>
-          <p className="hero-subtitle">Crafting Nature's Masterpieces</p>
-        </div>
-      </FadeUp>
+          <p className="hero-subtitle">Transforming our surroundings</p>
+        </FadeUp>
+      </div>
 
       <section ref={textRef}>
         <div className="about-intro" style={{ maxWidth: '1100px', margin: '0 auto', padding: 'var(--spacing-xxl) var(--spacing-md)', textAlign: 'center' }}>
@@ -348,7 +348,6 @@ His project experience spans residential landscapes, resorts, parks, schools, he
         )}
       </AnimatePresence>
 
-      <ClientLogos />
     </>
   );
 };

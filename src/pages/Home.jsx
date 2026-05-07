@@ -180,20 +180,7 @@ const Home = () => {
 
       <div style={{ marginTop: '100px' }}>
         <ClientStories />
-        <div style={{ marginTop: '100px' }}>
-          <ClientLogos />
-        </div>
       </div>
-
-
-      <FadeUp>
-        <OptimizedImage
-          src="assets/home-images/imgland.png"
-          alt="Landscape Architecture"
-          className="full-width-img"
-          width={1550}
-        />
-      </FadeUp>
     </>
   );
 };

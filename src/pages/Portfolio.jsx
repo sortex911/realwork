@@ -348,43 +348,13 @@ const Portfolio = () => {
   return (
     <div className="portfolio-page">
 
-      <div style={{
-        position: 'relative',
-        height: '100vh',
-        width: '100vw',
-        overflow: 'hidden',
-        margin: 0,
-        padding: 0
-      }}>
-        <ImagesSlider
-          images={parallaxImages.map(img => img.src)}
-          autoplay={true}
-          direction="up"
-          overlay={true}
-        >
-          <div style={{
-            textAlign: 'center',
-            color: '#fff',
-            zIndex: 50,
-            position: 'relative',
-            padding: '0 20px'
-          }}>
-            <h1 style={{
-              fontSize: 'clamp(3.5rem, 10vw, 7rem)',
-              fontFamily: 'var(--font-serif)',
-              marginBottom: '1rem',
-              textShadow: '0 4px 10px rgba(0,0,0,0.3)'
-            }}>Our Work</h1>
-            <p style={{
-              fontSize: '1.2rem',
-              opacity: 0.9,
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              fontWeight: '500',
-              textShadow: '0 2px 5px rgba(0,0,0,0.3)'
-            }}>Curated Landscaping Excellence</p>
-          </div>
-        </ImagesSlider>
+      <div className="hero">
+        <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
+          <source src="assets/video/portfolio-hero.mp4" type="video/mp4" />
+        </video>
+        <FadeUp className="hero-content" style={{ textAlign: 'center', width: '100%', maxWidth: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '15vh' }}>
+          <h1 className="hero-title" style={{ fontSize: '50px', textAlign: 'center' }}>Work</h1>
+        </FadeUp>
       </div>
 
       {/* Category Tabs — hidden while loading */}

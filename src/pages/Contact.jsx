@@ -28,7 +28,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
     // 1. Prepare data for Web3Forms
     const web3FormData = new FormData();
     web3FormData.append("access_key", "0efbd2ff-d520-432c-bba6-5469a0c3027d");
@@ -69,41 +69,33 @@ const Contact = () => {
 
   return (
     <>
-      <div style={{ 
-        position: 'relative', 
-        height: '100vh', 
-        width: '100vw', 
+      <div style={{
+        position: 'relative',
+        height: '100vh',
+        width: '100vw',
         overflow: 'hidden',
         margin: 0,
         padding: 0
       }}>
-        <ImagesSlider 
+        <ImagesSlider
           images={parallaxImages.map(img => img.src)}
           autoplay={true}
           direction="up"
           overlay={true}
         >
-          <div style={{ 
-            textAlign: 'center', 
-            color: '#fff', 
-            zIndex: 50, 
+          <div style={{
+            textAlign: 'center',
+            color: '#fff',
+            zIndex: 50,
             position: 'relative',
             padding: '0 20px'
           }}>
-            <h1 style={{ 
-              fontSize: 'clamp(3.5rem, 10vw, 7rem)', 
-              fontFamily: 'var(--font-serif)', 
+            <h1 style={{
+              fontSize: '50px',
+              fontFamily: 'var(--font-serif)',
               marginBottom: '1rem',
               textShadow: '0 4px 10px rgba(0,0,0,0.3)'
             }}>Get in Touch</h1>
-            <p style={{ 
-              fontSize: '1.2rem', 
-              opacity: 0.9, 
-              letterSpacing: '4px', 
-              textTransform: 'uppercase',
-              fontWeight: '500',
-              textShadow: '0 2px 5px rgba(0,0,0,0.3)'
-            }}>Let's create something beautiful together</p>
           </div>
         </ImagesSlider>
       </div>
@@ -113,7 +105,7 @@ const Contact = () => {
           <div className="contact-info">
             <FadeUp><h2>GREEN REALM LANDSCAPE</h2></FadeUp>
             <FadeUp><p>We'd love to hear from you. Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.</p></FadeUp>
-            
+
             <div className="info-block" style={{ marginTop: '2rem' }}>
               <FadeUp><h3>Locations</h3></FadeUp>
               <FadeUp><p>Kochi, Thrissur, Bangalore</p></FadeUp>
@@ -131,43 +123,43 @@ const Contact = () => {
           <form className="contact-form" onSubmit={handleSubmit}>
             <FadeUp className="form-group">
               <label htmlFor="name">Name</label>
-              <input 
-                type="text" 
-                id="name" 
-                placeholder="John Doe" 
-                required 
+              <input
+                type="text"
+                id="name"
+                placeholder="John Doe"
+                required
                 value={formData.name}
                 onChange={handleChange}
               />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="email">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                placeholder="john@example.com" 
-                required 
+              <input
+                type="email"
+                id="email"
+                placeholder="john@example.com"
+                required
                 value={formData.email}
                 onChange={handleChange}
               />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="phone">Mobile Number</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                placeholder="+91 98765 43210" 
-                required 
+              <input
+                type="tel"
+                id="phone"
+                placeholder="+91 98765 43210"
+                required
                 value={formData.phone}
                 onChange={handleChange}
               />
             </FadeUp>
             <FadeUp className="form-group">
               <label htmlFor="message">Message</label>
-              <textarea 
-                id="message" 
-                rows="5" 
-                placeholder="Tell us about your project..." 
+              <textarea
+                id="message"
+                rows="5"
+                placeholder="Tell us about your project..."
                 required
                 value={formData.message}
                 onChange={handleChange}
@@ -175,18 +167,18 @@ const Contact = () => {
             </FadeUp>
             <FadeUp>
               <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className={`submit-btn ${status === 'submitting' ? 'submitting' : ''}`}
                   disabled={status === 'submitting'}
                   style={{ margin: 0 }}
                 >
                   {status === 'submitting' ? 'Sending...' : 'Send Message'}
                 </button>
-                
-                <a 
-                  href="https://wa.me/919072047272" 
-                  target="_blank" 
+
+                <a
+                  href="https://wa.me/919072047272"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="whatsapp-btn"
                   style={{
@@ -232,9 +224,9 @@ const Contact = () => {
               Interested in our workflow? Download or view our complete procedure and profile documentation.
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '30px' }}>
-              <a 
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
-                target="_blank" 
+              <a
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
+                target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex',
@@ -262,8 +254,8 @@ const Contact = () => {
               >
                 View Procedure
               </a>
-              <a 
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf" 
+              <a
+                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
                 download="Green_Realm_Landscape_Procedure.pdf"
                 style={{
                   display: 'inline-flex',

@@ -68,19 +68,11 @@ const News = () => {
             padding: '0 20px'
           }}>
             <h1 style={{
-              fontSize: 'clamp(3.5rem, 10vw, 7rem)',
-              fontFamily: 'var(--font-serif)',
+              fontSize: '50px',
+              fontFamily: 'var(--font-sans)',
               marginBottom: '1rem',
               textShadow: '0 4px 10px rgba(0,0,0,0.3)'
             }}>Press & News</h1>
-            <p style={{
-              fontSize: '1.2rem',
-              opacity: 0.9,
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              fontWeight: '500',
-              textShadow: '0 2px 5px rgba(0,0,0,0.3)'
-            }}>Our Media Appearances & Publications</p>
           </div>
         </ImagesSlider>
       </div>

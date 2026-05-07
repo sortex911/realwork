@@ -46,8 +46,8 @@ const Procedure = () => {
           overlay={true}
         >
           <div className="hero-content" style={{ zIndex: 10, textAlign: 'center', color: '#fff' }}>
-            <h1 className="hero-title" style={{ fontSize: 'clamp(3rem, 8vw, 5rem)' }}>Our Procedure</h1>
-            <p className="hero-subtitle" style={{ letterSpacing: '4px' }}>Transforming our surroundings</p>
+            <h1 className="hero-title" style={{ fontSize: '50px' }}>Our Procedure</h1>
+
           </div>
         </ImagesSlider>
       </div>

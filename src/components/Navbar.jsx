@@ -68,8 +68,8 @@ const Navbar = () => {
           className="menu-trigger"
           onClick={() => setMenuOpen(!menuOpen)}
           style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            background: 'transparent',
+            border: 'none',
             color: 'white',
             width: '45px',
             height: '45px',

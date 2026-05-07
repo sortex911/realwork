@@ -86,7 +86,7 @@
 }
 
 .gooey-nav-container nav ul li.active {
-  color: #05100a;
+  color: #000000;
 }
 
 .gooey-nav-container nav ul li.active::after {
@@ -105,11 +105,11 @@
   display: grid;
   place-items: center;
   z-index: 1;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .gooey-nav-container .effect.filter {
-  filter: blur(8px) contrast(20) blur(0);
-  mix-blend-mode: overlay;
+  /* mix-blend-mode removed for cleaner look */
 }
 
 .gooey-nav-container .effect.filter::after {
