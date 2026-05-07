@@ -632,24 +632,19 @@ section {
   width: 100%;
   padding: 0;
   margin: 80px 0;
-  display: flex;
-  justify-content: center;
 }
 
 .concept-container {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  height: 60vh;
+  min-height: 400px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
 }
 
 .concept-img {
-  width: 100%;
-  height: auto;
-  max-height: 800px;
-  object-fit: contain;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   display: block;
 }
 
