@@ -47,31 +47,14 @@ const PublicLayout = () => {
 
       {isHome && (
         <FadeUp>
-          <div style={{ position: 'relative', width: '100%' }}>
+          <div className="landscape-banner">
             <OptimizedImage
               src="assets/home-images/imgland.png"
               alt="Landscape Architecture"
               className="full-width-img"
-              width={1550}
             />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              color: 'white',
-              background: 'rgba(0,0,0,0.15)'
-            }}>
-              <h2 style={{ 
-                fontFamily: 'var(--font-serif)', 
-                fontSize: 'clamp(2rem, 6vw, 4.5rem)', 
-                fontWeight: '400',
-                lineHeight: '1.1',
-                marginBottom: '0'
-              }}>
+            <div className="landscape-banner-overlay">
+              <h2 className="landscape-banner-title">
                 Let's Celebrate<br />Landscape
               </h2>
             </div>
