@@ -162,16 +162,12 @@ const Home = () => {
           ))}
         </div>
       </section>
-      <section>
-  <div className="concept-container" style={{ textAlign: 'left' }}>
-    <img
-          src="/assets/home-images/CONCEPT 2.jpg.png"
-          style={{ 
-          width: '1200px',      // 'x' matti 'px' aakkuka
-          marginLeft: '30px',   // Left side-il ninnu 40px gap
-          height: 'auto',       // Image valiyaathe ratio maintain cheyyaan
-          display: 'block'      // Margin krithyamaayi work cheyyaan
-            }}
+      <section className="concept-image-section">
+        <div className="concept-container">
+          <img
+            src="/assets/home-images/CONCEPT 2.jpg.png"
+            alt="Landscape Concept"
+            className="concept-main-img"
           />
         </div>
       </section>
