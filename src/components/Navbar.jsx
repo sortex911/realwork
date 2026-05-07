@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="desktop-nav">
           <AnimatePresence>
             {menuOpen && (
-              <motion.nav 
+              <motion.nav
                 initial={{ opacity: 0, x: 20, scale: 0.95 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 20, scale: 0.95 }}
@@ -66,27 +66,10 @@ const Navbar = () => {
           </AnimatePresence>
         </div>
 
-        <button 
-          className="menu-trigger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Drawer - Moved outside nav-controls for better click handling */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="mobile-menu-overlay"
-              onClick={() => setMenuOpen(false)}
-            />
-            <motion.div 
+        {/* Mobile Menu Drawer */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -95,24 +78,33 @@ const Navbar = () => {
             >
               <div className="mobile-menu-header">
                 <button className="close-menu" onClick={() => setMenuOpen(false)}>
-                  <X size={32} />
+                  <X size={30} />
                 </button>
               </div>
               <nav className="mobile-nav-links">
                 {navItems.map((item, index) => (
-                  <button 
-                    key={index} 
+                  <Link
+                    key={index}
+                    to={item.href}
                     className={`mobile-nav-link ${location.pathname === item.href ? 'active' : ''}`}
-                    onClick={() => handleNavItemClick(item)}
+                    onClick={() => setMenuOpen(false)}
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 ))}
               </nav>
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+
+        <button
+          className="menu-trigger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
     </header>
   );
 };

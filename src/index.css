@@ -158,33 +158,23 @@ a {
   display: block;
 }
 
-.mobile-menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  z-index: 1999;
-}
-
 .mobile-menu-drawer {
-  display: block;
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 300px;
+  width: 280px;
   background: #ffffff;
   z-index: 2000;
-  padding: 40px 30px;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
+  padding: 30px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-menu-header {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .close-menu {
@@ -192,53 +182,35 @@ a {
   border: none;
   color: #0f1a15;
   cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.close-menu:hover {
-  transform: scale(1.1);
 }
 
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .mobile-nav-link {
-  background: transparent;
-  border: none;
-  padding: 10px 0;
-  text-align: left;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #4a5c54;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
+  transition: color 0.3s ease;
 }
 
 .mobile-nav-link.active {
   color: #2c5545;
   font-weight: 700;
-  padding-left: 10px;
-  border-left: 3px solid #2c5545;
 }
 
 .mobile-nav-link:hover {
   color: #2c5545;
-  transform: translateX(5px);
 }
 
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
   }
-  
+
   .mobile-menu-drawer {
     display: block;
   }
@@ -246,7 +218,7 @@ a {
   .header {
     padding: 15px 20px;
   }
-  
+
   .logo-container {
     width: 120px;
     height: 50px;
@@ -770,10 +742,12 @@ section {
 .concept-img img {
   object-position: 70% center;
 }
+
 @media (max-width: 768px) {
   .concept-section {
     margin: 30px 0;
   }
+
   .concept-img {
     max-height: 400px;
   }
@@ -4323,7 +4297,8 @@ section {
     padding: 4px !important;
   }
 
-  .service-card-icon-badge svg, .service-card-icon-badge span {
+  .service-card-icon-badge svg,
+  .service-card-icon-badge span {
     font-size: 0.8rem !important;
     width: 14px !important;
     height: 14px !important;
@@ -4414,45 +4389,454 @@ section {
   }
 }
 
-.founders-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 95px;
-  max-width: 1300px;
-  margin: auto;
+/* ════════════════════════════════════════════════════════════════
+   GREEN REALM LANDSCAPE — MOBILE RESPONSIVE ADDITIONS
+   
+   INSTRUCTIONS: Copy everything below and paste at the END of
+   your index.css file. These only ADD new styles — nothing is
+   removed or overwritten.
+════════════════════════════════════════════════════════════════ */
+ 
+/* ──────────────────────────────────────────────────────────────
+   1. CONTACT PAGE — Button row fix on mobile
+   (Submit + WhatsApp side by side breaks on very small screens)
+────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 0 4px;
+  }
+ 
+  /* Make submit + whatsapp buttons stack vertically */
+  .contact-form > div[style*="display: flex"][style*="gap: 15px"],
+  .contact-form .fade-up > div {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+ 
+  .submit-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 14px 20px;
+    min-height: 48px; /* touch-friendly */
+  }
+ 
+  .whatsapp-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    min-height: 48px !important;
+  }
+ 
+  /* Contact info section spacing */
+  .contact-info h2 {
+    font-size: 1.4rem;
+  }
+ 
+  .contact-info .info-block h3 {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+ 
+  .contact-info .info-block p {
+    font-size: 0.95rem;
+  }
+ 
+  /* Procedure/Download buttons in Contact page */
+  section div[style*="display: flex"][style*="gap: 20px"][style*="flexWrap: wrap"] {
+    gap: 12px !important;
+  }
+ 
+  section a[style*="padding: 16px 40px"] {
+    padding: 13px 20px !important;
+    font-size: 0.9rem !important;
+    width: 100%;
+    justify-content: center !important;
+  }
 }
-
+ 
+/* ──────────────────────────────────────────────────────────────
+   2. PROCEDURE PAGE — CardSticky / Project Stages mobile fix
+────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .founders-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 15px !important;
-    padding: 0 10px !important;
-    flex-wrap: nowrap !important;
+  /* Stage cards: reduce padding & font */
+  .procedure-stage-card,
+  [style*="maxWidth: 800px"][style*="borderRadius: 16px"] {
+    padding: 1.2rem !important;
+    width: 95% !important;
   }
-  
-  .founders-grid .team-card {
-    width: 100% !important;
+ 
+  /* Stage title font size */
+  [style*="fontSize: 1.8rem"][style*="fontFamily: var(--font-serif)"] {
+    font-size: 1.2rem !important;
   }
-  
-  .founders-grid .team-img-wrapper {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 3/4 !important;
-    margin-bottom: 8px !important;
+ 
+  /* Stage number badge */
+  [style*="fontSize: 2rem"][style*="fontWeight: '800'"] {
+    font-size: 1.5rem !important;
   }
-  
-  .founders-grid .team-card h3 {
-    font-size: 0.75rem !important;
-    margin-bottom: 2px !important;
+ 
+  /* Stage header: stack on mobile */
+  [style*="display: flex"][style*="justifyContent: space-between"][style*="marginBottom: 1rem"] {
+    flex-direction: column !important;
+    gap: 0.3rem !important;
   }
-  
-  .founders-grid .team-card p {
-    font-size: 0.55rem !important;
+ 
+  /* Aurora Hero services grid fix */
+  .services-grid-new[style*="gridTemplateColumns: repeat(auto-fit"] {
+    grid-template-columns: 1fr !important;
   }
-
-  .founders-grid .team-card div[style*="display: flex"] {
-    display: none !important; /* Hide social icons on mobile to save space */
+ 
+  /* Procedure hero title */
+  .hero-title[style*="fontSize: 50px"],
+  [style*="fontSize: '50px'"] {
+    font-size: clamp(1.6rem, 7vw, 2.5rem) !important;
+  }
+ 
+  /* Planning methodology list */
+  [style*="paddingLeft: 20px"][style*="fontSize: 1.1rem"] {
+    font-size: 0.95rem !important;
+    padding-left: 14px !important;
+  }
+ 
+  /* Terms section */
+  [style*="backgroundColor: var(--color-text)"][style*="color: var(--color-white)"] h2 {
+    font-size: 1.8rem !important;
   }
 }
+ 
+@media (max-width: 480px) {
+  /* Procedure view/download button group */
+  [style*="display: flex"][style*="justifyContent: center"][style*="gap: 20px"][style*="flexWrap: wrap"] {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+ 
+  [style*="padding: 16px 40px"] {
+    padding: 13px 24px !important;
+    font-size: 0.9rem !important;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   3. NEWS PAGE — lightbox & grid improvements
+────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .news-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--spacing-md);
+  }
+ 
+  .news-card-img-wrapper {
+    height: 220px;
+  }
+ 
+  .news-category-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+ 
+  .news-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+}
+ 
+@media (max-width: 480px) {
+  .news-card-img-wrapper {
+    height: 180px;
+  }
+ 
+  .news-card-title {
+    font-size: 1rem;
+  }
+ 
+  .news-card-location {
+    font-size: 0.85rem;
+  }
+ 
+  /* Lightbox close button — larger touch target */
+  button[style*="borderRadius: 50%"][style*="width: 40px"] {
+    width: 48px !important;
+    height: 48px !important;
+    top: 12px !important;
+    right: 12px !important;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   4. HOME PAGE — News cards & Services layout polish
+────────────────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  /* Very small phones (Galaxy A series etc.) */
+  .news-grid-new {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px;
+    padding: 0 6px;
+  }
+ 
+  .news-card-minimal div[style*="font-size: 4rem"] {
+    font-size: 1.4rem !important;
+  }
+ 
+  .services-grid-new {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px;
+  }
+ 
+  .service-card-title {
+    font-size: 0.7rem !important;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   5. NAVIGATION — Hamburger menu smooth slide-in animation
+   (Adds animation to your existing mobile-menu-drawer)
+────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .mobile-menu-drawer {
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+ 
+  .mobile-menu-drawer.open {
+    transform: translateX(0);
+  }
+ 
+  /* Backdrop overlay when menu is open */
+  .mobile-menu-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1999;
+    backdrop-filter: blur(2px);
+  }
+ 
+  .mobile-menu-backdrop.open {
+    display: block;
+    animation: fadeInBackdrop 0.3s ease forwards;
+  }
+ 
+  @keyframes fadeInBackdrop {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+ 
+  /* Mobile nav link touch targets */
+  .mobile-nav-link {
+    padding: 10px 0;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+ 
+  /* Logo scaling for mid-size mobile */
+  .logo-container {
+    height: 44px;
+    width: 110px;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   6. ABOUT PAGE — Team grid & intro polish
+────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--spacing-md);
+    max-width: 100%;
+    padding: 0 var(--spacing-sm);
+  }
+ 
+  .team-img-wrapper {
+    height: 200px !important;
+    width: 100% !important;
+  }
+ 
+  .about-intro h2 {
+    font-size: 1.4rem;
+  }
+ 
+  .about-intro p {
+    font-size: 0.9rem;
+  }
+ 
+  .timeline {
+    padding-left: 14px;
+  }
+ 
+  .timeline-item::before {
+    left: calc(14px * -1 - 7px);
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   7. PORTFOLIO — Category header wrap on narrow screens
+────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .category-header {
+    padding: 0 var(--spacing-sm);
+    gap: 10px;
+  }
+ 
+  .category-title {
+    font-size: 1.1rem;
+    white-space: normal;
+  }
+ 
+  .portfolio-nav-sticky {
+    padding: 0.6rem 0;
+  }
+ 
+  .portfolio-tabs {
+    gap: 0.2rem;
+    padding: 0 var(--spacing-sm);
+  }
+ 
+  .tab-btn {
+    font-size: 0.65rem;
+    padding: 5px 7px;
+    letter-spacing: 0;
+  }
+ 
+  /* Project list item touch area */
+  .project-list-item {
+    padding: 1.2rem 0;
+  }
+ 
+  .project-list-title {
+    font-size: 1.2rem;
+  }
+ 
+  .project-list-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+ 
+  .project-list-action {
+    opacity: 1;
+    transform: none;
+    font-size: 0.7rem;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   8. GLOBAL — Touch targets, scrollbar, misc polish
+────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll globally */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+ 
+  /* Better touch tap color */
+  * {
+    -webkit-tap-highlight-color: rgba(44, 85, 69, 0.15);
+  }
+ 
+  /* Smoother scroll on iOS */
+  .project-gallery,
+  .mobile-menu-drawer {
+    -webkit-overflow-scrolling: touch;
+  }
+ 
+  /* Prevent text overflow in cards */
+  .news-card-title,
+  .service-title-new,
+  .project-title,
+  .gallery-hero-title {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+ 
+  /* Client logos marquee — slightly smaller on mobile */
+  .partner-logo {
+    height: 55px;
+  }
+}
+ 
+@media (max-width: 480px) {
+  /* Client logos */
+  .partner-logo {
+    height: 42px;
+  }
+ 
+  /* Reduce partners-track gap on mobile */
+  .partners-track {
+    gap: var(--spacing-lg);
+  }
+ 
+  /* Section title spacing */
+  .section-title {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    margin-bottom: var(--spacing-lg);
+  }
+ 
+  .section-header {
+    gap: 10px;
+    margin-bottom: var(--spacing-lg);
+  }
+ 
+  .section-header .line {
+    width: 30px;
+  }
+ 
+  .section-title-small {
+    font-size: 0.85rem;
+    letter-spacing: 2.5px;
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   9. ADMIN LOGIN — Mobile card padding
+────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .admin-login-page {
+    padding: 1rem;
+  }
+ 
+  .admin-login-card {
+    padding: 2rem 1.2rem;
+  }
+ 
+  .admin-login-header h1 {
+    font-size: 1.4rem;
+  }
+ 
+  .admin-login-btn {
+    min-height: 48px;
+  }
+ 
+  .input-icon-wrap input {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   10. LANDSCAPE BANNER + CONCEPT SECTION — mobile heights
+────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .landscape-banner,
+  .landscape-banner .opt-img-container {
+    height: 40vw !important;
+    min-height: 160px !important;
+    max-height: 220px;
+  }
+ 
+  .landscape-banner-title {
+    font-size: clamp(1.2rem, 7vw, 2rem) !important;
+    line-height: 1.2;
+  }
+ 
+  .concept-section {
+    margin: 20px 0 !important;
+  }
+ 
+  .concept-container {
+    width: 100% !important;
+  }
+}
+ 
+/* END OF MOBILE RESPONSIVE ADDITIONS */
