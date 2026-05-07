@@ -96,15 +96,20 @@ His project experience spans residential landscapes, resorts, parks, schools, he
           <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-lg)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
 
           <FadeUp>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300' }}>
-              Green Realm Landscape, based in Thrissur and Kochi, stands as one of Kerala’s foremost landscaping and maintenance companies. Established in 2009, the company has built a strong reputation over the past 15 years by consistently delivering high-quality services and ensuring complete client satisfaction. This success is driven by a dedicated team of experienced, young, energetic, and passionate professionals who bring creativity and technical expertise to every project.
-              <br /><br />
-              The firm comprises skilled Landscape Architects, Landscape Engineers, Botanists, and well-trained landscape workers, all working together to create sustainable and aesthetically pleasing outdoor environments. Their collaborative approach ensures that every project reflects both functional excellence and natural beauty.
-              <br /><br />
-              Green Realm Landscape specializes in a wide range of projects, including residential landscapes, resorts, children’s parks, schools, and hospitality spaces. Their comprehensive services cover every stage of landscaping, from design and construction to long-term maintenance. In addition, the company offers expertise in hardscaping, mixed farming, horticulture consultancy, and irrigation hydraulic design and installation.
-              <br /><br />
-              With a continued commitment to superiority, integrity, and exceptional service, Green Realm Landscape has established itself as a trusted name in the industry, transforming outdoor spaces into vibrant and sustainable environments.
-            </p>
+            <div style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300', display: 'flex', flexDirection: 'column', gap: '25px' }}>
+              <p style={{ maxWidth: 'none' }}>
+                Founded in 2009 and based in Thrissur and Kochi, Green Realm Landscape has emerged as one of Kerala’s leading landscape architecture firms. Over the past 15 years, the company has earned a strong reputation for delivering high-quality landscaping solutions with a focus on innovation, sustainability, and complete client satisfaction.
+              </p>
+              <p style={{ maxWidth: 'none' }}>
+                The success of Green Realm Landscape is driven by a dedicated team of experienced, young, energetic, and passionate professionals who bring creativity and technical expertise to every project. The firm comprises skilled Landscape Architects, Landscape Engineers, Botanists, and well-trained landscape workers who work collaboratively to create outdoor environments that are both functional and aesthetically inspiring.
+              </p>
+              <p style={{ maxWidth: 'none' }}>
+                Green Realm Landscape specializes in a diverse range of projects, including residential landscapes, resorts, children’s parks, educational institutions, and hospitality spaces. Their comprehensive services encompass every stage of landscaping — from conceptual design and construction to long-term maintenance.
+              </p>
+              <p style={{ maxWidth: 'none' }}>
+                In addition to landscape architecture, the company offers expertise in hardscaping, mixed farming, horticulture consultancy, irrigation systems, and hydraulic design and installation. With an unwavering commitment to quality, integrity, and exceptional service, Green Realm Landscape continues to transform outdoor spaces into vibrant, sustainable, and enduring environments.
+              </p>
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -113,16 +118,16 @@ His project experience spans residential landscapes, resorts, parks, schools, he
         <FadeUp><h2 className="section-title">Our Story</h2></FadeUp>
         <div className="timeline">
           <FadeUp className="timeline-item">
-            <h3>2022 - The Beginning</h3>
-            <p>Founded with a vision to revolutionize urban landscapes through sustainable and aesthetic design.</p>
+            <h3>2012 – The Beginning</h3>
+            <p>Founded by Sabu Mathew as Green City, with a mission to provide sustainable landscape solutions.</p>
           </FadeUp>
           <FadeUp className="timeline-item">
-            <h3>2023 - Recognition</h3>
-            <p>Featured in Landscape International Magazine for our innovative approach to Miyawaki forests.</p>
+            <h3>2017 – A Shared Vision</h3>
+            <p>Sibin M. Sabu and Sabu Mathew came together to expand the firm with a combined vision for design, horticulture, and context-based landscape solutions.</p>
           </FadeUp>
           <FadeUp className="timeline-item">
-            <h3>2025 - Expanding Horizons</h3>
-            <p>Shortlisted for prestigious architecture awards and completed our 100th project.</p>
+            <h3>2019 – Formation of Green Realm Landscape</h3>
+            <p>Green Realm Landscape was established with a vision to explore new approaches in landscape design, focusing on low-maintenance, sustainable, and environment-responsive solutions based on the site context and surrounding ecology.</p>
           </FadeUp>
         </div>
       </section>

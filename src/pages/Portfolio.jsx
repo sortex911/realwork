@@ -348,12 +348,13 @@ const Portfolio = () => {
   return (
     <div className="portfolio-page">
 
-      <div className="hero">
+      <div className="portfolio-hero">
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
           <source src="assets/video/portfolio-hero.mp4" type="video/mp4" />
         </video>
-        <FadeUp className="hero-content" style={{ textAlign: 'center', width: '100%', maxWidth: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '15vh' }}>
-          <h1 className="hero-title" style={{ fontSize: '50px', textAlign: 'center' }}>Work</h1>
+        <FadeUp className="hero-content">
+          <h1 className="hero-title">Work</h1>
+          <p className="hero-subtitle">Transforming our surroundings</p>
         </FadeUp>
       </div>
 
