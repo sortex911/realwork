@@ -101,7 +101,7 @@ a {
 
 /* Navigation */
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -109,8 +109,9 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
+  z-index: 9998;
   color: var(--color-white);
+  transition: all 0.3s ease;
 }
 
 .logo-container {
@@ -3473,7 +3474,7 @@ section {
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  z-index: 999999;
+  z-index: 9000;
   display: flex;
   align-items: center;
   justify-content: center;
