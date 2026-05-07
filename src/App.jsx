@@ -52,6 +52,7 @@ const PublicLayout = () => {
               src="assets/home-images/imgland.png"
               alt="Landscape Architecture"
               className="full-width-img"
+              noBg={true}
             />
             <div className="landscape-banner-overlay">
               <h2 className="landscape-banner-title">

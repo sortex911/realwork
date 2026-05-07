@@ -163,6 +163,18 @@ const Home = () => {
         </div>
       </section>
 
+      <section className="concept-section">
+        <FadeUp>
+          <div className="concept-container">
+            <OptimizedImage
+              src="assets/home-images/CONCEPT 2.jpg.jpeg"
+              alt="Landscape Concept"
+              className="concept-img"
+            />
+          </div>
+        </FadeUp>
+      </section>
+
       <section id="services">
         <FadeUp><h2 className="section-title">Services</h2></FadeUp>
         <div className="services-grid-new">
