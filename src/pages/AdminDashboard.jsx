@@ -2164,9 +2164,6 @@ const ClientLogoFormModal = ({ onClose, onSuccess, onError }) => {
   );
 };
 
-  );
-};
-
 // ─── ServiceAdminCard ────────────────────────────────────────────────────────
 const ServiceAdminCard = ({ service, onEdit, onDelete }) => {
   return (
