@@ -28,15 +28,39 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
+    
+    // 1. Prepare data for Web3Forms
+    const web3FormData = new FormData();
+    web3FormData.append("access_key", "0efbd2ff-d520-432c-bba6-5469a0c3027d");
+    web3FormData.append("name", formData.name);
+    web3FormData.append("email", formData.email);
+    web3FormData.append("phone", formData.phone);
+    web3FormData.append("message", formData.message);
+    web3FormData.append("from_name", "Green Realm Website");
+    web3FormData.append("subject", "New Inquiry from " + formData.name);
+
     try {
+      // 2. Send to Web3Forms (Email)
+      const web3Response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: web3FormData
+      });
+      const web3Data = await web3Response.json();
+
+      // 3. Save to Firebase (Dashboard)
       await addDoc(collection(db, 'inquiries'), {
         ...formData,
         createdAt: serverTimestamp(),
         status: 'new'
       });
-      setStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
+
+      if (web3Data.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        throw new Error('Web3Forms submission failed');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       setStatus('error');
