@@ -41,24 +41,15 @@ const Navbar = () => {
       <div className="nav-controls">
         {/* Desktop Menu */}
         <div className="desktop-nav">
-          <AnimatePresence>
-            {menuOpen && (
-              <motion.nav
-                initial={{ opacity: 0, x: 20, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                className="inline-menu"
-              >
-                <GooeyNav
-                  items={navItems}
-                  initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
-                  onItemClick={handleNavItemClick}
-                  particleCount={12}
-                  animationTime={500}
-                />
-              </motion.nav>
-            )}
-          </AnimatePresence>
+          <nav className="inline-menu">
+            <GooeyNav
+              items={navItems}
+              initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
+              onItemClick={handleNavItemClick}
+              particleCount={12}
+              animationTime={500}
+            />
+          </nav>
         </div>
 
         {/* Mobile Menu Drawer */}
@@ -94,11 +85,10 @@ const Navbar = () => {
 
         <button
           className="menu-trigger"
-          onClick={() => setMenuOpen(true)}
-          aria-label="Open Menu"
-          style={{ display: menuOpen ? 'none' : 'flex' }}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle Menu"
         >
-          <Menu size={24} />
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
     </header>
