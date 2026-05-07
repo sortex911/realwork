@@ -47,12 +47,53 @@ const PublicLayout = () => {
 
       {isHome && (
         <FadeUp>
-          <OptimizedImage
-            src="assets/home-images/imgland.png"
-            alt="Landscape Architecture"
-            className="full-width-img"
-            width={1550}
-          />
+          <div style={{ position: 'relative', width: '100%' }}>
+            <OptimizedImage
+              src="assets/home-images/imgland.png"
+              alt="Landscape Architecture"
+              className="full-width-img"
+              width={1550}
+            />
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+              color: 'white',
+              background: 'rgba(0,0,0,0.15)'
+            }}>
+              <h2 style={{ 
+                fontFamily: 'var(--font-serif)', 
+                fontSize: 'clamp(2rem, 6vw, 4.5rem)', 
+                fontWeight: '400',
+                lineHeight: '1.1',
+                marginBottom: '10px'
+              }}>
+                Let's Celebrate<br />Landscape
+              </h2>
+              <span style={{ 
+                fontSize: '1rem', 
+                letterSpacing: '10px', 
+                textTransform: 'uppercase', 
+                fontWeight: '500',
+                marginBottom: '20px',
+                display: 'block'
+              }}>
+                WITH US
+              </span>
+              <p style={{ 
+                fontSize: '0.9rem', 
+                fontStyle: 'italic', 
+                opacity: 0.9,
+                fontWeight: '300'
+              }}>
+                Transforming our surroundings
+              </p>
+            </div>
+          </div>
         </FadeUp>
       )}
 
