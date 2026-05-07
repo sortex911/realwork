@@ -93,7 +93,7 @@ const Procedure = () => {
 
       <section>
         <FadeUp><h2 className="section-title">Project Stages</h2></FadeUp>
-        <ContainerScroll style={{ minHeight: '150vh', padding: 'var(--spacing-xl) 0', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <ContainerScroll style={{ position: 'relative', minHeight: '200vh', paddingBottom: '100px' }}>
           {[
             {
               id: "stage-1",
@@ -123,17 +123,17 @@ const Procedure = () => {
           ].map((phase, index) => (
             <CardSticky
               key={phase.id}
-              index={index + 2}
-              incrementY={25}
+              index={index}
+              incrementY={35}
               style={{
                 background: '#fff',
                 borderRadius: '16px',
-                border: '1px solid rgba(0,0,0,0.1)',
+                border: '1px solid rgba(0,0,0,0.08)',
                 padding: 'var(--spacing-xl)',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
-                margin: '0 auto',
-                maxWidth: '800px',
-                width: '90%',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+                margin: '0 auto 80px',
+                maxWidth: '850px',
+                width: '92%',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '1rem' }}>
