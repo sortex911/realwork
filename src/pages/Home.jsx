@@ -163,15 +163,14 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="concept-section">
-        <FadeUp>
-          <div className="concept-container">
-            <OptimizedImage
-              src="assets/home-images/CONCEPT 2.jpg.jpeg"
+      <section className="concept-section" style={{ width: '100%', margin: '40px 0', display: 'flex', justifyContent: 'center' }}>
+        <FadeUp style={{ width: '100%' }}>
+          <div className="concept-container" style={{ width: '100%', margin: '0 auto', textAlign: 'center' }}>
+            <img
+              src="/assets/home-images/CONCEPT 2.jpg.png"
               alt="Landscape Concept"
               className="concept-img"
-              position={"center"}
-              noBg={true}
+              style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
             />
           </div>
         </FadeUp>
