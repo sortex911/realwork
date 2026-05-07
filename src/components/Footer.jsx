@@ -44,7 +44,7 @@ const Footer = () => {
               fontSize: "14px", lineHeight: "1.7",
               color: "#6b7280", maxWidth: "280px", margin: 0,
             }}>
-              A collection of premium landscaping and architectural designs for your luxury space or side project.
+               Celebrating landscapes that connect people, nature, and purpose
             </p>
 
             <div style={{ display: "flex", gap: "10px" }}>
