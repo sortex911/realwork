@@ -4101,11 +4101,24 @@ section {
     letter-spacing: 1.5px;
   }
 
-  /* ── News Grid: single column ── */
+  /* ── News Grid: two columns ── */
   .news-grid-new {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     padding: 0 8px;
+  }
+
+  .news-card-minimal {
+    padding: 0 10px !important;
+  }
+
+  .news-card-minimal div[style*="font-size: 4rem"] {
+    font-size: 2.5rem !important;
+  }
+
+  .news-card-minimal p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
   }
 
   /* ── Services Grid: single column ── */

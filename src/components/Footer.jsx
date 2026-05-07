@@ -144,10 +144,25 @@ const Footer = () => {
       {/* Responsive styles */}
       <style>{`
         @media (max-width: 768px) {
-          .footer-top-grid { grid-template-columns: 1fr 1fr !important; }
+          .team-grid {
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            max-width: 320px;
+          }
+
+          .team-img-wrapper {
+            height: 220px;
+          }
         }
         @media (max-width: 480px) {
-          .footer-top-grid { grid-template-columns: 1fr !important; }
+          .footer-top-grid { 
+            grid-template-columns: repeat(2, 1fr) !important; 
+            gap: 24px !important;
+          }
+          .footer-top-grid > div:first-child {
+            grid-column: span 2;
+            margin-bottom: 20px;
+          }
         }
         footer { padding: 0 !important; }
       `}</style>
