@@ -26,6 +26,7 @@ export const COL_TEAM = 'team';
 export const COL_NEWS = 'news';
 export const COL_CLIENTS = 'clients';
 export const COL_INQUIRIES = 'inquiries';
+export const COL_SERVICES = 'services';
 
 // ─── News Categories ─────────────────────────────────────────────────────────
 export const NEWS_CAT_RECENT = 'recent_news';
@@ -213,4 +214,42 @@ export const updateClientsOrder = async (items) => {
  */
 export const deleteInquiry = (id) =>
   deleteDoc(doc(db, COL_INQUIRIES, id));
+
+// ─── Services ────────────────────────────────────────────────────────────────
+
+/**
+ * Add a new service.
+ * @param {{ title, desc, images: string[], icon: string }} payload
+ */
+export const addService = (payload) =>
+  addDoc(collection(db, COL_SERVICES), {
+    ...payload,
+    order: payload.order ?? 999,
+    createdAt: serverTimestamp(),
+  });
+
+/**
+ * Update an existing service.
+ */
+export const updateService = (id, payload) =>
+  updateDoc(doc(db, COL_SERVICES, id), {
+    ...payload,
+    updatedAt: serverTimestamp(),
+  });
+
+/**
+ * Bulk update services order.
+ */
+export const updateServicesOrder = async (items) => {
+  const promises = items.map(item => 
+    updateDoc(doc(db, COL_SERVICES, item.id), { order: item.order })
+  );
+  return Promise.all(promises);
+};
+
+/**
+ * Delete a service.
+ */
+export const deleteService = (id) =>
+  deleteDoc(doc(db, COL_SERVICES, id));
 

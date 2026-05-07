@@ -16,8 +16,9 @@ import {
   addTeamMember, updateTeamMember, deleteTeamMember, updateTeamOrder,
   addNews, updateNews, deleteNews, updateNewsOrder,
   addClientLogo, deleteClientLogo, updateClientsOrder,
+  addService, updateService, deleteService, updateServicesOrder,
   deleteInquiry,
-  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS, COL_CLIENTS, COL_INQUIRIES,
+  COL_PROJECTS, COL_CATEGORIES, COL_TEAM, COL_NEWS, COL_CLIENTS, COL_INQUIRIES, COL_SERVICES,
   NEWS_CAT_RECENT, NEWS_CAT_PUBLICATIONS, NEWS_CAT_INTERVIEWS, NEWS_CAT_ONLINE,
   uploadImagesToSupabase, uploadImageToSupabase
 } from '../services/adminService';
@@ -62,6 +63,7 @@ const AdminDashboard = () => {
   const [news, setNews] = useState([]);
   const [clients, setClients] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [services, setServices] = useState([]);
 
   // ── UI state ──
   const [activeTab, setActiveTab] = useState('projects');
@@ -85,6 +87,10 @@ const AdminDashboard = () => {
   const [showCatOrderModal, setShowCatOrderModal] = useState(false);
   const [newCatName, setNewCatName] = useState('');
   const [deleteInquiryTarget, setDeleteInquiryTarget] = useState(null);
+  const [addingServiceModal, setAddingServiceModal] = useState(false);
+  const [editServiceTarget, setEditServiceTarget] = useState(null);
+  const [deleteServiceTarget, setDeleteServiceTarget] = useState(null);
+  const [showServiceOrderModal, setShowServiceOrderModal] = useState(false);
 
   // ── Realtime listeners ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -114,7 +120,11 @@ const AdminDashboard = () => {
       query(collection(db, COL_INQUIRIES), orderBy('createdAt', 'desc')),
       snap => setInquiries(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     );
-    return () => { unsubP(); unsubC(); unsubT(); unsubN(); unsubClients(); unsubInquiries(); };
+    const unsubServices = onSnapshot(
+      query(collection(db, COL_SERVICES), orderBy('createdAt', 'desc')),
+      snap => setServices(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+    return () => { unsubP(); unsubC(); unsubT(); unsubN(); unsubClients(); unsubInquiries(); unsubServices(); };
   }, []);
 
   // ── Filtered projects ───────────────────────────────────────────────────────
@@ -179,6 +189,18 @@ const AdminDashboard = () => {
     });
   }, [sortedNews, filterNewsCat]);
 
+  // ── Services sorting ────────────────────────────────────────────────────────
+  const sortedServices = useMemo(() => {
+    return [...services].sort((a, b) => {
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) return orderA - orderB;
+      const timeA = a.createdAt?.seconds ?? 0;
+      const timeB = b.createdAt?.seconds ?? 0;
+      return timeB - timeA;
+    });
+  }, [services]);
+
   // ── Logout ──────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
     await signOut(auth);
@@ -238,6 +260,17 @@ const AdminDashboard = () => {
       toast('Failed to delete inquiry.', 'error');
     } finally {
       setDeleteInquiryTarget(null);
+    }
+  };
+
+  const confirmDeleteService = async () => {
+    try {
+      await deleteService(deleteServiceTarget);
+      toast('Service deleted.', 'info');
+    } catch {
+      toast('Failed to delete service.', 'error');
+    } finally {
+      setDeleteServiceTarget(null);
     }
   };
 
@@ -318,6 +351,12 @@ const AdminDashboard = () => {
               id: 'inquiries', label: 'Inquiries', icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>)
+            },
+            {
+              id: 'services', label: 'Services', icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
                 </svg>)
             },
           ].map(tab => (
@@ -696,6 +735,53 @@ const AdminDashboard = () => {
             )}
           </>
         )}
+
+        {/* ══ Services Tab ══ */}
+        {activeTab === 'services' && (
+          <>
+            <div className="admin-toolbar">
+              <div className="admin-toolbar-left">
+                <h2 className="admin-page-title">
+                  Services
+                  <span className="admin-badge">{services.length}</span>
+                </h2>
+              </div>
+              <div className="admin-toolbar-right">
+                <button
+                  className="admin-btn-secondary"
+                  onClick={() => setShowServiceOrderModal(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '16px' }}>
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                  List / Order
+                </button>
+                <button
+                  className="admin-btn-primary"
+                  onClick={() => setAddingServiceModal(true)}
+                >
+                  + Add Service
+                </button>
+              </div>
+            </div>
+
+            {sortedServices.length === 0 ? (
+              <div className="admin-empty">No services yet. Click "+ Add Service" to get started.</div>
+            ) : (
+              <div className="admin-project-grid">
+                {sortedServices.map(service => (
+                  <ServiceAdminCard
+                    key={service.id}
+                    service={service}
+                    onEdit={() => setEditServiceTarget(service)}
+                    onDelete={() => setDeleteServiceTarget(service.id)}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </main>
 
       {/* ══ Add Project Modal ══ */}
@@ -803,6 +889,98 @@ const AdminDashboard = () => {
           onSuccess={(msg) => { toast(msg); setShowTeamOrderModal(false); }}
           onError={(msg) => toast(msg, 'error')}
         />
+      )}
+
+      {/* ══ Add Service Modal ══ */}
+      {addingServiceModal && (
+        <ServiceFormModal
+          mode="add"
+          onClose={() => setAddingServiceModal(false)}
+          onSuccess={(msg) => { toast(msg); setAddingServiceModal(false); }}
+          onError={(msg) => toast(msg, 'error')}
+        />
+      )}
+
+      {/* ══ Edit Service Modal ══ */}
+      {editServiceTarget && (
+        <ServiceFormModal
+          mode="edit"
+          service={editServiceTarget}
+          onClose={() => setEditServiceTarget(null)}
+          onSuccess={(msg) => { toast(msg); setEditServiceTarget(null); }}
+          onError={(msg) => toast(msg, 'error')}
+        />
+      )}
+
+      {/* ══ Service Order Modal ══ */}
+      {showServiceOrderModal && (
+        <ServiceOrderModal
+          services={services}
+          onClose={() => setShowServiceOrderModal(false)}
+          onSuccess={(msg) => { toast(msg); setShowServiceOrderModal(false); }}
+          onError={(msg) => toast(msg, 'error')}
+        />
+      )}
+
+      {/* ══ Confirm Delete Modals ══ */}
+      {deleteTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteTarget(null)}>
+          <p>Are you sure you want to delete this project? This action cannot be undone.</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDelete}>Delete Project</button>
+          </div>
+        </Modal>
+      )}
+
+      {deleteTeamTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteTeamTarget(null)}>
+          <p>Remove this team member?</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteTeamTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDeleteTeam}>Remove Member</button>
+          </div>
+        </Modal>
+      )}
+
+      {deleteNewsTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteNewsTarget(null)}>
+          <p>Delete this news item?</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteNewsTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDeleteNews}>Delete News</button>
+          </div>
+        </Modal>
+      )}
+
+      {deleteClientTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteClientTarget(null)}>
+          <p>Remove this client logo?</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteClientTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDeleteClient}>Remove Logo</button>
+          </div>
+        </Modal>
+      )}
+
+      {deleteInquiryTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteInquiryTarget(null)}>
+          <p>Delete this inquiry?</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteInquiryTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDeleteInquiry}>Delete Inquiry</button>
+          </div>
+        </Modal>
+      )}
+
+      {deleteServiceTarget && (
+        <Modal title="⚠️ Confirm Delete" onClose={() => setDeleteServiceTarget(null)}>
+          <p>Are you sure you want to delete this service? This will remove it from the home page.</p>
+          <div className="modal-actions" style={{ marginTop: '20px' }}>
+            <button className="admin-btn-secondary" onClick={() => setDeleteServiceTarget(null)}>Cancel</button>
+            <button className="admin-btn-danger" onClick={confirmDeleteService}>Delete Service</button>
+          </div>
+        </Modal>
       )}
 
       {/* ══ Category Order Modal ══ */}
@@ -1982,6 +2160,230 @@ const ClientLogoFormModal = ({ onClose, onSuccess, onError }) => {
           </button>
         </div>
       </form>
+    </Modal>
+  );
+};
+
+  );
+};
+
+// ─── ServiceAdminCard ────────────────────────────────────────────────────────
+const ServiceAdminCard = ({ service, onEdit, onDelete }) => {
+  return (
+    <div className="admin-project-card">
+      <div className="admin-project-img-wrapper">
+        <img src={service.images?.[0]} alt={service.title} className="admin-project-img" loading="lazy" />
+        <div className="admin-project-badge">{service.images?.length || 0} Photos</div>
+      </div>
+      <div className="admin-project-info">
+        <h3 className="admin-project-title">{service.title}</h3>
+        <p className="admin-project-desc" style={{ fontSize: '0.8rem', opacity: 0.7 }}>
+          {service.desc?.substring(0, 100)}{service.desc?.length > 100 ? '...' : ''}
+        </p>
+        <div className="admin-project-actions">
+          <button className="admin-btn-secondary" onClick={onEdit}>✏️ Edit</button>
+          <button className="admin-btn-danger" onClick={onDelete}>🗑️ Delete</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── ServiceFormModal ────────────────────────────────────────────────────────
+const ServiceFormModal = ({ mode, service, onClose, onSuccess, onError }) => {
+  const [form, setForm] = useState({
+    title: service?.title || '',
+    desc: service?.desc || '',
+    icon: service?.icon || '🌿', // Default icon string or emoji
+  });
+  const [images, setImages] = useState(
+    service?.images?.map(url => ({ preview: url, file: null, existing: true })) || []
+  );
+  const [saving, setSaving] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files ?? []);
+    if (images.length + files.length > 2) {
+      onError('Each service can have exactly 2 photos.');
+      return;
+    }
+    
+    const newEntries = files.map(file => ({
+      preview: URL.createObjectURL(file),
+      file,
+      existing: false
+    }));
+    
+    setImages(prev => [...prev, ...newEntries]);
+    e.target.value = '';
+  };
+
+  const handleRemoveImage = (idx) => {
+    setImages(prev => {
+      const copy = [...prev];
+      if (!copy[idx].existing) URL.revokeObjectURL(copy[idx].preview);
+      copy.splice(idx, 1);
+      return copy;
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (images.length !== 2) return onError('Please provide exactly 2 photos for the service.');
+    setSaving(true);
+
+    try {
+      // 1. Upload new files
+      const uploadPromises = images.map(img => {
+        if (img.existing) return Promise.resolve(img.preview);
+        return uploadImageToSupabase(img.file, 'services');
+      });
+      const urls = await Promise.all(uploadPromises);
+
+      const payload = { ...form, images: urls };
+
+      if (mode === 'edit') {
+        await updateService(service.id, payload);
+        onSuccess('Service updated!');
+      } else {
+        await addService(payload);
+        onSuccess('Service added!');
+      }
+    } catch (err) {
+      onError('Error: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title={mode === 'edit' ? '✏️ Edit Service' : '➕ Add Service'} onClose={onClose}>
+      <form className="admin-form" onSubmit={handleSubmit}>
+        <div className="admin-form-group">
+          <label>Service Title *</label>
+          <input 
+            type="text" 
+            placeholder="e.g. Landscape Consultation" 
+            value={form.title} 
+            onChange={e => setForm({ ...form, title: e.target.value })} 
+            required 
+          />
+        </div>
+
+        <div className="admin-form-group">
+          <label>Description *</label>
+          <textarea 
+            rows={4} 
+            placeholder="Describe the service..." 
+            value={form.desc} 
+            onChange={e => setForm({ ...form, desc: e.target.value })} 
+            required 
+          />
+        </div>
+
+        <div className="admin-form-group">
+          <label>Service Photos (Exactly 2) *</label>
+          <div 
+            className="image-upload-zone"
+            onClick={() => images.length < 2 && fileInputRef.current?.click()}
+            style={{
+              border: '2px dashed rgba(61,122,94,0.5)', borderRadius: '10px',
+              padding: '20px', textAlign: 'center', 
+              cursor: images.length < 2 ? 'pointer' : 'not-allowed',
+              background: 'rgba(61,122,94,0.04)', marginBottom: '12px',
+              opacity: images.length < 2 ? 1 : 0.6
+            }}
+          >
+            {images.length < 2 ? (
+              <span style={{ opacity: 0.6 }}>📷 Click to upload photos ({images.length}/2)</span>
+            ) : (
+              <span style={{ opacity: 0.6 }}>✅ 2 photos selected</span>
+            )}
+          </div>
+          <input ref={fileInputRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={handleFileChange} />
+          
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {images.map((img, idx) => (
+              <div key={idx} style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '8px', overflow: 'hidden' }}>
+                <img src={img.preview} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button 
+                  type="button" 
+                  onClick={() => handleRemoveImage(idx)}
+                  style={{
+                    position: 'absolute', top: '5px', right: '5px',
+                    background: 'rgba(239,68,68,0.9)', border: 'none',
+                    borderRadius: '50%', width: '20px', height: '20px',
+                    color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}
+                >×</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="modal-actions">
+          <button type="button" className="admin-btn-secondary" onClick={onClose} disabled={saving}>Cancel</button>
+          <button type="submit" className="admin-btn-primary" disabled={saving}>
+            {saving ? 'Saving...' : mode === 'edit' ? 'Update Service' : 'Add Service'}
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
+};
+
+// ─── ServiceOrderModal ────────────────────────────────────────────────────────
+const ServiceOrderModal = ({ services, onClose, onSuccess, onError }) => {
+  const [items, setItems] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const sorted = [...services].sort((a, b) => {
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0);
+    });
+    setItems(sorted);
+  }, [services]);
+
+  const handleSaveOrder = async () => {
+    setSaving(true);
+    try {
+      const updates = items.map((item, index) => ({ id: item.id, order: index + 1 }));
+      await updateServicesOrder(updates);
+      onSuccess('Services order updated!');
+    } catch (err) {
+      onError('Failed: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title="📦 Service Display Order" onClose={onClose}>
+      <div className="admin-form">
+        <p style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '15px' }}>Drag services to change their order on the home page.</p>
+        <div className="admin-reorder-list-container" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          <Reorder.Group axis="y" values={items} onReorder={setItems} className="admin-reorder-list">
+            {items.map(item => (
+              <Reorder.Item key={item.id} value={item} className="admin-reorder-item">
+                <div className="reorder-handle">⠿</div>
+                <div className="reorder-content">
+                  <span className="reorder-title">{item.title}</span>
+                </div>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
+        </div>
+        <div className="modal-actions" style={{ marginTop: '20px' }}>
+          <button className="admin-btn-secondary" onClick={onClose} disabled={saving}>Close</button>
+          <button className="admin-btn-primary" onClick={handleSaveOrder} disabled={saving || items.length < 2}>
+            {saving ? 'Saving...' : 'Save Order'}
+          </button>
+        </div>
+      </div>
     </Modal>
   );
 };
