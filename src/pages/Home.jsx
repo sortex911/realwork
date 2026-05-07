@@ -168,7 +168,7 @@ const Home = () => {
           src="/assets/home-images/CONCEPT 2.jpg.png"
           style={{ 
           width: '1200px',      // 'x' matti 'px' aakkuka
-          marginLeft: '40px',   // Left side-il ninnu 40px gap
+          marginLeft: '30px',   // Left side-il ninnu 40px gap
           height: 'auto',       // Image valiyaathe ratio maintain cheyyaan
           display: 'block'      // Margin krithyamaayi work cheyyaan
             }}
