@@ -20,11 +20,6 @@ const Navbar = () => {
     { label: 'Contact', href: '/contact' },
   ];
 
-  if (isAdmin) {
-    navItems.push({ label: 'Dashboard', href: '/dashboard' });
-  } else {
-    navItems.push({ label: 'Admin', href: '/admin' });
-  }
 
   const activeIndex = navItems.findIndex(item => item.href === location.pathname);
 
