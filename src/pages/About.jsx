@@ -145,7 +145,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
             justifyContent: 'center',
             gap: '95px',
             maxWidth: '1300px',
-            margin: '0 auto',
+            margin: 'auto',
           }}>
             {founders.map((member, index) => (
               <FadeUp 
@@ -161,6 +161,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                     className="team-img"
                     width={320}
                     noBg
+                    objectPosition="center bottom"
                   />
                 </div>
                 <h3>{member.name}</h3>
@@ -331,6 +332,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                           src={member.image || 'assets/team-members/placeholder.jpg'}
                           alt={member.name}
                           width={300}
+                          objectPosition="center bottom"
                         />
                       </div>
                       <div className="team-gallery-info">

@@ -21,7 +21,7 @@ export { uploadImageToSupabase, uploadImagesToSupabase };
 // ─── Collection names ────────────────────────────────────────────────────────
 export const COL_PROJECTS = 'projects';
 export const COL_CATEGORIES = 'categories';
-export const COL_USERS = 'users';
+const COL_USERS = 'users';
 export const COL_TEAM = 'team';
 export const COL_NEWS = 'news';
 export const COL_CLIENTS = 'clients';
@@ -172,7 +172,7 @@ export const updateCategoriesOrder = async (items) => {
 export const deleteCategory = (id) =>
   deleteDoc(doc(db, COL_CATEGORIES, id));
 
-export const fetchCategories = async () => {
+const fetchCategories = async () => {
   const snap = await getDocs(collection(db, COL_CATEGORIES));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 };

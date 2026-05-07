@@ -1,4 +1,6 @@
+
 import React, { useRef, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import FadeUp from '../components/FadeUp';
 import ClientStories from '../components/ClientStories';
 import ClientLogos from '../components/ClientLogos';
@@ -31,7 +33,7 @@ const Home = () => {
         const timeB = b.createdAt?.seconds ?? 0;
         return timeB - timeA;
       });
-      setNews(sorted.slice(0, 3));
+      setNews(sorted);
     });
     return () => unsub();
   }, []);
@@ -90,6 +92,12 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Best Landscape Architects & Designers in Kerala | Green Realm</title>
+        <meta name="description" content="Green Realm Landscape is the best landscape firm in Kerala. We specialize in tropical landscaping, butterfly gardens, and Miyawaki forests. Hire the best landscape consultants today." />
+        <meta name="keywords" content="best landscaping website, best Landscape Architects in kerala, Landscape Architects Kerala, Best Landscape Firm in Kerala, Tropical Landscaper kerala, Best Tropical Consultant in Kerala, Best Landscaper, Butterfly garden Kerala, Miyawaki Kerala, best Landscape consultant kerala, Best Landscape Designers kerala" />
+        <link rel="canonical" href="https://www.greenrealmlandscape.com/" />
+      </Helmet>
       <FadeUp className="hero">
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
           <source src="assets/video/home-hero.mp4" type="video/mp4" />
@@ -97,7 +105,7 @@ const Home = () => {
         <div className="hero-content" ref={containerRef} style={{ position: 'relative' }}>
           <h1 className="hero-title" style={{ color: '#ffffff' }}>
             <Typewriter 
-              words={['Let’s Celebrate']} 
+              words={['Let’s celebrate landscape']} 
               speed={150} 
               loop={false}
               cursor={false}
@@ -172,7 +180,7 @@ const Home = () => {
       <section id="services">
         <FadeUp><h2 className="section-title">Services</h2></FadeUp>
         <div className="services-grid-new">
-          {services.slice(0, 3).map((service, index) => (
+          {services.map((service, index) => (
             <ServiceCard
               key={index}
               title={service.title}

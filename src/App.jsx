@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -5,15 +6,17 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import LoadingSpinner from './components/LoadingSpinner';
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Portfolio from './pages/Portfolio';
-import News from './pages/News';
-import Procedure from './pages/Procedure';
-import Contact from './pages/Contact';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
+// ─── Lazy-loaded pages (route-level code splitting) ──────────────────────────
+const Home           = lazy(() => import('./pages/Home'));
+const About          = lazy(() => import('./pages/About'));
+const Portfolio      = lazy(() => import('./pages/Portfolio'));
+const News           = lazy(() => import('./pages/News'));
+const Procedure      = lazy(() => import('./pages/Procedure'));
+const Contact        = lazy(() => import('./pages/Contact'));
+const AdminLogin     = lazy(() => import('./pages/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 import SmoothScroll from './components/SmoothScroll';
 import ContentProtection from './components/ContentProtection';
@@ -41,6 +44,7 @@ function App() {
           <ContentProtection />
 
 
+          <Suspense fallback={<LoadingSpinner />}>
           <Routes>
 
             {/* ── Public pages (share Navbar + Footer via PublicLayout) ── */}
@@ -70,6 +74,7 @@ function App() {
             />
 
           </Routes>
+          </Suspense>
         </Router>
       </SmoothScroll>
     </AuthProvider>

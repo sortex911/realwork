@@ -11,7 +11,7 @@ import OptimizedImage from '../components/OptimizedImage';
 const ProjectCardItem = memo(({ project, onClick }) => {
   const [loaded, setLoaded] = useState(false);
   return (
-    <FadeUp
+    <div
       className="project-card"
       onClick={() => onClick(project)}
     >
@@ -21,7 +21,7 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             src={project.imageUrl}
             alt={project.title}
             className="project-img"
-            width={600}
+            onLoad={() => setLoaded(true)}
           />
         ) : (
           <div className="project-img-placeholder">No Image</div>
@@ -31,7 +31,7 @@ const ProjectCardItem = memo(({ project, onClick }) => {
         <h3 className="project-title">{project.title}</h3>
         <div className="view-details">View Gallery</div>
       </div>
-    </FadeUp>
+    </div>
   );
 });
 
@@ -41,7 +41,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
   return (
     <div
       className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`}
-      style={{ borderRadius: '12px', overflow: 'hidden', height: '100%', cursor: 'pointer' }}
+      style={{ borderRadius: '0', overflow: 'hidden', height: '100%', cursor: 'pointer' }}
       onClick={() => onOpen(url)}
     >
       <OptimizedImage
@@ -49,6 +49,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img"
         width={800}
+        onLoad={() => setLoaded(true)}
       />
       <div className="gallery-item-overlay">
         <span>View Full</span>
@@ -69,10 +70,10 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
     // The "Nuclear" Body Lock
     const originalStyle = window.getComputedStyle(document.body).overflow;
     const originalHeight = window.getComputedStyle(document.body).height;
-    
+
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100vh';
-    
+
     return () => {
       // Restore styles when gallery is closed
       document.body.style.overflow = originalStyle;
@@ -80,6 +81,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
     };
   }, []);
 
+  // Auto-sliding removed for static layout
+  /*
   useEffect(() => {
     if (images.length <= 1 || fullscreenImage) return;
     const timer = setInterval(() => {
@@ -87,6 +90,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
     }, 5000);
     return () => clearInterval(timer);
   }, [images, fullscreenImage, currentIndex]);
+  */
 
   const nextImage = (e) => {
     e.stopPropagation();
@@ -183,9 +187,9 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
 
         <div className="gallery-grid">
           {images.map((url, idx) => (
-            <FadeUp key={idx} className="gallery-item">
+            <div key={idx} className="gallery-item">
               <GalleryItem url={url} project={project} idx={idx} onOpen={setFullscreenImage} />
-            </FadeUp>
+            </div>
           ))}
         </div>
       </div>
@@ -423,7 +427,7 @@ const Portfolio = () => {
             <p>No projects found. Add your first project from the Admin Dashboard.</p>
           </div>
         ) : (
-          <div className="portfolio-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto px-4 py-10">
             {filteredProjects.length > 0 ? (
               filteredProjects.map(project => (
                 <ProjectCardItem

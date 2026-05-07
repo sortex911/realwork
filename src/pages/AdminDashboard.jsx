@@ -983,7 +983,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
   // Each entry: { type: 'url'|'file', preview: string, file?: File }
   const initImages = () => {
     const existing = project?.images ?? (project?.imageUrl ? [project.imageUrl] : []);
-    return existing.map(url => ({ type: 'url', preview: url, file: null }));
+    return existing.map(url => ({ id: genId(), type: 'url', preview: url, file: null }));
   };
   const [images, setImages] = useState(initImages);
   const [urlInput, setUrlInput] = useState('');
@@ -994,7 +994,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
   const handleAddUrl = () => {
     const trimmed = urlInput.trim();
     if (!trimmed) return;
-    setImages(prev => [...prev, { type: 'url', preview: trimmed, file: null }]);
+    setImages(prev => [...prev, { id: genId(), type: 'url', preview: trimmed, file: null }]);
     setUrlInput('');
   };
 
@@ -1006,6 +1006,7 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
       return;
     }
     const newEntries = files.map(file => ({
+      id: genId(),
       type: 'file',
       preview: URL.createObjectURL(file),
       file,
@@ -1164,41 +1165,79 @@ const ProjectFormModal = ({ mode, project, categories, onClose, onSuccess, onErr
           </div>
         </div>
 
-        {/* Image previews grid */}
+        {/* Image previews list with Reorder */}
         {images.length > 0 && (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
-            gap: '8px',
-          }}>
-            {images.map((img, idx) => (
-              <div key={idx} style={{
-                position: 'relative', borderRadius: '8px',
-                overflow: 'hidden', aspectRatio: '1',
-                border: idx === 0 ? '2px solid #3d7a5e' : '2px solid transparent',
-              }}>
-                <img src={img.preview} alt={`img-${idx}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-                {idx === 0 && (
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: 'rgba(61,122,94,0.85)', color: '#fff',
-                    fontSize: '0.6rem', textAlign: 'center', padding: '2px',
-                  }}>COVER</div>
-                )}
-                <button type="button" onClick={() => handleRemove(idx)}
+          <div style={{ marginTop: '16px' }}>
+            <p style={{ fontSize: '0.75rem', color: 'rgba(232,237,233,0.5)', marginBottom: '10px' }}>
+              ↔️ Drag images left/right to change order. The first image is the <strong>Primary Cover</strong>.
+            </p>
+            <Reorder.Group
+              axis="x"
+              values={images}
+              onReorder={setImages}
+              style={{
+                display: 'flex',
+                gap: '12px',
+                overflowX: 'auto',
+                padding: '10px 4px 20px 4px',
+                scrollSnapType: 'x mandatory'
+              }}
+            >
+              {images.map((img, idx) => (
+                <Reorder.Item
+                  key={img.id}
+                  value={img}
                   style={{
-                    position: 'absolute', top: '3px', right: '3px',
-                    background: 'rgba(239,68,68,0.9)', border: 'none',
-                    borderRadius: '50%', width: '18px', height: '18px',
-                    cursor: 'pointer', color: '#fff', fontSize: '0.7rem',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flex: '0 0 110px',
+                    position: 'relative',
+                    borderRadius: '10px',
+                    overflow: 'hidden',
+                    aspectRatio: '1',
+                    border: idx === 0 ? '3px solid #3d7a5e' : '1px solid rgba(255,255,255,0.1)',
+                    cursor: 'grab',
+                    background: 'rgba(255,255,255,0.02)',
+                    zIndex: images.length - idx
                   }}
-                  aria-label="Remove"
-                >×</button>
-              </div>
-            ))}
+                  whileDrag={{ 
+                    scale: 1.1, 
+                    boxShadow: '0 12px 28px rgba(0,0,0,0.4)', 
+                    cursor: 'grabbing',
+                    zIndex: 100 
+                  }}
+                >
+                  <img
+                    src={img.preview}
+                    alt={`img-${idx}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}
+                  />
+                  {idx === 0 && (
+                    <div style={{
+                      position: 'absolute', bottom: 0, left: 0, right: 0,
+                      background: 'rgba(61,122,94,0.9)',
+                      color: '#fff', fontSize: '0.6rem', fontWeight: 'bold',
+                      textAlign: 'center', padding: '4px 2px'
+                    }}>
+                      COVER
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); handleRemove(idx); }}
+                    style={{
+                      position: 'absolute', top: '4px', right: '4px',
+                      background: 'rgba(239,68,68,0.95)', border: 'none',
+                      borderRadius: '50%', width: '22px', height: '22px',
+                      cursor: 'pointer', color: '#fff', fontSize: '0.8rem',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      zIndex: 20
+                    }}
+                    aria-label="Remove"
+                  >
+                    ×
+                  </button>
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
           </div>
         )}
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const ImagesSlider = ({
+const ImagesSlider = ({
   images,
   children,
   overlay = true,
@@ -147,6 +147,8 @@ export const ImagesSlider = ({
             animate="visible"
             exit={direction === "up" ? "upExit" : "downExit"}
             variants={slideVariants}
+            loading="lazy"
+            decoding="async"
             style={{
               height: '100%',
               width: '100%',

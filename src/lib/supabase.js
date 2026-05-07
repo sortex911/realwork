@@ -14,8 +14,8 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-export const STORAGE_BUCKET = 'portfolio-assets';
-export const CATEGORIES = {
+const STORAGE_BUCKET = 'portfolio-assets';
+const CATEGORIES = {
   LANDSCAPING: 'landscaping',
   TEAM: 'team',
   PROJECTS: 'projects',
@@ -26,7 +26,7 @@ export const CATEGORIES = {
 /**
  * Programmatically ensures the public bucket exists.
  */
-export const initializeStorage = async () => {
+const initializeStorage = async () => {
   try {
     const { data: buckets, error: listError } = await supabase.storage.listBuckets();
     if (listError) throw listError;

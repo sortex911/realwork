@@ -21,6 +21,7 @@ const OptimizedImage = ({
   priority = false,
   quality = 80,
   objectFit = 'cover',
+  objectPosition = 'center',
   onLoad,
   noBg = false
 }) => {
@@ -51,6 +52,7 @@ const OptimizedImage = ({
     width: '100%',
     height: '100%',
     objectFit: objectFit,
+    objectPosition: objectPosition,
     transition: 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease',
     opacity: isLoaded ? 1 : 0,
     filter: isLoaded ? 'blur(0)' : 'blur(10px)',

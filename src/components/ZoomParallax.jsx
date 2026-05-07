@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 
-export function ZoomParallax({ images }) {
+function ZoomParallax({ images }) {
 	const container = useRef(null);
 	const { scrollYProgress } = useScroll({
 		target: container,
@@ -20,6 +20,7 @@ export function ZoomParallax({ images }) {
 		<div ref={container} style={{ position: 'relative', height: '300vh' }}>
 			<div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
 				{images.map(({ src, alt }, index) => {
+
 					const scale = scales[index % scales.length];
 
                     // Positioning logic adapted from the user's snippet
@@ -54,6 +55,8 @@ export function ZoomParallax({ images }) {
 								<img
 									src={src || '/placeholder.svg'}
 									alt={alt || `Parallax image ${index + 1}`}
+									loading="lazy"
+									decoding="async"
 									style={{ height: '100%', width: '100%', objectFit: 'cover' }}
 								/>
 							</div>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.greenrealmlandscape.com/</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>1.00</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greenrealmlandscape.com/portfolio</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.greenrealmlandscape.com/about</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.greenrealmlandscape.com/procedure</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.greenrealmlandscape.com/news</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.greenrealmlandscape.com/contact</loc>
+    <lastmod>2026-05-07</lastmod>
+    <priority>0.70</priority>
+  </url>
+</urlset>

@@ -15,7 +15,7 @@ const Footer = () => {
     <footer style={{
       borderTop: "1px solid #e5e7eb",
       backgroundColor: "#ffffff",
-      fontFamily: "'Inter', sans-serif",
+      fontFamily: "var(--font-sans)",
     }}>
       <div style={{
         maxWidth: "1400px",
