@@ -144,19 +144,11 @@ His project experience spans residential landscapes, resorts, parks, schools, he
           </FadeUp>
 
           {/* Founder Cards */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '95px',
-            maxWidth: '1300px',
-            margin: 'auto',
-          }}>
+          <div className="founders-grid">
             {founders.map((member, index) => (
               <FadeUp
                 key={member.id}
                 className="team-card"
-                style={{ flex: '0 0 auto' }}
                 onClick={() => setSelectedFounder(member)}
               >
                 <div className="team-img-wrapper">
