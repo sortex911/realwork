@@ -4157,6 +4157,11 @@ section {
     padding: 8px !important;
   }
 
+  .service-card-carousel {
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
   .service-card-icon-badge {
     width: 25px !important;
     height: 25px !important;
