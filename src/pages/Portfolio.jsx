@@ -21,6 +21,8 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             src={project.imageUrl}
             alt={project.title}
             className="project-img"
+            objectFit="contain"
+            noBg={true}
             onLoad={() => setLoaded(true)}
           />
         ) : (
@@ -49,6 +51,8 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img"
         width={800}
+        objectFit="contain"
+        noBg={true}
         onLoad={() => setLoaded(true)}
       />
       <div className="gallery-item-overlay">
@@ -121,6 +125,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             priority={true}
             width={1600}
             className="gallery-hero-bg"
+            objectFit="contain"
+            noBg={true}
           />
         </div>
 
