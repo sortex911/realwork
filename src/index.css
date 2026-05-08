@@ -828,7 +828,7 @@ section {
 /* Portfolio Specifics */
 .portfolio-hero {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   height: auto;
   min-height: unset;
   display: flex;
@@ -971,7 +971,7 @@ section {
   aspect-ratio: 3 / 2;
   object-fit: contain;
   border-radius: 0;
-  background: #000;
+  background: #ffffff;
 }
 
 .project-card {
@@ -980,7 +980,7 @@ section {
   border-radius: 0;
   aspect-ratio: 3 / 2;
   cursor: pointer;
-  background: #000;
+  background: #ffffff;
   /* Base color to avoid flicker */
 }
 
@@ -1173,7 +1173,7 @@ section {
 .gallery-hero {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   background: #000;
   display: flex;
   align-items: center;
@@ -4137,7 +4137,7 @@ section {
 
   /* ── Gallery Modal ── */
   .gallery-hero {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     height: auto;
     min-height: unset;
   }
@@ -4390,7 +4390,7 @@ section {
 
   /* ── Gallery Hero ── */
   .gallery-hero {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     height: auto;
     min-height: unset;
   }
