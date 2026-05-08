@@ -828,7 +828,7 @@ section {
 /* Portfolio Specifics */
 .portfolio-hero {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   height: auto;
   min-height: unset;
   display: flex;
@@ -968,7 +968,7 @@ section {
 
 .gallery-item img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   object-fit: contain;
   border-radius: 0;
   background: #000;
@@ -978,7 +978,7 @@ section {
   position: relative;
   overflow: hidden;
   border-radius: 0;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   cursor: pointer;
   background: #000;
   /* Base color to avoid flicker */
@@ -987,7 +987,7 @@ section {
 .project-img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   object-fit: contain;
   transition: none !important;
   animation: none !important;
@@ -1139,7 +1139,8 @@ section {
   width: 100vw;
   height: 100vh;
   background: #ffffff;
-  z-index: 200000; /* Must be higher than header (100000) */
+  z-index: 200000;
+  /* Must be higher than header (100000) */
   overflow-y: auto !important;
   pointer-events: auto !important;
   padding: 0;
@@ -1172,7 +1173,7 @@ section {
 .gallery-hero {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   background: #000;
   display: flex;
   align-items: center;
@@ -1342,7 +1343,7 @@ section {
 .gallery-item-inner {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1/1;
   border-radius: 0;
   overflow: hidden;
   background: #1c3528;
@@ -1350,9 +1351,7 @@ section {
 
 .gallery-item-inner img {
   aspect-ratio: 16 / 9;
-  object-fit: contain;
-  display: block;
-  background: #000;
+  object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -3781,14 +3780,14 @@ section {
 }
 
 .gallery-item {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   border-radius: 0;
   overflow: hidden;
   position: relative;
 }
 
 .gallery-item-inner {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -4138,7 +4137,7 @@ section {
 
   /* ── Gallery Modal ── */
   .gallery-hero {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
     height: auto;
     min-height: unset;
   }
@@ -4391,7 +4390,7 @@ section {
 
   /* ── Gallery Hero ── */
   .gallery-hero {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
     height: auto;
     min-height: unset;
   }
