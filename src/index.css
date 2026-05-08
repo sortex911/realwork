@@ -1652,10 +1652,15 @@ section {
   }
 
   /* Hero Section Mobile Fixes */
-  .about-hero,
-  .hero {
-    height: 70vh !important;
+  .about-hero {
+    height: 80vh !important;
     min-height: 500px;
+  }
+
+  .hero {
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 600px;
   }
 
   .portfolio-hero {
@@ -4263,6 +4268,8 @@ section {
   /* ── Hero ── */
   .hero {
     padding: var(--spacing-md) 5% 6vh 5%;
+    height: 100vh !important;
+    height: 100dvh !important;
   }
 
   .hero-title {
