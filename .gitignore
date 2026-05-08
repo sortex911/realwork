@@ -28,3 +28,6 @@ yarn-error.log*
 
 # Vite
 .vite
+
+# Large files
+public/assets/logo/pre-comp-3.mov

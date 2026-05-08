@@ -9,7 +9,8 @@ export function Typewriter({
   loop = true,
   mode = "typewriter", // "typewriter", "glitch", "fade"
   className = "",
-  style = {}
+  style = {},
+  onComplete
 }) {
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -23,6 +24,7 @@ export function Typewriter({
 
   useEffect(() => {
     if (!loop && !isDeleting && charIndex === currentWord.length) {
+      if (onComplete) onComplete();
       return;
     }
 
@@ -42,6 +44,9 @@ export function Typewriter({
           }
         } else if (loop) {
           setTimeout(() => setIsDeleting(true), delayBetweenWords);
+        } else {
+          // If not looping and finished typing the word
+          if (onComplete) onComplete();
         }
       } else {
         if (charIndex > 0) {
@@ -55,7 +60,7 @@ export function Typewriter({
     }, isDeleting ? speed / 2 : speed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, wordIndex, words, loop, speed, delayBetweenWords, currentWord, mode]);
+  }, [charIndex, isDeleting, wordIndex, words, loop, speed, delayBetweenWords, currentWord, mode, onComplete]);
 
   useEffect(() => {
     if (!cursor) return;

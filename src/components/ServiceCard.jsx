@@ -8,6 +8,7 @@ const ServiceCard = ({ images, title, description, icon }) => {
   const [direction, setDirection] = useState(0);
 
   const changeImage = (newDirection) => {
+    if (!images || images.length === 0) return;
     setDirection(newDirection);
     setCurrentIndex((prevIndex) => {
       const nextIndex = prevIndex + newDirection;
@@ -56,26 +57,28 @@ const ServiceCard = ({ images, title, description, icon }) => {
       {/* Image Carousel Section */}
       <div className="service-card-carousel">
         <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={carouselVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="service-card-img-wrapper"
-            style={{ position: 'absolute', inset: 0 }}
-          >
-            <OptimizedImage
-              src={images[currentIndex]}
-              alt={title}
-              width={600}
-            />
-          </motion.div>
+          {images && images.length > 0 && images[currentIndex] && (
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={carouselVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              className="service-card-img-wrapper"
+              style={{ position: 'absolute', inset: 0 }}
+            >
+              <OptimizedImage
+                src={images[currentIndex]}
+                alt={title}
+                width={600}
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
         
         {/* Carousel Navigation */}
