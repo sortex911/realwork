@@ -350,7 +350,7 @@ const Portfolio = () => {
 
       <div className="portfolio-hero">
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
-          <source src="assets/video/portfolio-hero.mp4" type="video/mp4" />
+          <source src="/assets/video/portfolio-hero.mp4" type="video/mp4" />
         </video>
         <FadeUp className="hero-content">
           <h1 className="hero-title">Work</h1>

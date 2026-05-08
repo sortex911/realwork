@@ -103,7 +103,7 @@ const Procedure = () => {
             {
               id: "stage-2",
               title: "Site Visit",
-              description: "After confirmation of the Fee Terms, After receiving 20 % of the design fee, we schedule a site visit.",
+              description: "After confirmation of the fee terms and receipt of the design fee based on the agreed fee percentage, we will schedule a site visit.",
             },
             {
               id: "stage-3",

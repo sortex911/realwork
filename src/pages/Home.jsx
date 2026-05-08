@@ -81,21 +81,11 @@ const Home = () => {
         <meta name="keywords" content="best landscaping website, best Landscape Architects in kerala, Landscape Architects Kerala, Best Landscape Firm in Kerala, Tropical Landscaper kerala, Best Tropical Consultant in Kerala, Best Landscaper, Butterfly garden Kerala, Miyawaki Kerala, best Landscape consultant kerala, Best Landscape Designers kerala" />
         <link rel="canonical" href="https://www.greenrealmlandscape.com/" />
       </Helmet>
-      <FadeUp className="hero">
-        <video 
-          key={isMobile ? 'mobile' : 'desktop'} 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="hero-video"
-        >
-          <source 
-            src={isMobile ? '/assets/video/mobilehero.mp4' : '/assets/video/home-hero.mp4'} 
-            type="video/mp4" 
-          />
+      <FadeUp className="hero" style={{ background: 'transparent' }}>
+        <video key={isMobile ? 'mobile' : 'desktop'} autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
+          <source src={isMobile ? "/assets/video/mobilehero.mp4" : "/assets/video/home-hero.mp4"} type="video/mp4" />
         </video>
-        <div className="hero-content" ref={containerRef} style={{ position: 'relative' }}>
+        <div className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
           <h1 className="hero-title" style={{ color: '#ffffff' }}>
             <br />
             {!isMobile && firstComplete && (
@@ -127,7 +117,7 @@ const Home = () => {
             <div key={item.id} className="news-card-minimal" style={{ opacity: 1, padding: '0 20px' }}>
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: '4rem', fontStyle: 'italic', opacity: 0.1, marginBottom: '5px', color: 'var(--color-text)', lineHeight: 1 }}>{item.title}</div>
               <div style={{ color: 'var(--color-accent)', fontSize: '0.75rem', fontWeight: '600', marginBottom: '1.5rem', letterSpacing: '3px', opacity: 0.7, textTransform: 'uppercase' }}>{item.date}</div>
-              <p style={{ fontSize: '1rem', lineHeight: '1.7', color: 'var(--color-text)', opacity: 0.9, margin: '0 auto', maxWidth: '300px' }}>{item.text}</p>
+              <p style={{ fontSize: '1rem', lineHeight: '1.7', color: 'var(--color-text)', opacity: 0.9, margin: '0 auto' }}>{item.text}</p>
             </div>
           ))}
         </div>

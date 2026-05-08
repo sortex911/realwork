@@ -81,7 +81,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
     <>
       <div className="about-hero">
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
-          <source src="assets/video/about-hero.mp4" type="video/mp4" />
+          <source src="/assets/video/about-hero.mp4" type="video/mp4" />
         </video>
         <FadeUp className="hero-content">
           <h1 className="hero-title">About Us</h1>
