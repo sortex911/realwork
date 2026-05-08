@@ -21,7 +21,7 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             src={project.imageUrl}
             alt={project.title}
             className="project-img"
-            objectFit="cover"
+            objectFit="contain"
             noBg={true}
             onLoad={() => setLoaded(true)}
           />
@@ -51,7 +51,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img"
         width={800}
-        objectFit="cover"
+        objectFit="contain"
         noBg={true}
         onLoad={() => setLoaded(true)}
       />

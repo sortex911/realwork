@@ -978,20 +978,20 @@ section {
   position: relative;
   overflow: hidden;
   border-radius: 0;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   cursor: pointer;
   background: #ffffff;
-  /* Base color to avoid flicker */
 }
 
 .project-img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  object-position: center;
   transition: none !important;
   animation: none !important;
-  background: #000;
+  background: #ffffff;
 }
 
 .project-info {
@@ -1173,8 +1173,8 @@ section {
 .gallery-hero {
   position: relative;
   width: 100%;
-  height: 60vh;
-  background: #000;
+  aspect-ratio: 16 / 9;
+  background: #fffcfc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1189,7 +1189,8 @@ section {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #000;
+  object-position: center;
+  background: #ffffff;
 }
 
 .gallery-hero:hover .gallery-hero-bg {
@@ -1233,7 +1234,7 @@ section {
   font-family: var(--font-serif);
   margin-bottom: 10px;
   line-height: 1.1;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 30px rgba(255, 255, 255, 0.3);
 }
 
 .gallery-hero-desc {
@@ -1343,16 +1344,20 @@ section {
 .gallery-item-inner {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   border-radius: 0;
   overflow: hidden;
   background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .gallery-item-inner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -3783,7 +3788,7 @@ section {
 
 .gallery-item {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   border-radius: 0;
   overflow: hidden;
   position: relative;
@@ -3793,7 +3798,7 @@ section {
 .gallery-item-inner {
   width: 100%;
   height: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -4143,9 +4148,9 @@ section {
 
   /* ── Gallery Modal ── */
   .gallery-hero {
-    height: 50vh;
-    min-height: 280px;
-    aspect-ratio: auto;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: unset;
   }
 
   .close-gallery-floating {
@@ -4391,27 +4396,14 @@ section {
   /* ── Gallery Grid: single column ── */
   .gallery-grid {
     grid-template-columns: 1fr !important;
-    gap: 15px;
-  }
-
-  .gallery-item, 
-  .gallery-item-inner {
-    aspect-ratio: auto !important;
-    height: auto !important;
-    background: transparent !important;
-  }
-
-  .gallery-img, 
-  .gallery-item img {
-    height: auto !important;
-    object-fit: contain !important;
+    gap: 10px;
   }
 
   /* ── Gallery Hero ── */
   .gallery-hero {
-    height: 40vh;
-    min-height: 220px;
-    aspect-ratio: auto;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: unset;
   }
 
   /* ── Team Grid: single column ── */
