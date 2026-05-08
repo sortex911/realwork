@@ -1,83 +1,140 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Typewriter } from 'react-simple-typewriter'; // Assuming this or similar is available, or use a custom one
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Typewriter } from 'react-simple-typewriter';
 
-const VIDEO_URL = "/assets/video/home-hero.mp4"; // Swap with Supabase URL
+// Configuration - Replace with your actual Supabase URL and assets
+const SUPABASE_VIDEO_URL = "https://your-project-id.supabase.co/storage/v1/object/public/videos/hero-bg.mp4";
+const POSTER_IMAGE_URL = "/assets/images/hero-thumbnail.jpg"; // Small optimized thumbnail
+const FALLBACK_IMAGE_URL = "/assets/images/hero-fallback.jpg"; // High-quality static fallback
 
 const ModernHero = () => {
-  return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src={VIDEO_URL} type="video/mp4" />
-      </video>
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [startTypewriter, setStartTypewriter] = useState(false);
 
-      {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+  // Sync Typewriter start with the entrance animation completion
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStartTypewriter(true);
+    }, 1200); // Matches the 0.8s + small delay of the main container animation
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Background Layer */}
+      <AnimatePresence>
+        {!videoError ? (
+          <motion.div
+            key="video-container"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ 
+              opacity: isVideoLoaded ? 1 : 0, 
+              scale: isVideoLoaded ? 1 : 1.1 
+            }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute inset-0 z-0"
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={POSTER_IMAGE_URL}
+              onLoadedData={() => setIsVideoLoaded(true)}
+              onError={() => setVideoError(true)}
+              className="w-full h-full object-cover"
+            >
+              <source src={SUPABASE_VIDEO_URL} type="video/mp4" />
+            </video>
+          </motion.div>
+        ) : (
+          /* Fallback Gradient/Image Layer */
+          <motion.div
+            key="fallback-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 z-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url(${FALLBACK_IMAGE_URL})`,
+              backgroundColor: '#0f172a' // Dark slate fallback color
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Dark Overlay (Always present for consistency) */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-transparent to-black/90" />
 
       {/* Content Container */}
       <div className="relative z-20 container mx-auto px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="max-w-4xl mx-auto"
         >
-          {/* Bold Heading with Typewriter */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
-            Building Digital <span className="text-blue-400">Experiences</span>
+          {/* Main Title */}
+          <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 tracking-tighter leading-tight">
+            Design <span className="text-emerald-400">Integrity.</span>
             <br />
-            <span className="text-3xl md:text-5xl font-light italic opacity-90">
-              <Typewriter
-                words={['Modern.', 'Performant.', 'Scalable.']}
-                loop={0}
-                cursor
-                cursorStyle='|'
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
+            <span className="text-3xl md:text-5xl font-extralight text-gray-300">
+              {startTypewriter && (
+                <Typewriter
+                  words={['Tropical Sanctuaries.', 'Miyawaki Forests.', 'Butterfly Havens.']}
+                  loop={0}
+                  cursor
+                  cursorStyle='|'
+                  typeSpeed={60}
+                  deleteSpeed={40}
+                  delaySpeed={2000}
+                />
+              )}
             </span>
           </h1>
 
-          {/* Subtext Card (Glassmorphism) */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-2xl mb-10 max-w-2xl mx-auto transform hover:scale-[1.02] transition-transform duration-300">
-            <p className="text-lg md:text-xl text-gray-200 font-light">
-              Full-stack developer specialized in creating stunning user interfaces and robust architectures. Let's turn your vision into reality.
+          {/* Glassmorphism Feature Card */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 1 }}
+            className="inline-block bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] mb-12 max-w-2xl"
+          >
+            <p className="text-lg md:text-xl text-emerald-50/80 font-light leading-relaxed">
+              Elevating landscape architecture through technical precision and ecological sensitivity. Based in Kerala, serving the globe.
             </p>
-          </div>
+          </motion.div>
 
-          {/* CTA Buttons (Glassmorphism & Contrast) */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(52, 211, 153, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white text-black font-semibold rounded-full shadow-lg hover:bg-gray-100 transition-colors w-full sm:w-auto"
+              className="px-10 py-4 bg-emerald-500 text-black font-bold rounded-full transition-all w-full sm:w-auto"
             >
-              View Projects
+              Our Projects
             </motion.button>
             
             <motion.button
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 border border-white/30 text-white font-semibold rounded-full backdrop-blur-sm transition-all w-full sm:w-auto"
+              className="px-10 py-4 border border-white/20 text-white font-medium rounded-full backdrop-blur-md transition-all w-full sm:w-auto"
             >
-              Contact Me
+              Get In Touch
             </motion.button>
           </div>
         </motion.div>
       </div>
 
-      {/* Decorative Glass Element */}
-      <div className="absolute bottom-10 left-10 hidden lg:block">
-        <div className="w-32 h-32 bg-blue-500/10 backdrop-blur-xl rounded-full border border-white/10 animate-pulse" />
-      </div>
+      {/* Modern Scroll Indicator */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium">Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-emerald-500/80 to-transparent" />
+      </motion.div>
     </section>
   );
 };
