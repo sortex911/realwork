@@ -332,6 +332,15 @@ const Portfolio = () => {
     return () => unsub();
   }, []);
 
+  useEffect(() => {
+    if (galleryActive) {
+      document.body.classList.add('gallery-open');
+    } else {
+      document.body.classList.remove('gallery-open');
+    }
+    return () => document.body.classList.remove('gallery-open');
+  }, [galleryActive]);
+
   // Support both "categoryId" (new admin docs) and "category" (legacy docs)
   const filteredProjects = projects.filter(
     p => (p.categoryId ?? p.category) === activeCategory
@@ -354,7 +363,7 @@ const Portfolio = () => {
         </video>
         <FadeUp className="hero-content">
           <h1 className="hero-title">Work</h1>
-          <p className="hero-subtitle">Transforming our surroundings</p>
+          <p className="hero-subtitle">TRANSFORMING OUR SURROUNDINGS</p>
         </FadeUp>
       </div>
 

@@ -85,7 +85,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
         </video>
         <FadeUp className="hero-content">
           <h1 className="hero-title">About Us</h1>
-          <p className="hero-subtitle">Transforming our surroundings</p>
+          <p className="hero-subtitle">TRANSFORMING OUR SURROUNDINGS</p>
         </FadeUp>
       </div>
 
