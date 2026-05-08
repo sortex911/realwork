@@ -109,7 +109,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 9998;
+  z-index: 100000;
   color: var(--color-white);
   transition: all 0.3s ease;
 }
@@ -159,6 +159,9 @@ a {
   display: block;
 }
 
+/* ==========================================
+   MOBILE MENU DRAWER - FIXED
+========================================== */
 .mobile-menu-drawer {
   position: fixed;
   top: 0;
@@ -167,30 +170,47 @@ a {
   width: 100%;
   max-width: 300px;
   background: #ffffff;
-  z-index: 9999;
+  z-index: 999999 !important;
   padding: 30px;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
-  display: none; /* Hidden on desktop */
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  display: none;
   flex-direction: column;
+  pointer-events: auto !important;
 }
 
 .mobile-menu-header {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 40px;
+  position: relative;
+  z-index: 999999 !important;
 }
 
 .close-menu {
   background: transparent;
   border: none;
   color: #0f1a15;
-  cursor: pointer;
+  cursor: pointer !important;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+
+.close-menu svg {
+  color: #0f1a15 !important;
+  stroke: #0f1a15 !important;
+  pointer-events: none;
 }
 
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  z-index: 999999 !important;
 }
 
 .mobile-nav-link {
@@ -198,6 +218,10 @@ a {
   font-weight: 500;
   color: #4a5c54;
   transition: color 0.3s ease;
+  padding: 10px 0;
+  text-decoration: none;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .mobile-nav-link.active {
@@ -208,6 +232,13 @@ a {
 .mobile-nav-link:hover {
   color: #2c5545;
 }
+
+@media (max-width: 768px) {
+  .mobile-menu-drawer {
+    display: flex;
+  }
+}
+/* ========================================== */
 
 @media (max-width: 768px) {
   .desktop-nav {
@@ -4735,6 +4766,27 @@ section {
   .timeline-item::before {
     left: calc(14px * -1 - 7px);
   }
+
+  .mobile-menu-drawer {
+    z-index: 100001 !important;
+    pointer-events: auto !important; /* Ensure touch events are captured */
+  }
+
+  .mobile-menu-drawer .close-menu {
+    position: relative;
+    z-index: 100002 !important;
+    padding: 15px;
+    cursor: pointer !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Ensure X icon is visible */
+  .mobile-menu-drawer .close-menu svg {
+    color: #0f1a15 !important;
+    stroke: #0f1a15 !important;
+  }
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -4911,20 +4963,88 @@ section {
   }
 }
 
-/* END OF MOBILE RESPONSIVE ADDITIONS */
-/* Mobile Menu Drawer Fix */
+/* END OF MOBILE RESPONSIVE ADDITIONS *//* Custom Mobile Left Navbar styling */
+.mobile-menu-trigger-left {
+  display: none;
+  background: none;
+  border: none;
+  color: #2c5545;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 15px; /* Spacing from logo */
+  z-index: 1000;
+}
+
 @media (max-width: 768px) {
-  .mobile-menu-drawer {
-    z-index: 99999 !important;
+  .header {
+    justify-content: flex-start; /* To align items from left to right */
   }
+  .mobile-menu-trigger-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-container {
+    margin-left: 0; /* Adjust if needed */
+  }
+}
 
-  .mobile-menu-drawer .close-menu {
-    position: relative;
-    z-index: 100000 !important;
-    padding: 15px;
-  }
+.mobile-menu-drawer-left {
+  position: fixed;
+  top: 0;
+  left: 0; /* From the left */
+  bottom: 0;
+  width: 100%;
+  max-width: 300px; /* Optional: limit width on larger phones */
+  background-color: #ffffff; /* Or your preferred background */
+  z-index: 100001 !important;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  pointer-events: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
 
-  .mobile-menu-drawer .close-menu .hamburger-icon span {
-    background-color: #0f1a15 !important;
-  }
+.mobile-menu-drawer-left .mobile-menu-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.mobile-menu-drawer-left .close-menu {
+  background: none;
+  border: none;
+  cursor: pointer !important;
+  padding: 15px;
+  position: relative;
+  z-index: 100002 !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-menu-drawer-left .close-menu svg {
+  color: #0f1a15 !important;
+  stroke: #0f1a15 !important;
+}
+
+.mobile-menu-drawer-left .mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-menu-drawer-left .mobile-nav-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0f1a15;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu-drawer-left .mobile-nav-link.active,
+.mobile-menu-drawer-left .mobile-nav-link:hover {
+  color: #2c5545;
 }

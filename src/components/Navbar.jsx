@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Menu, X } from 'lucide-react';
+import { MoreVertical, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import GooeyNav from './GooeyNav';
 
@@ -9,7 +8,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -20,7 +18,6 @@ const Navbar = () => {
     { label: 'Contact', href: '/contact' },
   ];
 
-
   const activeIndex = navItems.findIndex(item => item.href === location.pathname);
 
   const handleNavItemClick = (item) => {
@@ -30,6 +27,15 @@ const Navbar = () => {
 
   return (
     <header className="header">
+      {/* Mobile 3-dot trigger on the left */}
+      <button
+        className="mobile-menu-trigger-left"
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle Menu"
+      >
+        <MoreVertical size={28} />
+      </button>
+
       <div className="logo-container">
         <Link to="/">
           <video autoPlay muted loop playsInline className="logo-video">
@@ -52,18 +58,25 @@ const Navbar = () => {
           </nav>
         </div>
 
-        {/* Mobile Menu Drawer */}
+        {/* Mobile Menu Drawer (Left Side) */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              initial={{ x: '100%' }}
+              key="mobile-drawer"
+              initial={{ x: '-100%' }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="mobile-menu-drawer"
+              className="mobile-menu-drawer-left"
             >
               <div className="mobile-menu-header">
-                <button className="close-menu" onClick={() => setMenuOpen(false)}>
+                <button 
+                  className="close-menu" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                  }}
+                >
                   <X size={30} />
                 </button>
               </div>
@@ -82,14 +95,6 @@ const Navbar = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
-        <button
-          className="menu-trigger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </div>
     </header>
   );
