@@ -969,7 +969,7 @@ section {
 .gallery-item img {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 0;
   background: #000;
 }
@@ -1341,7 +1341,7 @@ section {
 .gallery-item-inner {
   position: relative;
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 16 / 9;
   border-radius: 0;
   overflow: hidden;
   background: #1c3528;
@@ -1350,7 +1350,9 @@ section {
 .gallery-item-inner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  display: block;
+  background: #000;
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -3779,7 +3781,7 @@ section {
 }
 
 .gallery-item {
-  aspect-ratio: 1/1;
+  aspect-ratio: 16 / 9;
   border-radius: 0;
   overflow: hidden;
   position: relative;
