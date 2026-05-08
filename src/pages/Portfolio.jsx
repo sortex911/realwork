@@ -114,24 +114,15 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       onWheel={(e) => e.stopPropagation()} // Stop event propagation
     >
       <div className="gallery-hero">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            className="gallery-hero-bg-wrapper"
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-            style={{ position: 'absolute', inset: 0 }}
-          >
-            <OptimizedImage
-              src={images[currentIndex]}
-              alt={`${project.title} slide ${currentIndex + 1}`}
-              priority={true}
-              width={1600}
-            />
-          </motion.div>
-        </AnimatePresence>
+        <div className="gallery-hero-bg-wrapper" style={{ position: 'absolute', inset: 0 }}>
+          <OptimizedImage
+            src={images[currentIndex]}
+            alt={`${project.title} slide ${currentIndex + 1}`}
+            priority={true}
+            width={1600}
+            className="gallery-hero-bg"
+          />
+        </div>
 
         <div className="gallery-hero-overlay" />
 

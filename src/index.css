@@ -967,11 +967,10 @@ section {
 
 .gallery-item img {
   width: 100%;
-  height: auto;
-  aspect-ratio: auto;
+  aspect-ratio: 16 / 9;
   object-fit: contain;
   border-radius: 0;
-  background: #f8f8f8; /* Light background for thumbnail bars */
+  background: #000;
 }
 
 .project-card {
@@ -1170,8 +1169,8 @@ section {
 .gallery-hero {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 100vh;
+  aspect-ratio: 16 / 9;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1187,7 +1186,6 @@ section {
   height: 100%;
   object-fit: contain;
   background: #000;
-  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .gallery-hero:hover .gallery-hero-bg {
@@ -4137,8 +4135,9 @@ section {
 
   /* ── Gallery Modal ── */
   .gallery-hero {
-    height: 50vh;
-    min-height: 280px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: unset;
   }
 
   .close-gallery-floating {
@@ -4389,8 +4388,9 @@ section {
 
   /* ── Gallery Hero ── */
   .gallery-hero {
-    height: 40vh;
-    min-height: 220px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: unset;
   }
 
   /* ── Team Grid: single column ── */
