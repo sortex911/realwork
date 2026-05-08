@@ -601,12 +601,12 @@ section {
 }
 
 .concept-image-section .concept-container {
-  text-align: left;
+  text-align: center;
 }
 
 .concept-image-section .concept-main-img {
   width: 1200px;
-  margin-left: 100px;
+  margin-left: 150px;
   height: auto;
   display: block;
 }

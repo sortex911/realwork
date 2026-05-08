@@ -2,7 +2,7 @@ import React from "react";
 import { FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 
 const Footer = () => {
-  const productLinks = ["Landscape Consultation", "Butterfly Garden", "Terrace Garden", "Other Services"];
+  const productLinks = ["Landscape consultation ", "Landscape Execution ", "Landscape Maintenance"];
   const companyLinks  = [
     { label: "About",    href: "#/about" },
     { label: "Portfolio",href: "#/portfolio" },

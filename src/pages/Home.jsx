@@ -172,7 +172,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="services">
+      <section id="services" style={{ marginTop: '8rem' }}>
         <FadeUp><h2 className="section-title">Services</h2></FadeUp>
         <div className="services-grid-new">
           {services.map((service, index) => (
