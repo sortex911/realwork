@@ -125,7 +125,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             priority={true}
             width={1600}
             className="gallery-hero-bg"
-            objectFit="cover"
+            objectFit="contain"
             noBg={true}
           />
         </div>
