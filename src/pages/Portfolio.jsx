@@ -43,7 +43,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
   return (
     <div
       className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`}
-      style={{ borderRadius: '0', overflow: 'hidden', height: '100%', cursor: 'pointer' }}
+      style={{ overflow: 'hidden', cursor: 'pointer' }}
       onClick={() => onOpen(url)}
     >
       <OptimizedImage
