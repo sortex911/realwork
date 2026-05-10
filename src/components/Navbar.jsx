@@ -68,4 +68,33 @@ const Navbar = () => {
   );
 };
 
+export default Navbar; false);
+  };
+
+return (
+  <header className="header" ref={headerRef} data-nav-theme={navTheme}>
+    <div className="logo-container">
+      <Link to="/">
+        <video autoPlay muted loop playsInline className="logo-video">
+          <source src="assets/logo/pre-comp-3.mov" type="video/quicktime" />
+          <source src="assets/logo/pre-comp-3.mp4" type="video/mp4" />
+        </video>
+      </Link>
+    </div>
+
+    <div className="nav-controls">
+      <nav className="inline-menu">
+        <GooeyNav
+          items={navItems}
+          initialActiveIndex={activeIndex !== -1 ? activeIndex : 0}
+          onItemClick={handleNavItemClick}
+          particleCount={12}
+          animationTime={500}
+        />
+      </nav>
+    </div>
+  </header>
+);
+};
+
 export default Navbar;

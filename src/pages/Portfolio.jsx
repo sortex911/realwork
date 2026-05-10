@@ -21,6 +21,8 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             src={project.imageUrl}
             alt={project.title}
             className="project-img"
+            width="100%"
+            height="100%"
             objectFit="contain"
             noBg={true}
             onLoad={() => setLoaded(true)}
@@ -50,7 +52,8 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         src={url}
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img"
-        width={800}
+        width="100%"
+        height="100%"
         objectFit="contain"
         noBg={true}
         onLoad={() => setLoaded(true)}
@@ -123,7 +126,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             src={images[currentIndex]}
             alt={`${project.title} slide ${currentIndex + 1}`}
             priority={true}
-            width={1600}
+            width="100%"
+            height="100%"
             className="gallery-hero-bg"
             objectFit="contain"
             noBg={true}
@@ -214,8 +218,10 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
           >
             <OptimizedImage
               src={fullscreenImage}
-              width={2000}
+              width="100%"
+              height="100%"
               objectFit="contain"
+              noBg={true}
             />
             <button
               style={{
