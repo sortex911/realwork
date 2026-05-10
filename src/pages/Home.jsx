@@ -89,7 +89,6 @@ const Home = () => {
           loop 
           playsInline 
           preload="auto" 
-          poster="/assets/home-images/imgland.png"
           disablePictureInPicture 
           className="hero-bg"
         >
