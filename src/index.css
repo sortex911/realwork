@@ -982,6 +982,7 @@ section {
   aspect-ratio: 16 / 9;
   cursor: pointer;
   background: #ffffff;
+  width: 100%;
 }
 
 .project-img {
@@ -3761,7 +3762,7 @@ section {
   background: #fff;
 }
 
-.gallery-grid {
+.gallery-grid { justify-items: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 20px;

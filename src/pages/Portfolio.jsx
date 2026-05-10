@@ -404,7 +404,7 @@ const Portfolio = () => {
             <p>No projects found. Add your first project from the Admin Dashboard.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto px-4 py-10">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '2.5rem 1rem', justifyItems: 'center' }}>
             {filteredProjects.length > 0 ? (
               filteredProjects.map(project => (
                 <ProjectCardItem
