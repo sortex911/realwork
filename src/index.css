@@ -5126,3 +5126,45 @@ section {
     margin: 0 auto !important;
   }
 }
+
+/* --- Mobile Responsiveness & Overflow Fixes --- */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.concept-section-new {
+  width: 100%;
+  margin: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.concept-section-new .concept-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .concept-section-new {
+    margin: 50px 0;
+  }
+  
+  .concept-section-new .concept-container {
+    width: 95%; /* Increased from 70% */
+    max-width: 600px; /* Increased from 300px */
+  }
+}
+
+/* Ensure no other section causes overflow */
+section {
+  max-width: 100%;
+  overflow-x: hidden;
+}

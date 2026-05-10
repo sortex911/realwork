@@ -83,9 +83,9 @@ His project experience spans residential landscapes, resorts, parks, schools, he
         <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
           <source src="/assets/video/about-hero.mp4" type="video/mp4" />
         </video>
-        <FadeUp className="hero-content">
-          <h1 className="hero-title">About Us</h1>
-          <p className="hero-subtitle">TRANSFORMING OUR SURROUNDINGS</p>
+        <FadeUp className="hero-content" style={{ alignItems: 'center', textAlign: 'center', paddingLeft: 0, margin: '0 auto' }}>
+          <h1 className="hero-title" style={{ textAlign: 'center' }}>About Us</h1>
+          <p className="hero-subtitle" style={{ textAlign: 'center' }}>TRANSFORMING OUR SURROUNDINGS</p>
         </FadeUp>
       </div>
 

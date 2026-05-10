@@ -133,18 +133,20 @@ const Home = () => {
         </div>
       </section>
 
-      <div style={{ margin: '100px auto', textAlign: 'center', width: '90%', maxWidth: '1200px' }}>
+      <section className="concept-section-new">
         <FadeUp>
-          <OptimizedImage
-            src="/assets/home-images/CONCEPT.png"
-            alt="Landscape Concept"
-            width={1600}
-            quality={90}
-            objectFit="contain"
-            noBg={true}
-          />
+          <div className="concept-container">
+            <OptimizedImage
+              src="/assets/home-images/CONCEPT.png"
+              alt="Landscape Concept"
+              width={1600}
+              quality={90}
+              objectFit="contain"
+              noBg={true}
+            />
+          </div>
         </FadeUp>
-      </div>
+      </section>
 
       <section id="services" style={{ marginTop: '8rem' }}>
         <FadeUp><h2 className="section-title">Services</h2></FadeUp>

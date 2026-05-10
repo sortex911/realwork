@@ -41,9 +41,10 @@ const OptimizedImage = ({
 
   const containerStyle = {
     position: 'relative',
-    width: width ? `${width}px` : '100%',
-    height: height ? `${height}px` : '100%',
-    aspectRatio: width && height ? `${width}/${height}` : 'auto',
+    width: width ? (typeof width === 'number' ? `${width}px` : width) : '100%',
+    height: height ? (typeof height === 'number' ? `${height}px` : height) : 'auto',
+    maxWidth: '100%',
+    aspectRatio: width && height && typeof width === 'number' && typeof height === 'number' ? `${width}/${height}` : 'auto',
     overflow: 'hidden',
     backgroundColor: noBg ? 'transparent' : 'var(--color-bg-alt, #f0f4f2)'
   };
