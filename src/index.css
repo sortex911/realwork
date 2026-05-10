@@ -134,6 +134,7 @@ a {
   display: flex;
   align-items: center;
   gap: 1rem;
+  mix-blend-mode: difference;
 }
 
 .menu-trigger {
@@ -5131,7 +5132,7 @@ section {
 /* --- Mobile Responsiveness & Overflow Fixes --- */
 html, body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -5167,5 +5168,5 @@ html, body {
 /* Ensure no other section causes overflow */
 section {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
