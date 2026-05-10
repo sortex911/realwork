@@ -82,7 +82,17 @@ const Home = () => {
         <link rel="canonical" href="https://www.greenrealmlandscape.com/" />
       </Helmet>
       <FadeUp className="hero" style={{ background: 'transparent' }}>
-        <video key={isMobile ? 'mobile' : 'desktop'} autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
+        <video 
+          key={isMobile ? 'mobile' : 'desktop'} 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          preload="auto" 
+          poster="/assets/home-images/imgland.png"
+          disablePictureInPicture 
+          className="hero-bg"
+        >
           <source src={isMobile ? "/assets/video/mobilehero.mp4" : "/assets/video/home-hero.mp4"} type="video/mp4" />
         </video>
         <div className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
@@ -125,10 +135,13 @@ const Home = () => {
 
       <div style={{ margin: '100px auto', textAlign: 'center', width: '90%', maxWidth: '1200px' }}>
         <FadeUp>
-          <img 
-            src="/assets/home-images/CONCEPT.png" 
-            alt="Landscape Concept" 
-            style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }} 
+          <OptimizedImage
+            src="/assets/home-images/CONCEPT.png"
+            alt="Landscape Concept"
+            width={1600}
+            quality={90}
+            objectFit="contain"
+            noBg={true}
           />
         </FadeUp>
       </div>
