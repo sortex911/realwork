@@ -92,7 +92,7 @@ const Home = () => {
           disablePictureInPicture 
           className="hero-bg"
         >
-          <source src={isMobile ? "/assets/video/mobilehero.mp4" : "/assets/video/home-hero.mp4"} type="video/mp4" />
+          <source src="/assets/video/home-hero.mp4" type="video/mp4" />
         </video>
         <div className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
           <h1 className="hero-title" style={{ color: '#ffffff', textAlign: 'left', width: '100%' }}>
