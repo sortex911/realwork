@@ -2,6 +2,10 @@
   padding: 50px 0;
   background-color: #ffffff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .testimonials-grid-container {
@@ -49,12 +53,12 @@
 
 @media (max-width: 768px) {
   .testimonials-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .testimonials-grid-container {
-    height: 300px;
+    height: 600px;
   }
 
   .testimonial-card {
@@ -131,19 +135,22 @@
 .testimonial-stars {
   font-size: 0.9rem;
   letter-spacing: 2px;
+  text-align: center;
 }
 
 .testimonial-text {
   color: #475569;
   line-height: 1.6;
   font-size: 14px;
-  margin-bottom: 2px;
+  margin-bottom: 12px;
   font-weight: 300;
+  text-align: center;
 }
 
 .testimonial-footer {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
 }
 

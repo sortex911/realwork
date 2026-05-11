@@ -93,6 +93,8 @@ p {
   font-size: 1.1rem;
   color: var(--color-text-light);
   max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 a {
@@ -273,7 +275,10 @@ a {
 section {
   padding: var(--spacing-xxl) var(--spacing-md);
   max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
 }
 
 .section-title {
@@ -522,8 +527,9 @@ section {
 }
 
 .concept-image-section .concept-main-img {
-  width: 1200px;
-  margin-left: 150px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   height: auto;
   display: block;
 }
