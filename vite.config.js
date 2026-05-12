@@ -10,6 +10,16 @@ export default defineConfig({
   ],
   base: '/',
   build: {
+    target: 'esnext',
+    minify: 'terser',
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 1000,
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -19,6 +29,7 @@ export default defineConfig({
           'vendor-motion': ['framer-motion'],
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-icons': ['react-icons', 'lucide-react'],
+          'vendor-utils': ['lenis', 'gsap', '@gsap/react'],
         },
       },
     },

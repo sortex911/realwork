@@ -22,6 +22,7 @@ import {
   NEWS_CAT_RECENT, NEWS_CAT_PUBLICATIONS, NEWS_CAT_INTERVIEWS, NEWS_CAT_ONLINE,
   uploadImagesToSupabase, uploadImageToSupabase
 } from '../services/adminService';
+import '../styles/admin.css';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const genId = () => Math.random().toString(36).slice(2, 10);

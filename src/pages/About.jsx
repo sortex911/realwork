@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { COL_TEAM } from '../services/adminService';
 import FadeUp from '../components/FadeUp';
 import ClientLogos from '../components/ClientLogos';
 import OptimizedImage from '../components/OptimizedImage';
+import LazyVideo from '../components/LazyVideo';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import '../styles/about.css';
 
 const About = () => {
   const [showGallery, setShowGallery] = useState(false);
@@ -79,21 +81,26 @@ His project experience spans residential landscapes, resorts, parks, schools, he
 
   return (
     <>
-      <div className="about-hero">
-        <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
-          <source src="/assets/video/about-hero.mp4" type="video/mp4" />
-        </video>
-        <FadeUp className="hero-content" style={{ alignItems: 'center', textAlign: 'center', paddingLeft: 0, margin: '0 auto' }}>
-          <h1 className="hero-title" style={{ textAlign: 'center' }}>About Us</h1>
-          <p className="hero-subtitle" style={{ textAlign: 'center' }}>TRANSFORMING OUR SURROUNDINGS</p>
-        </FadeUp>
-      </div>
+      <FadeUp className="hero about-hero" style={{ background: 'transparent' }}>
+        <LazyVideo 
+          src="/assets/video/about-hero.mp4" 
+          className="hero-bg"
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+        />
+        <div className="hero-content" style={{ alignItems: 'center', textAlign: 'center', paddingLeft: 0, margin: '0 auto', width: '100%' }}>
+          <h1 className="hero-title" style={{ textAlign: 'center', color: '#ffffff' }}>About Us</h1>
+          <p className="hero-subtitle" style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.8)' }}>TRANSFORMING OUR SURROUNDINGS</p>
+        </div>
+      </FadeUp>
 
       <section ref={textRef}>
         <div className="about-intro" style={{ maxWidth: '1100px', margin: '0 auto', padding: 'var(--spacing-xxl) var(--spacing-md)', textAlign: 'center' }}>
           <div className="section-dot"></div>
-          <h2 className="section-title" style={{ marginBottom: 'var(--spacing-sm)' }}>About Us</h2>
-          <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-lg)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
+          <h2 className="section-title">About Us</h2>
+          <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-xl)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
 
           <FadeUp>
             <div style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300', display: 'flex', flexDirection: 'column', gap: '25px' }}>
@@ -251,14 +258,14 @@ His project experience spans residential landscapes, resorts, parks, schools, he
 
       <AnimatePresence>
         {selectedFounder && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="founder-modal-overlay"
             onClick={() => setSelectedFounder(null)}
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -290,14 +297,14 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                   {founderDetails[selectedFounder.name]?.bio || "Biography details coming soon."}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {showGallery && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -317,7 +324,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
               <div className="gallery-content">
                 <div className="team-gallery-grid">
                   {fullTeam.map((member, index) => (
-                    <motion.div
+                    <m.div
                       key={member.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -336,12 +343,12 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                         <h3>{member.name}</h3>
                         <p>{member.role}</p>
                       </div>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

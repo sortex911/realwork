@@ -1,30 +1,25 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import FadeUp from '../components/FadeUp';
-import ClientStories from '../components/ClientStories';
-import ClientLogos from '../components/ClientLogos';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { COL_NEWS, NEWS_CAT_RECENT } from '../services/adminService';
 import { Typewriter } from '../components/Typewriter';
 import ServiceCard from '../components/ServiceCard';
 import OptimizedImage from '../components/OptimizedImage';
+import LazyVideo from '../components/LazyVideo';
+import '../styles/home.css';
+
+import { useMediaQuery } from '../lib/hooks';
+
+const ClientStories = lazy(() => import('../components/ClientStories'));
 
 const Home = () => {
   const containerRef = useRef(null);
   const [news, setNews] = useState([]);
   const [services, setServices] = useState([]);
   const [firstComplete, setFirstComplete] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  // Handle dynamic video switching on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   // Fetch recent news
   useEffect(() => {
@@ -82,18 +77,15 @@ const Home = () => {
         <link rel="canonical" href="https://www.greenrealmlandscape.com/" />
       </Helmet>
       <FadeUp className="hero" style={{ background: 'transparent' }}>
-        <video 
-          key={isMobile ? 'mobile' : 'desktop'} 
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          preload="auto" 
-          disablePictureInPicture 
+        <LazyVideo 
+          src="/assets/video/home-hero.mp4" 
+          mobileSrc="/assets/video/mobilehero.mp4"
           className="hero-bg"
-        >
-          <source src="/assets/video/home-hero.mp4" type="video/mp4" />
-        </video>
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+        />
         <div className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
           <h1 className="hero-title" style={{ color: '#ffffff', textAlign: 'left', width: '100%' }}>
             <br />
@@ -163,7 +155,9 @@ const Home = () => {
       </section>
 
       <div style={{ marginTop: '100px' }}>
-        <ClientStories />
+        <Suspense fallback={null}>
+          <ClientStories />
+        </Suspense>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import FadeUp from '../components/FadeUp';
 import { ContainerScroll, CardSticky } from '../components/CardsStack';
 import { AuroraHero } from '../components/AuroraHero';
 import ImagesSlider from '../components/ImagesSlider';
+import '../styles/procedure.css';
 
 const Procedure = () => {
   const services = [

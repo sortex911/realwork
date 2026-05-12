@@ -6,6 +6,8 @@ node_modules/
 # build files
 dist/
 build/
+out/
+.next/
 
 # env files
 .env
@@ -21,6 +23,9 @@ build/
 
 # firebase
 .firebase/
+firestore-debug.log
+ui-debug.log
+firebase-debug.log
 
 # logs
 *.log
@@ -35,16 +40,40 @@ yarn-error.log*
 # system files
 .DS_Store
 Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
 # IDE
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
 
 # Misc
 *.pem
 coverage
+*.zip
+*.rar
+*.7z
+*.tar.gz
 
-# Large files
-public/assets/logo/pre-comp-3.mov
+# Large Media / Assets
+*.mov
+*.mp4
+*.mkv
+*.avi
+*.wmv
+# Keep essential site videos
+!public/assets/video/*.mp4
 
-*.timestamp-*.mjs
+# OS generated files
+ehthumbs.db
+Icon?
+
+# Backup files
+*.bak
+*.swp
+*~

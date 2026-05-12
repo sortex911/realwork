@@ -1,0 +1,449 @@
+/* Home Specific Styles */
+
+/* Recent News */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-header .line {
+  height: 1px;
+  width: 50px;
+  background-color: #c1a87d;
+}
+
+.section-title-small {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.news-section {
+  padding-bottom: 15px !important;
+}
+
+.news-grid-new {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1400px;
+  margin: var(--spacing-xl) auto 0;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.news-card {
+  background: var(--color-white);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.news-number {
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  font-style: italic;
+  color: #f0f0f0;
+  line-height: 0.8;
+  padding: 20px 20px 0 20px;
+  margin-bottom: 5px;
+}
+
+.news-image-wrapper {
+  position: center;
+  width: 100%;
+  height: 200px;
+}
+
+.news-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-date-badge {
+  position: absolute;
+  bottom: -16px;
+  left: 20px;
+  background-color: #4e6550;
+  color: var(--color-white);
+  padding: 6px 12px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  box-shadow: none;
+}
+
+.news-date-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.news-content {
+  padding: 35px 20px 20px 20px;
+  flex-grow: 1;
+}
+
+.news-content p {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+/* Concept Image */
+.concept-image-section {
+  width: 100%;
+  margin: 40px 0;
+}
+
+.concept-image-section .concept-container {
+  text-align: center;
+}
+
+.concept-image-section .concept-main-img {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: auto;
+  display: block;
+}
+
+/* Services */
+.services-grid-new {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+.service-icon {
+  width: 90px;
+  height: 90px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  box-shadow: 0 8px 20px rgba(46, 74, 61, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.service-icon svg {
+  width: 45px;
+  height: 45px;
+}
+
+.service-title-new {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.service-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  line-height: 1.8;
+}
+
+/* Testimonials */
+.testimonials-section {
+  background-color: var(--color-white);
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+}
+
+.testimonial-list {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.testimonial-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.testimonial-text {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  text-align: left;
+}
+
+.testimonial-author-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  align-self: flex-end;
+  margin-right: 15%;
+}
+
+.testimonial-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 0;
+  object-fit: cover;
+  border: 2px solid var(--color-white);
+  box-shadow: none;
+}
+
+.testimonial-author {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.full-width-img {
+  width: 100%;
+  height: 50vh;
+  min-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Landscape Banner */
+.landscape-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.landscape-banner .opt-img-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 50vh;
+  min-height: 400px;
+  background-color: transparent !important;
+}
+
+.landscape-banner .opt-img-container img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.landscape-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.landscape-banner-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0 20px;
+}
+
+/* Concept Section */
+.concept-section {
+  width: 100%;
+  padding: 0;
+  margin: 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.concept-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.concept-img img {
+  object-position: 70% center;
+}
+
+/* Concept Section New */
+.concept-section-new {
+  width: 100%;
+  margin: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.concept-section-new .concept-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* Service Place Card */
+.service-place-card {
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  border-radius: 0;
+  background-color: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: none;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.service-card-carousel {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.service-card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.service-card-nav {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.service-card-carousel:hover .service-card-nav {
+  opacity: 1;
+}
+
+.service-nav-btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.service-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.service-card-icon-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--color-white);
+  color: var(--color-accent);
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card-icon-badge svg {
+  width: 20px;
+  height: 20px;
+}
+
+.service-card-content {
+  padding: 20px;
+  background: var(--color-white);
+}
+
+.service-card-title {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.service-card-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+/* Home Media Queries */
+@media (max-width: 1024px) {
+  .news-grid-new {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .services-grid-new {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .concept-image-section .concept-main-img {
+    width: 100%;
+    margin-left: 0;
+  }
+  .concept-section {
+    margin: 30px 0;
+  }
+  .concept-section-new {
+    margin: 50px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .news-grid-new, .services-grid-new {
+    grid-template-columns: 1fr;
+  }
+}

@@ -3,7 +3,8 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
+import '../styles/contact.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

@@ -23,15 +23,16 @@ const OptimizedImage = ({
   objectFit = 'cover',
   objectPosition = 'center',
   onLoad,
-  noBg = false
+  noBg = false,
+  sizes = '100vw'
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [retryWithOriginal, setRetryWithOriginal] = useState(false);
 
-  // Generate optimized URL
+  // Generate optimized URL - request larger than display width for high-DPI screens
   const optimizedSrc = getOptimizedUrl(src, { 
-    width: width || 800, 
+    width: typeof width === 'number' ? width * 2 : 1200, 
     quality, 
     format: 'webp' 
   });
@@ -42,11 +43,14 @@ const OptimizedImage = ({
   const containerStyle = {
     position: 'relative',
     width: width ? (typeof width === 'number' ? `${width}px` : width) : '100%',
-    height: height ? (typeof height === 'number' ? `${height}px` : height) : 'auto',
+    height: height ? (typeof height === 'number' ? `${height}px` : height) : '100%',
     maxWidth: '100%',
     aspectRatio: width && height && typeof width === 'number' && typeof height === 'number' ? `${width}/${height}` : 'auto',
     overflow: 'hidden',
-    backgroundColor: noBg ? 'transparent' : 'var(--color-bg-alt, #f0f4f2)'
+    backgroundColor: noBg ? 'transparent' : 'rgba(44, 85, 69, 0.05)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   };
 
   const imageStyle = {
@@ -89,6 +93,7 @@ const OptimizedImage = ({
           alt={alt}
           style={imageStyle}
           loading={priority ? 'eager' : 'lazy'}
+          sizes={sizes}
           onLoad={() => {
             setIsLoaded(true);
             if (onLoad) onLoad();

@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from '../firebase';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
+import '../styles/admin.css';
 
 const AdminLogin = () => {
   const { user, isAdmin, loading } = useAuth();

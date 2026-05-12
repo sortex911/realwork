@@ -1,0 +1,224 @@
+/* Shared Components Styles */
+
+/* Client Stories Premium Section */
+.cs-section {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 2.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cs-header {
+  max-width: 1000px;
+  margin: 0 auto 1.5rem;
+  padding: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.cs-heading {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cs-subheading {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cs-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.cs-nav-btn {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cs-nav-btn:hover:not(.disabled) {
+  background: #000;
+  color: #fff;
+}
+
+.cs-slide {
+  min-width: 100vw;
+  width: 100vw;
+  padding: 0 4rem;
+}
+
+.cs-slide-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.cs-image-box {
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+  aspect-ratio: 4/5;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.cs-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: transform 0.8s ease;
+}
+
+.cs-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  max-width: 500px;
+}
+
+.cs-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 4rem;
+}
+
+.cs-dot {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cs-dot.active {
+  background: #000;
+  width: 30px;
+}
+
+/* Client Logos / Partners */
+.partners-track {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xxl);
+}
+
+.partner-logo {
+  height: 65px;
+  filter: grayscale(100%) opacity(0.6);
+  transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  padding: 2.5rem 2rem;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
+  height: 100%;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-8px);
+}
+
+@media (max-width: 992px) {
+  .cs-slide-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-image-box { aspect-ratio: 16/9; }
+}
+
+/* Mobile Menu Drawers */
+.mobile-menu-drawer, .mobile-menu-drawer-left {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 300px;
+  background-color: #ffffff;
+  z-index: 100001 !important;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  pointer-events: auto !important;
+}
+
+.mobile-menu-drawer { right: 0; }
+.mobile-menu-drawer-left { left: 0; }
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+.close-menu {
+  background: none;
+  border: none;
+  cursor: pointer !important;
+  padding: 15px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-nav-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0f1a15;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mobile-nav-link.active, .mobile-nav-link:hover {
+  color: #2c5545;
+}
+
+.mobile-menu-trigger-left {
+  display: none;
+  background: none;
+  border: none;
+  color: #2c5545;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-trigger-left { display: flex; align-items: center; }
+}

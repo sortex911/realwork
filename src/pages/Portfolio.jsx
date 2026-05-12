@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo, memo } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import FadeUp from '../components/FadeUp';
 import ImagesSlider from '../components/ImagesSlider';
 import OptimizedImage from '../components/OptimizedImage';
+import LazyVideo from '../components/LazyVideo';
+import '../styles/portfolio.css';
 
 // ─── Component ────────────────────────────────────────────────────────────────
 // ─── Memoized Project Card ───────────────────────────────────────────────────
@@ -110,7 +112,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
   };
 
   return (
-    <motion.div
+    <m.div
       id="project-gallery"
       className="project-gallery active"
       initial={{ opacity: 0, y: 20 }}
@@ -198,7 +200,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       {/* Lightbox / Fullscreen Image View */}
       <AnimatePresence>
         {fullscreenImage && (
-          <motion.div
+          <m.div
             className="lightbox-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -236,12 +238,21 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             >
               &times;
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 };
+
+const CategoryTab = memo(({ cat, activeCategory, onClick }) => (
+  <button
+    className={`tab-btn ${activeCategory === cat.id ? 'active' : ''}`}
+    onClick={() => onClick(cat.id)}
+  >
+    {cat.name}
+  </button>
+));
 
 const Portfolio = () => {
   const [categories, setCategories] = useState([]);
@@ -345,9 +356,11 @@ const Portfolio = () => {
   }, [galleryActive]);
 
   // Support both "categoryId" (new admin docs) and "category" (legacy docs)
-  const filteredProjects = projects.filter(
-    p => (p.categoryId ?? p.category) === activeCategory
-  );
+  const filteredProjects = useMemo(() => {
+    return projects.filter(
+      p => (p.categoryId ?? p.category) === activeCategory
+    );
+  }, [projects, activeCategory]);
 
   // ── Gallery helpers ───────────────────────────────────────────────────────
   const openGallery = (project) => { setSelectedProject(project); setGalleryActive(true); };
@@ -361,9 +374,14 @@ const Portfolio = () => {
     <div className="portfolio-page">
 
       <div className="portfolio-hero">
-        <video autoPlay muted loop playsInline preload="auto" disablePictureInPicture className="hero-bg">
-          <source src="/assets/video/portfolio-hero.mp4" type="video/mp4" />
-        </video>
+        <LazyVideo 
+          src="/assets/video/portfolio-hero.mp4" 
+          className="hero-bg"
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+        />
         <FadeUp className="hero-content">
           <h1 className="hero-title">Work</h1>
           <p className="hero-subtitle">TRANSFORMING OUR SURROUNDINGS</p>
@@ -375,13 +393,12 @@ const Portfolio = () => {
         <div className="portfolio-nav-sticky">
           <div className="portfolio-tabs">
             {categories.map(cat => (
-              <button
+              <CategoryTab
                 key={cat.id}
-                className={`tab-btn ${activeCategory === cat.id ? 'active' : ''}`}
-                onClick={() => { setActiveCategory(cat.id); setGalleryActive(false); }}
-              >
-                {cat.name}
-              </button>
+                cat={cat}
+                activeCategory={activeCategory}
+                onClick={(id) => { setActiveCategory(id); setGalleryActive(false); }}
+              />
             ))}
           </div>
         </div>

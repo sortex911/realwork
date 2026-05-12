@@ -67,49 +67,50 @@ const PublicLayout = () => {
     </>
   );
 };
+import { domAnimation, LazyMotion } from 'framer-motion';
+
 // ─── App ─────────────────────────────────────────────────────────────────────
 function App() {
   return (
     <AuthProvider>
-      <SmoothScroll>
-        <Router>
-          <ScrollToTop />
-          <ContentProtection />
+      <LazyMotion features={domAnimation}>
+        <SmoothScroll>
+          <Router>
+            <ScrollToTop />
+            <ContentProtection />
 
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
 
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
+                {/* ── Public pages (share Navbar + Footer via PublicLayout) ── */}
+                <Route element={<PublicLayout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/news" element={<News />} />
+                  <Route path="/procedure" element={<Procedure />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Route>
 
-              {/* ── Public pages (share Navbar + Footer via PublicLayout) ── */}
-              <Route element={<PublicLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/news" element={<News />} />
-                <Route path="/procedure" element={<Procedure />} />
-                <Route path="/contact" element={<Contact />} />
-              </Route>
+                {/* ── Admin login — two aliases, no layout wrapper ── */}
+                <Route path="/admin" element={<AdminLogin />} />
+                <Route path="/control-panel-9x7k2-hidden" element={<AdminLogin />} />
 
-              {/* ── Admin login — two aliases, no layout wrapper ── */}
-              {/* /admin  → easy shortcut shown in navbar                  */}
-              {/* /control-panel-9x7k2-hidden → original hidden URL        */}
-              <Route path="/admin" element={<AdminLogin />} />
-              <Route path="/control-panel-9x7k2-hidden" element={<AdminLogin />} />
+                {/* ── Protected dashboard ── */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* ── Protected dashboard ── */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-
-            </Routes>
-          </Suspense>
-        </Router>
-      </SmoothScroll>
+              </Routes>
+            </Suspense>
+          </Router>
+        </SmoothScroll>
+      </LazyMotion>
     </AuthProvider>
   );
 }
