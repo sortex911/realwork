@@ -16,9 +16,9 @@ const Contact = () => {
   const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
   const [parallaxImages] = useState([
-    { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.avif', alt: 'Contact 1' },
-    { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.avif', alt: 'Contact 2' },
-    { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.avif', alt: 'Contact 3' },
+    { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.webp', alt: 'Contact 1' },
+    { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.webp', alt: 'Contact 2' },
+    { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.webp', alt: 'Contact 3' },
   ]);
 
   const handleChange = (e) => {

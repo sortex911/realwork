@@ -128,7 +128,7 @@ const Home = () => {
         <FadeUp>
           <div className="concept-container">
             <OptimizedImage
-              src="/assets/home-images/CONCEPT.png"
+              src="/assets/home-images/CONCEPT.webp"
               alt="Landscape Concept"
               width={1600}
               quality={90}

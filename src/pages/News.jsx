@@ -37,13 +37,13 @@ const News = () => {
   const onlineFeatures = newsItems.filter(item => item.category === NEWS_CAT_ONLINE);
 
   const parallaxImages = [
-    { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.avif', alt: 'Project 1' },
-    { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.avif', alt: 'Project 2' },
-    { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.avif', alt: 'Project 3' },
-    { src: 'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.avif', alt: 'Project 4' },
-    { src: 'assets/photos/4d869c_7fbf11bfac984a0b9ced41540874f37c~mv2.avif', alt: 'Project 5' },
-    { src: 'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.avif', alt: 'Project 6' },
-    { src: 'assets/photos/4d869c_9b23c6d326fc435ca07e746e0fcd668d~mv2.avif', alt: 'Project 7' },
+    { src: 'assets/photos/4d869c_429057ecc06b468884e3dcd4d4322ef9~mv2.webp', alt: 'Project 1' },
+    { src: 'assets/photos/4d869c_43586056fb6e4dbfac20c5d3ae97cab9~mv2.webp', alt: 'Project 2' },
+    { src: 'assets/photos/4d869c_43f23646b7334147a3123d790fb7aab3~mv2.webp', alt: 'Project 3' },
+    { src: 'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.webp', alt: 'Project 4' },
+    { src: 'assets/photos/4d869c_7fbf11bfac984a0b9ced41540874f37c~mv2.webp', alt: 'Project 5' },
+    { src: 'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.webp', alt: 'Project 6' },
+    { src: 'assets/photos/4d869c_9b23c6d326fc435ca07e746e0fcd668d~mv2.webp', alt: 'Project 7' },
   ];
 
   return (

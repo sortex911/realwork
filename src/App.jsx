@@ -49,7 +49,7 @@ const PublicLayout = () => {
         <FadeUp>
           <div className="landscape-banner">
             <OptimizedImage
-              src="assets/home-images/imgland.png"
+              src="assets/home-images/imgland.webp"
               alt="Landscape Architecture"
               className="full-width-img"
               noBg={true}

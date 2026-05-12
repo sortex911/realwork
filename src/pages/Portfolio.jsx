@@ -270,13 +270,13 @@ const Portfolio = () => {
   const [visibleCount, setVisibleCount] = useState(9); // For Infinite Scroll
   const loadMoreRef = useRef(null);
   const [parallaxImages] = useState([
-    { src: 'assets/photos/4d869c_fa129e99a0ee407e9df27b3947046f28~mv2.avif', alt: 'Project 1' },
-    { src: 'assets/photos/4d869c_dae3a776502b42a5a3a5b62b8d5dc682~mv2.avif', alt: 'Project 2' },
-    { src: 'assets/photos/4d869c_d0b4c72f0a3c4dea96407244c270603e~mv2.avif', alt: 'Project 3' },
-    { src: 'assets/photos/4d869c_9b23c6d326fc435ca07e746e0fcd668d~mv2.avif', alt: 'Project 4' },
-    { src: 'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.avif', alt: 'Project 5' },
-    { src: 'assets/photos/4d869c_7fbf11bfac984a0b9ced41540874f37c~mv2.avif', alt: 'Project 6' },
-    { src: 'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.avif', alt: 'Project 7' },
+    { src: 'assets/photos/4d869c_fa129e99a0ee407e9df27b3947046f28~mv2.webp', alt: 'Project 1' },
+    { src: 'assets/photos/4d869c_dae3a776502b42a5a3a5b62b8d5dc682~mv2.webp', alt: 'Project 2' },
+    { src: 'assets/photos/4d869c_d0b4c72f0a3c4dea96407244c270603e~mv2.webp', alt: 'Project 3' },
+    { src: 'assets/photos/4d869c_9b23c6d326fc435ca07e746e0fcd668d~mv2.webp', alt: 'Project 4' },
+    { src: 'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.webp', alt: 'Project 5' },
+    { src: 'assets/photos/4d869c_7fbf11bfac984a0b9ced41540874f37c~mv2.webp', alt: 'Project 6' },
+    { src: 'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.webp', alt: 'Project 7' },
   ]);
 
   const loading = loadingCats || loadingProjects;

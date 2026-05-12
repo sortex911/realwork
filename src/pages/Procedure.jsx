@@ -38,9 +38,9 @@ const Procedure = () => {
       <div style={{ position: 'relative', height: '50vh', width: '100vw', overflow: 'hidden' }}>
         <ImagesSlider
           images={[
-            'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.avif',
-            'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.avif',
-            'assets/photos/4d869c_d0b4c72f0a3c4dea96407244c270603e~mv2.avif'
+            'assets/photos/4d869c_5b2a9aac04db4bbaa5b0b4d24245ae59~mv2.webp',
+            'assets/photos/4d869c_8d57d4542d144c39bcf43318c5ef8b8f~mv2.webp',
+            'assets/photos/4d869c_d0b4c72f0a3c4dea96407244c270603e~mv2.webp'
           ]}
           autoplay={true}
           direction="up"
