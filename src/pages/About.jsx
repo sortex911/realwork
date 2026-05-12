@@ -83,7 +83,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
     <>
       <FadeUp className="hero about-hero" style={{ background: 'transparent' }}>
         <LazyVideo 
-          src="/assets/video/about-hero.mp4" 
+          src="/assets/video/about-hero.png" 
           className="hero-bg"
           autoPlay={true}
           muted={true}

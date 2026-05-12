@@ -76,6 +76,8 @@ const ServiceCard = ({ images, title, description, icon }) => {
                 src={images[currentIndex]}
                 alt={title}
                 width={600}
+                quality={70}
+                className="service-card-img"
               />
             </motion.div>
           )}

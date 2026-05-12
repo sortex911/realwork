@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { COL_NEWS, NEWS_CAT_PUBLICATIONS, NEWS_CAT_INTERVIEWS, NEWS_CAT_ONLINE } from '../services/adminService';
 import ImagesSlider from '../components/ImagesSlider';
 import ZoomParallax from '../components/ZoomParallax';
+import OptimizedImage from '../components/OptimizedImage';
 
 const News = () => {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -91,7 +92,14 @@ const News = () => {
                   style={{ cursor: 'zoom-in' }}
                   onClick={() => setSelectedImg(item.image)}
                 >
-                  <img src={item.image} alt={item.title} className="news-card-img" />
+                  <OptimizedImage 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="news-card-img" 
+                    width={500}
+                    height={400}
+                    quality={70}
+                  />
                 </div>
                 <div className="news-card-content">
                   <div className="news-card-meta">
@@ -117,7 +125,14 @@ const News = () => {
                   style={{ cursor: 'pointer' }}
                   onClick={() => window.open(item.link, '_blank')}
                 >
-                  <img src={item.image} alt={item.title} className="news-card-img" />
+                  <OptimizedImage 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="news-card-img" 
+                    width={500}
+                    height={400}
+                    quality={70}
+                  />
                   <div className="video-play-overlay">
                     <div className="video-play-icon" style={{ scale: 0.8 }}>
                       <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M8 5v14l11-7z" /></svg>
@@ -150,7 +165,14 @@ const News = () => {
                   onClick={() => window.open(item.link, '_blank')}
                 >
                   <div className="news-card-img-wrapper">
-                    <img src={item.image} alt={item.title} className="news-card-img" />
+                    <OptimizedImage 
+                      src={item.image} 
+                      alt={item.title} 
+                      className="news-card-img" 
+                      width={500}
+                      height={400}
+                      quality={70}
+                    />
                   </div>
                   <div className="news-card-content">
                     <div className="news-card-meta">
@@ -187,18 +209,14 @@ const News = () => {
               padding: '40px'
             }}
           >
-            <m.img
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+            <OptimizedImage
               src={selectedImg}
               alt="Enlarged view"
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                borderRadius: '10px'
-              }}
+              width={1200}
+              height={1200}
+              quality={85}
+              objectFit="contain"
+              noBg={true}
             />
             <button
               onClick={() => setSelectedImg(null)}

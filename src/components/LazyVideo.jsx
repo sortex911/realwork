@@ -52,6 +52,20 @@ const LazyVideo = ({
   }, [threshold]);
 
   const source = (isMobile && mobileSrc) ? mobileSrc : src;
+  const isImage = source && /\.(jpg|jpeg|png|webp|avif|gif)$/i.test(source);
+
+  if (isImage) {
+    return (
+      <img
+        ref={videoRef}
+        src={source}
+        className={className}
+        alt=""
+        loading="eager"
+        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+      />
+    );
+  }
 
   return (
     <video
@@ -64,7 +78,7 @@ const LazyVideo = ({
       playsInline={playsInline}
       preload={isInView ? "auto" : "metadata"}
     >
-      {isInView && <source src={source} type="video/mp4" />}
+      {isInView && <source src={source} type={source.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />}
     </video>
   );
 };

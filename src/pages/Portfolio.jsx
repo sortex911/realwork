@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, useMemo, memo, useRef } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { m, AnimatePresence } from 'framer-motion';
@@ -22,10 +22,11 @@ const ProjectCardItem = memo(({ project, onClick }) => {
           <OptimizedImage
             src={project.imageUrl}
             alt={project.title}
-            className="project-img"
-            width="100%"
-            height="100%"
-            objectFit="contain"
+            className="project-img thumbnail"
+            width={400}
+            height={300}
+            quality={60}
+            objectFit="cover"
             noBg={true}
             onLoad={() => setLoaded(true)}
           />
@@ -53,10 +54,11 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
       <OptimizedImage
         src={url}
         alt={`${project.title} — photo ${idx + 1}`}
-        className="gallery-img"
-        width="100%"
-        height="100%"
-        objectFit="contain"
+        className="gallery-img thumbnail"
+        width={400}
+        height={300}
+        quality={60}
+        objectFit="cover"
         noBg={true}
         onLoad={() => setLoaded(true)}
       />
@@ -128,8 +130,9 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             src={images[currentIndex]}
             alt={`${project.title} slide ${currentIndex + 1}`}
             priority={true}
-            width="100%"
-            height="100%"
+            width={1200}
+            height={800}
+            quality={80}
             className="gallery-hero-bg"
             objectFit="contain"
             noBg={true}
@@ -220,8 +223,9 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
           >
             <OptimizedImage
               src={fullscreenImage}
-              width="100%"
-              height="100%"
+              width={1200}
+              height={1200}
+              quality={90}
               objectFit="contain"
               noBg={true}
             />
@@ -263,6 +267,8 @@ const Portfolio = () => {
   const [error, setError] = useState(null);
   const [galleryActive, setGalleryActive] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(9); // For Infinite Scroll
+  const loadMoreRef = useRef(null);
   const [parallaxImages] = useState([
     { src: 'assets/photos/4d869c_fa129e99a0ee407e9df27b3947046f28~mv2.avif', alt: 'Project 1' },
     { src: 'assets/photos/4d869c_dae3a776502b42a5a3a5b62b8d5dc682~mv2.avif', alt: 'Project 2' },
@@ -362,6 +368,31 @@ const Portfolio = () => {
     );
   }, [projects, activeCategory]);
 
+  // Infinite Scroll Observer
+  useEffect(() => {
+    if (loading || filteredProjects.length <= visibleCount) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount(prev => prev + 9);
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [loading, filteredProjects.length, visibleCount]);
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    setVisibleCount(9);
+  }, [activeCategory]);
+
   // ── Gallery helpers ───────────────────────────────────────────────────────
   const openGallery = (project) => { setSelectedProject(project); setGalleryActive(true); };
   const closeGallery = () => setGalleryActive(false);
@@ -375,7 +406,7 @@ const Portfolio = () => {
 
       <div className="portfolio-hero">
         <LazyVideo 
-          src="/assets/video/portfolio-hero.mp4" 
+          src="/assets/video/portfolio-hero.webm" 
           className="hero-bg"
           autoPlay={true}
           muted={true}
@@ -429,13 +460,20 @@ const Portfolio = () => {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '2.5rem 1rem', justifyItems: 'center' }}>
             {filteredProjects.length > 0 ? (
-              filteredProjects.map(project => (
-                <ProjectCardItem
-                  key={project.id}
-                  project={project}
-                  onClick={openGallery}
-                />
-              ))
+              <>
+                {filteredProjects.slice(0, visibleCount).map(project => (
+                  <ProjectCardItem
+                    key={project.id}
+                    project={project}
+                    onClick={openGallery}
+                  />
+                ))}
+                {filteredProjects.length > visibleCount && (
+                  <div ref={loadMoreRef} style={{ height: '100px', width: '100%', gridColumn: '1/-1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="portfolio-spinner" style={{ width: '30px', height: '30px' }} />
+                  </div>
+                )}
+              </>
             ) : (
               <div className="no-projects">
                 <p>No projects in this category yet.</p>

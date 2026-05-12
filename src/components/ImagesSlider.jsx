@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getOptimizedUrl } from "../lib/supabase";
 
 const ImagesSlider = ({
   images,
@@ -33,11 +34,13 @@ const ImagesSlider = ({
   const loadImages = () => {
     setLoading(true);
     const loadPromises = images.map((image) => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
+        // Optimize slider images - usually full screen but quality can be lowered
+        const optimizedUrl = getOptimizedUrl(image, { width: 1200, quality: 75 });
         const img = new Image();
-        img.src = image;
-        img.onload = () => resolve(image);
-        img.onerror = reject;
+        img.src = optimizedUrl;
+        img.onload = () => resolve(optimizedUrl);
+        img.onerror = () => resolve(image); // Fallback to original
       });
     });
 

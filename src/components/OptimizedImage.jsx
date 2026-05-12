@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getOptimizedUrl } from '../lib/supabase';
 import './OptimizedImage.css';
 
@@ -6,7 +6,8 @@ import './OptimizedImage.css';
  * OptimizedImage Component
  * 
  * Features:
- * - Native lazy loading
+ * - Intersection Observer based lazy loading
+ * - Native lazy loading fallback
  * - CSS Shimmer/Skeleton placeholder
  * - Blur-up transition
  * - Smart Error fallback (retries with original URL)
@@ -26,16 +27,54 @@ const OptimizedImage = ({
   noBg = false,
   sizes = '100vw'
 }) => {
+  const [isInView, setIsInView] = useState(priority);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [retryWithOriginal, setRetryWithOriginal] = useState(false);
+  const imgRef = useRef(null);
 
-  // Generate optimized URL - request larger than display width for high-DPI screens
-  const optimizedSrc = getOptimizedUrl(src, { 
-    width: typeof width === 'number' ? width * 2 : 1200, 
-    quality, 
-    format: 'webp' 
-  });
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    if (priority || isInView) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '200px', // Start loading 200px before it enters viewport
+        threshold: 0.01
+      }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [priority, isInView]);
+
+  // Generate optimized URL
+  // If width is a number, we use it. If it's a string like '100%', we default to a safe maximum or expect a number.
+  const optimizedSrc = React.useMemo(() => {
+    if (!src) return '';
+    
+    let targetWidth = 1200; // Default
+    if (typeof width === 'number') {
+      targetWidth = width * 1.5; // Request slightly larger for high-DPI
+    } else if (className.includes('thumbnail') || className.includes('grid')) {
+      targetWidth = 400;
+    }
+
+    return getOptimizedUrl(src, { 
+      width: targetWidth, 
+      quality, 
+      format: 'webp' 
+    });
+  }, [src, width, quality, className]);
 
   // Decide which source to use
   const currentSrc = (retryWithOriginal || !optimizedSrc) ? src : optimizedSrc;
@@ -58,25 +97,26 @@ const OptimizedImage = ({
     height: '100%',
     objectFit: objectFit,
     objectPosition: objectPosition,
-    transition: 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease',
     opacity: isLoaded ? 1 : 0,
-    filter: isLoaded ? 'blur(0)' : 'blur(10px)',
+    filter: isLoaded ? 'blur(0)' : 'blur(15px)',
     display: (error && retryWithOriginal) ? 'none' : 'block'
   };
 
   const handleError = () => {
     if (!retryWithOriginal && optimizedSrc !== src) {
-      // If optimized URL failed, try the original URL
-      console.warn('[OptimizedImage] Optimization failed, falling back to original:', src);
       setRetryWithOriginal(true);
     } else {
-      // If original URL also fails, show error state
       setError(true);
     }
   };
 
   return (
-    <div className={`opt-img-container ${className}`} style={containerStyle}>
+    <div 
+      className={`opt-img-container ${className}`} 
+      style={containerStyle}
+      ref={imgRef}
+    >
       {!isLoaded && !error && (
         <div className="opt-img-skeleton">
           <div className="opt-img-shimmer"></div>
@@ -88,21 +128,23 @@ const OptimizedImage = ({
           <span>Failed to load image</span>
         </div>
       ) : (
-        <img
-          src={currentSrc}
-          alt={alt}
-          style={imageStyle}
-          loading={priority ? 'eager' : 'lazy'}
-          sizes={sizes}
-          onLoad={() => {
-            setIsLoaded(true);
-            if (onLoad) onLoad();
-          }}
-          onError={handleError}
-        />
+        (isInView || priority) && (
+          <img
+            src={currentSrc}
+            alt={alt}
+            style={imageStyle}
+            loading={priority ? 'eager' : 'lazy'}
+            sizes={sizes}
+            onLoad={() => {
+              setIsLoaded(true);
+              if (onLoad) onLoad();
+            }}
+            onError={handleError}
+          />
+        )
       )}
     </div>
   );
 };
 
-export default OptimizedImage;
+export default React.memo(OptimizedImage);
