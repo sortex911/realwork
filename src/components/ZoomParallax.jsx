@@ -1,29 +1,51 @@
 import React, { useRef } from 'react';
-import { useScroll, useTransform, motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function ZoomParallax({ images }) {
-	const container = useRef(null);
-	const { scrollYProgress } = useScroll({
-		target: container,
-		offset: ['start start', 'end end'],
-	});
+    const container = useRef(null);
+    const stickyElement = useRef(null);
+    const imagesRef = useRef([]);
 
-	const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-	const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-	const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
-	const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
-	const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top top",
+                end: "+=500%", // Increased scroll duration for better control
+                scrub: 1, // Smooth out the scrub effect
+                pin: true,
+                anticipatePin: 1,
+            }
+        });
 
-	const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
+        const scales = [4, 5, 6, 5, 6, 8, 9];
 
-	return (
-		<div ref={container} style={{ position: 'relative', height: '300vh' }}>
-			<div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
-				{images.map(({ src, alt }, index) => {
+        imagesRef.current.forEach((el, index) => {
+            if (!el) return;
+            const targetScale = scales[index % scales.length];
+            tl.to(el, {
+                scale: targetScale,
+                ease: "power1.inOut"
+            }, 0);
+        });
 
-					const scale = scales[index % scales.length];
+        // Add a bit of "wait" time at the end of the zoom before unpinning
+        tl.to({}, { duration: 0.5 }); 
 
-                    // Positioning logic adapted from the user's snippet
+        return () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+        };
+    }, { scope: container });
+
+    return (
+        <div ref={container} style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+            <div ref={stickyElement} style={{ height: '100vh', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {images.map(({ src, alt }, index) => {
+                    // Positioning logic
                     let top = '0';
                     let left = '0';
                     let width = '25vw';
@@ -36,11 +58,11 @@ function ZoomParallax({ images }) {
                     if (index === 5) { top = '27.5vh'; left = '-22.5vw'; width = '30vw'; height = '25vh'; }
                     if (index === 6) { top = '22.5vh'; left = '25vw'; width = '15vw'; height = '15vh'; }
 
-					return (
-						<motion.div
-							key={index}
-							style={{ 
-                                scale,
+                    return (
+                        <div
+                            key={index}
+                            ref={el => imagesRef.current[index] = el}
+                            style={{ 
                                 position: 'absolute',
                                 top: 0,
                                 left: 0,
@@ -48,24 +70,25 @@ function ZoomParallax({ images }) {
                                 height: '100%',
                                 width: '100%',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                willChange: 'transform'
                             }}
-						>
-							<div style={{ position: 'relative', height, width, top, left }}>
-								<img
-									src={src || '/placeholder.svg'}
-									alt={alt || `Parallax image ${index + 1}`}
-									loading="lazy"
-									decoding="async"
-									style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-								/>
-							</div>
-						</motion.div>
-					);
-				})}
-			</div>
-		</div>
-	);
+                        >
+                            <div style={{ position: 'relative', height, width, top, left }}>
+                                <img
+                                    src={src || '/placeholder.svg'}
+                                    alt={alt || `Parallax image ${index + 1}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+                                />
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
 
 export default ZoomParallax;
