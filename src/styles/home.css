@@ -310,14 +310,15 @@
 .concept-section-new .concept-container {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 0;
   display: flex;
-  justify-content: flex-end; /* Shifted to right */
+  justify-content: flex-end;
   align-items: center;
 }
 
 .concept-section-new .opt-img-container {
-  margin-left: auto; /* Allow shifting to the right */
+  margin-left: 120px; /* Allow shifting to the right */
   margin-right: 0;
 }
 
