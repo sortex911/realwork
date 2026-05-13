@@ -15,8 +15,8 @@ function ZoomParallax({ images }) {
             scrollTrigger: {
                 trigger: container.current,
                 start: "top top",
-                end: "+=500%", // Increased scroll duration for better control
-                scrub: 1, // Smooth out the scrub effect
+                end: "+=300%", // Balanced duration
+                scrub: true,
                 pin: true,
                 anticipatePin: 1,
             }
@@ -33,8 +33,8 @@ function ZoomParallax({ images }) {
             }, 0);
         });
 
-        // Add a bit of "wait" time at the end of the zoom before unpinning
-        tl.to({}, { duration: 0.5 }); 
+        // Smallest possible buffer to ensure animation finishes
+        tl.to({}, { duration: 0.1 }); 
 
         return () => {
             ScrollTrigger.getAll().forEach(t => t.kill());
