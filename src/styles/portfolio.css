@@ -510,8 +510,17 @@
     font-size: 1.4rem;
   }
 
+  .gallery-hero {
+    height: 60vh !important;
+    min-height: 350px;
+  }
+
   .gallery-hero-bg-wrapper {
-    padding: 15px;
+    padding: 10px;
+  }
+
+  .gallery-body {
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 }
 
