@@ -26,7 +26,7 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             width={400}
             height={300}
             quality={60}
-            objectFit="cover"
+            objectFit="contain"
             noBg={true}
             onLoad={() => setLoaded(true)}
           />
@@ -58,7 +58,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         width={400}
         height={300}
         quality={60}
-        objectFit="cover"
+        objectFit="contain"
         noBg={true}
         onLoad={() => setLoaded(true)}
       />
