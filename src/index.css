@@ -238,6 +238,11 @@ section {
     align-items: center;
     text-align: center;
     height: 100vh;
+    background: #000; /* Solid background for no-crop video */
+  }
+
+  .hero-bg {
+    object-fit: contain !important;
   }
 
   .hero-content {
