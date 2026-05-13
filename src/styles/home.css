@@ -312,12 +312,13 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* Shifted to right */
   align-items: center;
 }
 
 .concept-section-new .opt-img-container {
-  margin: 0 auto !important;
+  margin-left: auto; /* Allow shifting to the right */
+  margin-right: 0;
 }
 
 /* Service Place Card */
