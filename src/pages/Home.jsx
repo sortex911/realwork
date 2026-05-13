@@ -132,7 +132,7 @@ const Home = () => {
               alt="Landscape Concept"
               width={1600}
               quality={90}
-              objectFit="contain"
+              objectFit={isMobile ? "cover" : "contain"}
               noBg={true}
             />
           </div>

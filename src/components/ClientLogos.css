@@ -102,6 +102,9 @@
 }
 
 @media (max-width: 768px) {
+  .client-logos-section {
+    padding: 20px 0 30px;
+  }
   .client-logo-item {
     height: 60px;
   }

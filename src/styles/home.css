@@ -443,7 +443,26 @@
     margin: 30px 0;
   }
   .concept-section-new {
-    margin: 50px 0;
+    margin: 40px 0;
+    padding: 0 !important;
+  }
+  .concept-section-new .concept-container {
+    max-width: 100%;
+    margin: 0;
+    justify-content: center;
+  }
+  .concept-section-new .opt-img-container {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .landscape-banner .opt-img-container {
+    height: 30vh !important;
+    min-height: 250px !important;
+  }
+
+  .landscape-banner {
+    margin: 0 !important;
   }
 }
 

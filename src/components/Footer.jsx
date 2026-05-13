@@ -17,7 +17,7 @@ const Footer = () => {
       backgroundColor: "#ffffff",
       fontFamily: "var(--font-sans)",
     }}>
-      <div style={{
+      <div className="footer-container" style={{
         maxWidth: "1400px",
         margin: "0 auto",
         padding: "64px 40px 40px",
@@ -162,6 +162,9 @@ const Footer = () => {
           .footer-top-grid > div:first-child {
             grid-column: span 2;
             margin-bottom: 20px;
+          }
+          .footer-container {
+            padding: 30px 20px 30px !important;
           }
         }
         footer { padding: 0 !important; }

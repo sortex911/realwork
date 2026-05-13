@@ -27,10 +27,13 @@ import OptimizedImage from './components/OptimizedImage';
 // ─── Public layout wrapper (Navbar + Footer) ─────────────────────────────────
 // Uses <Outlet /> so nested public routes render inside it automatically.
 // Admin routes are declared OUTSIDE this layout so they never get Navbar/Footer.
+import { useMediaQuery } from './lib/hooks';
+
 const PublicLayout = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const isAbout = location.pathname === '/about';
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   return (
     <>
@@ -40,7 +43,7 @@ const PublicLayout = () => {
       </main>
       
       {(isHome || isAbout) && (
-        <div style={{ marginTop: '80px' }}>
+        <div style={{ marginTop: isMobile ? '20px' : '80px' }}>
           <ClientLogos />
         </div>
       )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import './ClientStories.css';
-import { AlignCenter } from 'lucide-react';
+import { useMediaQuery } from '../lib/hooks';
 
 const testimonials = [
   {
@@ -155,7 +155,9 @@ const TestimonialsColumn = ({ list, speed }) => {
 };
 
 const ClientStories = () => {
-  // Split 20 testimonials into 3 columns: 7, 7, 6
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  
+  // Split 20 testimonials into 3 columns for desktop: 7, 7, 6
   const col1 = testimonials.slice(0, 7);
   const col2 = testimonials.slice(7, 14);
   const col3 = testimonials.slice(14);
@@ -171,9 +173,15 @@ const ClientStories = () => {
         <div className="testimonials-grid-container">
           <div className="testimonials-fade-top"></div>
           <div className="testimonials-grid">
-            <TestimonialsColumn list={col1} speed="40s" />
-            <TestimonialsColumn list={col2} speed="60s" />
-            <TestimonialsColumn list={col3} speed="50s" />
+            {isMobile ? (
+              <TestimonialsColumn list={testimonials} speed="120s" />
+            ) : (
+              <>
+                <TestimonialsColumn list={col1} speed="40s" />
+                <TestimonialsColumn list={col2} speed="60s" />
+                <TestimonialsColumn list={col3} speed="50s" />
+              </>
+            )}
           </div>
           <div className="testimonials-fade-bottom"></div>
         </div>

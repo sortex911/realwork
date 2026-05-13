@@ -9,7 +9,7 @@
   --color-accent-light: #3d7a5e;
   --color-white: #ffffff;
   --color-surface: rgba(255, 255, 255, 0.6);
-  
+
   --font-sans: 'Outfit', sans-serif;
   --font-serif: 'Outfit', sans-serif;
 
@@ -47,16 +47,36 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   font-weight: 500;
   line-height: 1.2;
 }
 
-h1 { font-size: clamp(3rem, 6vw, 6rem); }
-h2 { font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: var(--spacing-md); }
-p { font-size: 1.1rem; color: var(--color-text-light); max-width: 600px; }
-a { text-decoration: none; color: inherit; }
+h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin-bottom: var(--spacing-md);
+}
+
+p {
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  max-width: 600px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 /* Navigation */
 .header {
@@ -106,7 +126,8 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
 }
 
-.hero-bg, .hero-video {
+.hero-bg,
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -183,14 +204,44 @@ section {
 }
 
 @keyframes pulse-opacity {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Global Mobile Fixes */
 @media (max-width: 768px) {
-  .header { padding: 15px 20px; }
-  .logo-container { width: 120px; height: 50px; }
-  .hero { padding: var(--spacing-md) 4% 8vh 4%; align-items: center; text-align: center; }
-  .hero-content { padding-left: 0; align-items: center; }
+  .header {
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .logo-container {
+    width: 100px;
+    height: 40px;
+  }
+
+  .nav-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: var(--spacing-md) 4% 8vh 4%;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+  }
+
+  .hero-content {
+    padding-left: 0;
+    align-items: center;
+  }
 }
