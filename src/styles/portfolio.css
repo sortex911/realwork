@@ -516,15 +516,27 @@
 }
 
 @media (max-width: 480px) {
-
   .portfolio-grid,
   .gallery-grid {
     grid-template-columns: 1fr !important;
   }
 
   .portfolio-tabs {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
+  .tab-btn {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .tab-btn.active::after,
+  .tab-btn:hover::after {
+    width: 60%;
+    height: 1.5px;
   }
 }
