@@ -24,7 +24,7 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             alt={project.title}
             className="project-img thumbnail"
             width={400}
-            height={300}
+            height="auto"
             quality={60}
             objectFit="contain"
             noBg={true}
@@ -56,7 +56,7 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img thumbnail"
         width={400}
-        height={300}
+        height="auto"
         quality={60}
         objectFit="contain"
         noBg={true}
