@@ -66,11 +66,8 @@ coverage
 *.mkv
 *.avi
 *.wmv
-# Keep essential site videos
-!public/assets/video/home_hero.webm
-!public/assets/video/mobilehero.png
-!public/assets/video/portfolio-hero.webm
-!public/assets/video/about-hero.png
+*.webm
+*.m4v
 
 # OS generated files
 ehthumbs.db

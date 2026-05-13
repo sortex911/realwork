@@ -1,14 +1,43 @@
 /* About Page Specific Styles */
 
 .about-intro {
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 60px 20px;
-  transform: translateY(10px);
+  padding: 80px 20px;
+}
+
+.about-hero {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+.about-hero .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+  width: 100%;
+}
+
+.about-hero .hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+  color: #ffffff !important;
+}
+
+.about-hero .hero-subtitle {
+  font-size: 1.1rem !important;
+  letter-spacing: 3px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .section-dot {

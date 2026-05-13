@@ -121,7 +121,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-      style={{ zIndex: 9999 }}
+      style={{ zIndex: 2000000 }}
       onWheel={(e) => e.stopPropagation()} // Stop event propagation
     >
       <div className="gallery-hero">
@@ -130,8 +130,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             src={images[currentIndex]}
             alt={`${project.title} slide ${currentIndex + 1}`}
             priority={true}
-            width={1200}
-            height={800}
+            width={1920}
+            height="100%"
             quality={80}
             className="gallery-hero-bg"
             objectFit="contain"
@@ -406,7 +406,7 @@ const Portfolio = () => {
 
       <div className="portfolio-hero">
         <LazyVideo 
-          src="/assets/video/portfolio-hero.webm" 
+          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778673521/portfolio-hero_qsaqbr.webm" 
           className="hero-bg"
           autoPlay={true}
           muted={true}

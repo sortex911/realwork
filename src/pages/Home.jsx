@@ -78,8 +78,8 @@ const Home = () => {
       </Helmet>
       <FadeUp className="hero" style={{ background: 'transparent' }}>
         <LazyVideo 
-          src="/assets/video/home_hero.webm" 
-          mobileSrc="/assets/video/mobilehero.png"
+          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778673236/Videoo_27.m4v_1_vqkyfp.webm" 
+          mobileSrc="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778670424/mobilehero_r0yhwd.webm"
           className="hero-bg"
           autoPlay={true}
           muted={true}

@@ -305,16 +305,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
 .concept-section-new .concept-container {
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.concept-section-new .opt-img-container {
+  margin: 0 auto !important;
 }
 
 /* Service Place Card */
