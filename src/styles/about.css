@@ -18,6 +18,12 @@
   padding: 0 !important;
 }
 
+@media (max-width: 768px) {
+  .about-hero .hero-bg {
+    object-fit: cover !important;
+  }
+}
+
 .about-hero .hero-content {
   display: flex;
   flex-direction: column;
