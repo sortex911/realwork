@@ -218,21 +218,24 @@ section {
 /* Global Mobile Fixes */
 @media (max-width: 768px) {
   .header {
-    padding: 5px 0;
+    padding: 0;
+    padding-bottom: 5px;
     flex-direction: column;
-    gap: 4px;
+    gap: 0;
     background: transparent;
+    top: 0;
   }
 
   .logo-container {
-    width: 80px;
-    height: 35px;
+    width: 60px;
+    height: 25px;
+    margin-top: 5px;
   }
 
   .nav-controls {
     width: 100%;
     justify-content: center;
-    margin-top: -5px;
+    margin-top: -8px;
   }
 
   .hero {
