@@ -243,19 +243,25 @@ section {
     margin-top: -5px !important;
   }
 
-  .hero {
-    padding: var(--spacing-md) 4% 8vh 4%;
-    align-items: center;
-    text-align: center;
+  .home-hero {
+    padding: var(--spacing-md) 0 8vh 0;
+    align-items: flex-start;
+    text-align: left;
     height: 100vh;
+    background: #000;
+    /* Solid background for no-crop video */
   }
 
-  .hero-bg {
+  .home-hero .hero-bg {
+    width: 100% !important;
+    left: 0 !important;
     object-fit: cover !important;
+    object-position: left center !important;
   }
 
-  .hero-content {
-    padding-left: 0;
-    align-items: center;
+  .home-hero .hero-content {
+    padding-left: 20px;
+    align-items: flex-start;
+    width: 100%;
   }
 }
