@@ -81,20 +81,21 @@ His project experience spans residential landscapes, resorts, parks, schools, he
 
   return (
     <>
-      <FadeUp className="hero about-hero">
+      <div className="hero about-hero">
         <LazyVideo 
           src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778670424/about-hero_w7z2fs.mp4" 
+          poster="https://res.cloudinary.com/daivsnmcc/video/upload/v1778670424/about-hero_w7z2fs.jpg"
           className="hero-bg"
           autoPlay={true}
           muted={true}
           loop={true}
           playsInline={true}
         />
-        <div className="hero-content">
+        <FadeUp className="hero-content">
           <h1 className="hero-title">About Us</h1>
           <p className="hero-subtitle">TRANSFORMING OUR SURROUNDINGS</p>
-        </div>
-      </FadeUp>
+        </FadeUp>
+      </div>
 
       <section ref={textRef}>
         <div className="about-intro" style={{ maxWidth: '1100px', margin: '0 auto', padding: 'var(--spacing-xxl) var(--spacing-md)', textAlign: 'center' }}>

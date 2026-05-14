@@ -76,17 +76,18 @@ const Home = () => {
         <meta name="keywords" content="best landscaping website, best Landscape Architects in kerala, Landscape Architects Kerala, Best Landscape Firm in Kerala, Tropical Landscaper kerala, Best Tropical Consultant in Kerala, Best Landscaper, Butterfly garden Kerala, Miyawaki Kerala, best Landscape consultant kerala, Best Landscape Designers kerala" />
         <link rel="canonical" href="https://www.greenrealmlandscape.com/" />
       </Helmet>
-      <FadeUp className="hero home-hero" style={{ background: 'transparent' }}>
+      <div className="hero home-hero" style={{ background: 'transparent' }}>
         <LazyVideo 
           src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778673236/Videoo_27.m4v_1_vqkyfp.webm" 
           mobileSrc="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778670424/mobilehero_r0yhwd.webm"
+          poster="https://res.cloudinary.com/daivsnmcc/video/upload/v1778670424/mobilehero_r0yhwd.jpg"
           className="hero-bg"
           autoPlay={true}
           muted={true}
           loop={true}
           playsInline={true}
         />
-        <div className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
+        <FadeUp className="hero-content" ref={containerRef} style={{ position: 'relative', background: 'transparent' }}>
           <h1 className="hero-title" style={{ color: '#ffffff', textAlign: 'left', width: '100%' }}>
             <br />
             {!isMobile && firstComplete && (
@@ -102,8 +103,8 @@ const Home = () => {
             )}
           </h1>
           <p className="hero-subtitle"></p>
-        </div>
-      </FadeUp>
+        </FadeUp>
+      </div>
 
       <section id="news" className="news-section">
         <FadeUp>
