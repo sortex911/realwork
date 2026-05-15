@@ -31,13 +31,13 @@
 
 .gooey-nav-container {
   position: relative;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
   border-radius: 50px;
   padding: 4px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
   width: fit-content;
   margin: 0 auto;
 }
@@ -56,7 +56,7 @@
   margin: 0;
   position: relative;
   z-index: 3;
-  color: #000000;
+  color: #ffffff;
 }
 
 .gooey-nav-container nav ul li {
@@ -64,7 +64,7 @@
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #000000;
+  color: inherit;
   opacity: 0.85;
   font-weight: 600;
   letter-spacing: 1px;
