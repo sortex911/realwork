@@ -406,7 +406,7 @@ const Portfolio = () => {
 
       <div className="portfolio-hero">
         <LazyVideo 
-          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778673521/portfolio-hero_qsaqbr.webm" 
+          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto,f_auto/v1778673521/portfolio-hero_qsaqbr.mp4" 
           className="hero-bg"
           autoPlay={true}
           muted={true}

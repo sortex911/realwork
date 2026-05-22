@@ -78,9 +78,9 @@ const Home = () => {
       </Helmet>
       <div className="hero home-hero" style={{ background: 'transparent' }}>
         <LazyVideo
-          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778673236/Videoo_27.m4v_1_vqkyfp.webm"
-          mobileSrc="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto/f_auto/v1778670424/mobilehero_r0yhwd.webm"
-          poster="https://res.cloudinary.com/daivsnmcc/video/upload/v1778670424/mobilehero_r0yhwd.jpg"
+          src="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto,f_auto/v1778673236/Videoo_27.m4v_1_vqkyfp.mp4"
+          mobileSrc="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto,f_auto/v1778670424/mobilehero_r0yhwd.mp4"
+          poster="https://res.cloudinary.com/daivsnmcc/video/upload/q_auto,f_auto,so_0/v1778670424/mobilehero_r0yhwd.jpg"
           className="hero-bg"
           autoPlay={true}
           muted={true}

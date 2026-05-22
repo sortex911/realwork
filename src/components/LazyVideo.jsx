@@ -57,15 +57,37 @@ const LazyVideo = ({
   // Safari requires explicit .load() when dynamically adding <source> elements
   useEffect(() => {
     if (isInView && videoRef.current && !isImage) {
-      videoRef.current.load();
+      const video = videoRef.current;
+      
+      const onLoadedMetadata = () => console.log(`[Safari Video] loadedmetadata for ${source}`);
+      const onLoadedData = () => console.log(`[Safari Video] loadeddata for ${source}`);
+      const onCanPlay = () => console.log(`[Safari Video] canplay for ${source}`);
+      const onPlay = () => console.log(`[Safari Video] play for ${source}`);
+      const onError = (e) => console.error(`[Safari Video] error for ${source}:`, video.error);
+
+      video.addEventListener('loadedmetadata', onLoadedMetadata);
+      video.addEventListener('loadeddata', onLoadedData);
+      video.addEventListener('canplay', onCanPlay);
+      video.addEventListener('play', onPlay);
+      video.addEventListener('error', onError);
+
+      video.load();
       if (autoPlay) {
-        const playPromise = videoRef.current.play();
+        const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Ignore autoplay prevented errors
+          playPromise.catch((err) => {
+            console.error(`[Safari Video] autoplay prevented error for ${source}:`, err);
           });
         }
       }
+
+      return () => {
+        video.removeEventListener('loadedmetadata', onLoadedMetadata);
+        video.removeEventListener('loadeddata', onLoadedData);
+        video.removeEventListener('canplay', onCanPlay);
+        video.removeEventListener('play', onPlay);
+        video.removeEventListener('error', onError);
+      };
     }
   }, [isInView, source, isImage, autoPlay]);
 
@@ -93,6 +115,12 @@ const LazyVideo = ({
       playsInline={playsInline}
       webkit-playsinline="true"
       preload={isInView ? "auto" : "none"}
+      onClick={() => {
+        // Fallback for Safari if autoPlay was blocked
+        if (videoRef.current && videoRef.current.paused) {
+          videoRef.current.play();
+        }
+      }}
     >
       {isInView && <source src={source} type={source.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />}
     </video>
