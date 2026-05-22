@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 
-// Configuration - Replace with your actual Supabase URL and assets
-const SUPABASE_VIDEO_URL = "https://your-project-id.supabase.co/storage/v1/object/public/videos/hero-bg.mp4";
-const POSTER_IMAGE_URL = "/assets/images/hero-thumbnail.jpg"; // Small optimized thumbnail
+// Configuration - Replace with your actual Cloudinary variables
+const CLOUDINARY_CLOUD_NAME = "YOUR_CLOUD_NAME";
+const CLOUDINARY_VIDEO_ID = "YOUR_VIDEO_PUBLIC_ID";
+const VIDEO_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/video/upload/q_auto,f_auto,vc_h265/${CLOUDINARY_VIDEO_ID}.mp4`;
+const POSTER_IMAGE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/video/upload/q_auto,f_auto,so_0/${CLOUDINARY_VIDEO_ID}.jpg`;
 const FALLBACK_IMAGE_URL = "/assets/images/hero-fallback.jpg"; // High-quality static fallback
 
 const ModernHero = () => {
@@ -36,6 +38,7 @@ const ModernHero = () => {
             className="absolute inset-0 z-0"
           >
             <video
+              preload="none"
               autoPlay
               muted
               loop
@@ -45,7 +48,7 @@ const ModernHero = () => {
               onError={() => setVideoError(true)}
               className="w-full h-full object-cover"
             >
-              <source src={SUPABASE_VIDEO_URL} type="video/mp4" />
+              <source src={VIDEO_URL} type="video/mp4" />
             </video>
           </motion.div>
         ) : (

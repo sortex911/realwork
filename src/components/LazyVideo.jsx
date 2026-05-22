@@ -76,7 +76,7 @@ const LazyVideo = ({
       muted={muted}
       loop={loop}
       playsInline={playsInline}
-      preload={isInView ? "auto" : "metadata"}
+      preload={isInView ? "auto" : "none"}
     >
       {isInView && <source src={source} type={source.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />}
     </video>
