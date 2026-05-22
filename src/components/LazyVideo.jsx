@@ -54,6 +54,21 @@ const LazyVideo = ({
   const source = (isMobile && mobileSrc) ? mobileSrc : src;
   const isImage = source && /\.(jpg|jpeg|png|webp|avif|gif)$/i.test(source);
 
+  // Safari requires explicit .load() when dynamically adding <source> elements
+  useEffect(() => {
+    if (isInView && videoRef.current && !isImage) {
+      videoRef.current.load();
+      if (autoPlay) {
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Ignore autoplay prevented errors
+          });
+        }
+      }
+    }
+  }, [isInView, source, isImage, autoPlay]);
+
   if (isImage) {
     return (
       <img
@@ -76,6 +91,7 @@ const LazyVideo = ({
       muted={muted}
       loop={loop}
       playsInline={playsInline}
+      webkit-playsinline="true"
       preload={isInView ? "auto" : "none"}
     >
       {isInView && <source src={source} type={source.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />}

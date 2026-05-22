@@ -5,7 +5,7 @@ import { Typewriter } from 'react-simple-typewriter';
 // Configuration - Replace with your actual Cloudinary variables
 const CLOUDINARY_CLOUD_NAME = "YOUR_CLOUD_NAME";
 const CLOUDINARY_VIDEO_ID = "YOUR_VIDEO_PUBLIC_ID";
-const VIDEO_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/video/upload/q_auto,f_auto,vc_h265/${CLOUDINARY_VIDEO_ID}.mp4`;
+const VIDEO_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/video/upload/q_auto,f_auto/${CLOUDINARY_VIDEO_ID}.mp4`;
 const POSTER_IMAGE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/video/upload/q_auto,f_auto,so_0/${CLOUDINARY_VIDEO_ID}.jpg`;
 const FALLBACK_IMAGE_URL = "/assets/images/hero-fallback.jpg"; // High-quality static fallback
 
@@ -38,11 +38,12 @@ const ModernHero = () => {
             className="absolute inset-0 z-0"
           >
             <video
-              preload="none"
+              preload="auto"
               autoPlay
               muted
               loop
               playsInline
+              webkit-playsinline="true"
               poster={POSTER_IMAGE_URL}
               onLoadedData={() => setIsVideoLoaded(true)}
               onError={() => setVideoError(true)}
