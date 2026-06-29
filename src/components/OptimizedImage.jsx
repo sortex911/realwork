@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getOptimizedUrl } from '../lib/supabase';
+import { getOptimizedUrl } from '../lib/cloudinary';
 import './OptimizedImage.css';
 
 /**
@@ -13,12 +13,12 @@ import './OptimizedImage.css';
  * - Smart Error fallback (retries with original URL)
  * - Supabase CDN optimization
  */
-const OptimizedImage = ({ 
-  src, 
-  alt = 'Image', 
-  width, 
-  height, 
-  className = '', 
+const OptimizedImage = ({
+  src,
+  alt = 'Image',
+  width,
+  height,
+  className = '',
   priority = false,
   quality = 80,
   objectFit = 'cover',
@@ -61,7 +61,7 @@ const OptimizedImage = ({
   // If width is a number, we use it. If it's a string like '100%', we default to a safe maximum or expect a number.
   const optimizedSrc = React.useMemo(() => {
     if (!src) return '';
-    
+
     let targetWidth = 1200; // Default
     if (typeof width === 'number') {
       targetWidth = width * 1.5; // Request slightly larger for high-DPI
@@ -69,10 +69,10 @@ const OptimizedImage = ({
       targetWidth = 400;
     }
 
-    return getOptimizedUrl(src, { 
-      width: targetWidth, 
-      quality, 
-      format: 'webp' 
+    return getOptimizedUrl(src, {
+      width: targetWidth,
+      quality,
+      format: 'webp'
     });
   }, [src, width, quality, className]);
 
@@ -112,8 +112,8 @@ const OptimizedImage = ({
   };
 
   return (
-    <div 
-      className={`opt-img-container ${className}`} 
+    <div
+      className={`opt-img-container ${className}`}
       style={containerStyle}
       ref={imgRef}
     >

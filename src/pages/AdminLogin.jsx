@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from '../firebase';
-import { supabase } from '../lib/supabase';
+
 import { useAuth } from '../context/AuthContext';
 import '../styles/admin.css';
 
@@ -44,18 +44,7 @@ const AdminLogin = () => {
       const uid = cred.user.uid;
       console.log('[Login] ✅ Sign-in success. UID:', uid);
 
-      // Step 2 — Authenticate with Supabase (added for Storage security)
-      console.log('[Login] Attempting Supabase sign-in for:', email.trim());
-      const { error: sbError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password: password,
-      });
-      if (sbError) {
-        console.warn('[Login] ⚠️ Supabase sign-in failed:', sbError.message);
-        // We continue because Firebase auth is primary, but storage might fail if RLS is strict.
-      } else {
-        console.log('[Login] ✅ Supabase sign-in success.');
-      }
+
 
       if (!db) throw new Error('Firestore is not initialised. Check your .env file.');
 
@@ -73,7 +62,7 @@ const AdminLogin = () => {
       } else {
         console.warn('[Login] ⛔ Role is not admin:', role, '— signing out.');
         await auth.signOut();
-        await supabase.auth.signOut(); // Sign out of Supabase too
+
         setError(
           role
             ? `Access denied. Your role is "${role}", not "admin".`

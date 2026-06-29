@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getOptimizedUrl } from "../lib/supabase";
+import { getOptimizedUrl } from "../lib/cloudinary";
 
 const ImagesSlider = ({
   images,

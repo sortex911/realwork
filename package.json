@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@supabase/supabase-js": "^2.105.1",
     "browser-image-compression": "^2.0.2",
     "firebase": "^12.12.1",
     "framer-motion": "^12.38.0",

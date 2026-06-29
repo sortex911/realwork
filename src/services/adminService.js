@@ -1,7 +1,7 @@
 /**
  * adminService.js — all Firestore + Supabase operations for the admin dashboard.
  *
- * Image Storage : Supabase Storage  (bucket: "projects")
+ * Image Storage : Cloudinary  (dynamic folders)
  * Database      : Firebase Firestore
  */
 
@@ -11,12 +11,12 @@ import {
 } from "firebase/firestore";
 import { db } from '../firebase';
 import {
-  uploadImagesToSupabase,
-  uploadImageToSupabase,
-} from '../lib/supabase';
+  uploadImagesToCloudinary,
+  uploadImageToCloudinary,
+} from '../lib/cloudinary';
 
-// ─── Re-export Supabase upload helpers so AdminDashboard only needs one import
-export { uploadImageToSupabase, uploadImagesToSupabase };
+// ─── Re-export Cloudinary upload helpers so AdminDashboard only needs one import
+export { uploadImageToCloudinary as uploadImageToSupabase, uploadImagesToCloudinary as uploadImagesToSupabase };
 
 // ─── Collection names ────────────────────────────────────────────────────────
 export const COL_PROJECTS = 'projects';
@@ -61,7 +61,7 @@ export const updateNews = (id, payload) =>
  * @param {Array<{id, order}>} items 
  */
 export const updateNewsOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_NEWS, item.id), { order: item.order })
   );
   return Promise.all(promises);
@@ -99,7 +99,7 @@ export const updateTeamMember = (id, payload) =>
  * Bulk update team order.
  */
 export const updateTeamOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_TEAM, item.id), { order: item.order })
   );
   return Promise.all(promises);
@@ -139,7 +139,7 @@ export const updateProject = (id, payload) =>
  * Bulk update projects order.
  */
 export const updateProjectsOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_PROJECTS, item.id), { order: item.order })
   );
   return Promise.all(promises);
@@ -147,7 +147,7 @@ export const updateProjectsOrder = async (items) => {
 
 /**
  * Delete a project document from Firestore.
- * Note: Supabase Storage files are not deleted here to prevent accidental data loss.
+ * Note: Cloudinary Storage files are not deleted here to prevent accidental data loss.
  */
 export const deleteProject = (id) =>
   deleteDoc(doc(db, COL_PROJECTS, id));
@@ -155,16 +155,16 @@ export const deleteProject = (id) =>
 // ─── Categories ──────────────────────────────────────────────────────────────
 
 export const addCategory = (name) =>
-  addDoc(collection(db, COL_CATEGORIES), { 
+  addDoc(collection(db, COL_CATEGORIES), {
     name: name.trim(),
-    order: 999 
+    order: 999
   });
 
 /**
  * Bulk update categories order.
  */
 export const updateCategoriesOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_CATEGORIES, item.id), { order: item.order })
   );
   return Promise.all(promises);
@@ -201,7 +201,7 @@ export const deleteClientLogo = (id) =>
  * Bulk update clients order.
  */
 export const updateClientsOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_CLIENTS, item.id), { order: item.order })
   );
   return Promise.all(promises);
@@ -241,7 +241,7 @@ export const updateService = (id, payload) =>
  * Bulk update services order.
  */
 export const updateServicesOrder = async (items) => {
-  const promises = items.map(item => 
+  const promises = items.map(item =>
     updateDoc(doc(db, COL_SERVICES, item.id), { order: item.order })
   );
   return Promise.all(promises);
