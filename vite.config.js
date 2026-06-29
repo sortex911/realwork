@@ -27,7 +27,6 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth'],
           'vendor-motion': ['framer-motion'],
-          'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-icons': ['react-icons', 'lucide-react'],
           'vendor-utils': ['lenis', 'gsap', '@gsap/react'],
         },
