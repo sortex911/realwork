@@ -1478,6 +1478,7 @@ const TeamFormModal = ({ mode, member, onClose, onSuccess, onError }) => {
     role: member?.role ?? '',
     image: member?.image ?? '',
     isFounder: member?.isFounder ?? false,
+    description: member?.description ?? '',
   });
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef(null);
@@ -1510,6 +1511,7 @@ const TeamFormModal = ({ mode, member, onClose, onSuccess, onError }) => {
         role: form.role.trim(),
         image: form.image,
         isFounder: form.isFounder,
+        description: form.description.trim(),
       };
 
       if (mode === 'edit') {
@@ -1555,6 +1557,11 @@ const TeamFormModal = ({ mode, member, onClose, onSuccess, onError }) => {
         <div className="admin-form-group">
           <label htmlFor="tm-role">Role / Designation *</label>
           <input id="tm-role" type="text" placeholder="e.g. Principal Architect" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} required />
+        </div>
+
+        <div className="admin-form-group">
+          <label htmlFor="tm-desc">Description / Bio</label>
+          <textarea id="tm-desc" rows={4} placeholder="Enter member biography or description..." value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
         </div>
 
         <div className="admin-form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '4px' }}>

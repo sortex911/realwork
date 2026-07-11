@@ -295,7 +295,11 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                 <h2>{founderDetails[selectedFounder.name]?.fullName || selectedFounder.name}</h2>
                 <span className="role">{founderDetails[selectedFounder.name]?.role || selectedFounder.role}</span>
                 <div className="founder-modal-bio">
-                  {founderDetails[selectedFounder.name]?.bio || "Biography details coming soon."}
+                  {selectedFounder.description ? (
+                    <div style={{ whiteSpace: 'pre-wrap' }}>{selectedFounder.description}</div>
+                  ) : (
+                    founderDetails[selectedFounder.name]?.bio || "Biography details coming soon."
+                  )}
                 </div>
               </div>
             </m.div>
