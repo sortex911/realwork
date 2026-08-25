@@ -33,6 +33,13 @@ const OptimizedImage = ({
   const [retryWithOriginal, setRetryWithOriginal] = useState(false);
   const imgRef = useRef(null);
 
+  // Reset loading & error states when src changes so reused components don't display stale images
+  useEffect(() => {
+    setIsLoaded(false);
+    setError(false);
+    setRetryWithOriginal(false);
+  }, [src]);
+
   // Intersection Observer for lazy loading
   useEffect(() => {
     if (priority || isInView) return;
@@ -62,16 +69,16 @@ const OptimizedImage = ({
   const optimizedSrc = React.useMemo(() => {
     if (!src) return '';
 
-    let targetWidth = 1200; // Default
+    let targetWidth = 1400; // Default sharp resolution
     if (typeof width === 'number') {
-      targetWidth = width * 1.5; // Request slightly larger for high-DPI
+      targetWidth = Math.min(width * 2, 1600); // 2x Retina scaling for high clarity
     } else if (className.includes('thumbnail') || className.includes('grid')) {
-      targetWidth = 400;
+      targetWidth = 800; // Sharp grid thumbnail
     }
 
     return getOptimizedUrl(src, {
       width: targetWidth,
-      quality,
+      quality: quality || 'auto:good',
       format: 'webp'
     });
   }, [src, width, quality, className]);

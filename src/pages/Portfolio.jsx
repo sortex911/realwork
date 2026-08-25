@@ -23,9 +23,9 @@ const ProjectCardItem = memo(({ project, onClick }) => {
             src={project.imageUrl}
             alt={project.title}
             className="project-img thumbnail"
-            width={400}
+            width={600}
             height="auto"
-            quality={60}
+            quality={85}
             objectFit="contain"
             noBg={true}
             onLoad={() => setLoaded(true)}
@@ -48,17 +48,17 @@ const GalleryItem = memo(({ url, project, idx, onOpen }) => {
   return (
     <div
       className={`gallery-item-inner ${!loaded ? 'skeleton-loading' : ''}`}
-      style={{ overflow: 'hidden', cursor: 'pointer' }}
+      style={{ overflow: 'hidden', cursor: 'pointer', position: 'relative' }}
       onClick={() => onOpen(url)}
     >
       <OptimizedImage
         src={url}
         alt={`${project.title} — photo ${idx + 1}`}
         className="gallery-img thumbnail"
-        width={400}
-        height="auto"
-        quality={60}
-        objectFit="contain"
+        width={600}
+        height={320}
+        quality={85}
+        objectFit="cover"
         noBg={true}
         onLoad={() => setLoaded(true)}
       />
@@ -92,16 +92,14 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
     };
   }, []);
 
-  // Auto-sliding removed for static layout
-  /*
+  // Auto-slide every 6 seconds for top landing page slider
   useEffect(() => {
     if (images.length <= 1 || fullscreenImage) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
-  }, [images, fullscreenImage, currentIndex]);
-  */
+  }, [images, fullscreenImage]);
 
   const nextImage = (e) => {
     e.stopPropagation();
@@ -124,56 +122,79 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       style={{ zIndex: 2000000 }}
       onWheel={(e) => e.stopPropagation()} // Stop event propagation
     >
-      <div className="gallery-hero">
+      {/* Full Screen Landing Page Top Hero Slider */}
+      <div className="gallery-hero" style={{ height: '100vh', width: '100vw', position: 'relative' }}>
         <div className="gallery-hero-bg-wrapper" style={{ position: 'absolute', inset: 0 }}>
-          <OptimizedImage
-            src={images[currentIndex]}
-            alt={`${project.title} slide ${currentIndex + 1}`}
-            priority={true}
-            width={1920}
-            height="100%"
-            quality={80}
-            className="gallery-hero-bg"
-            objectFit="contain"
-            noBg={true}
-          />
+          <AnimatePresence mode="wait">
+            <m.div
+              key={currentIndex}
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0.3 }}
+              transition={{ duration: 0.6 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <OptimizedImage
+                src={images[currentIndex]}
+                alt={`${project.title} slide ${currentIndex + 1}`}
+                priority={true}
+                width={1920}
+                height="100%"
+                quality={90}
+                className="gallery-hero-bg"
+                objectFit="cover"
+                noBg={true}
+              />
+            </m.div>
+          </AnimatePresence>
         </div>
 
-        <div className="gallery-hero-overlay" />
+        <div className="gallery-hero-overlay" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)', zIndex: 1 }} />
+
+        {/* Hero Banner Text */}
+        <div className="gallery-hero-content" style={{ position: 'absolute', bottom: '40px', left: '40px', zIndex: 2, color: '#fff', textAlign: 'left' }}>
+          <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '8px', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{project.title}</h2>
+          {project.location && <p style={{ fontSize: '1.1rem', letterSpacing: '1px', opacity: 0.9, textTransform: 'uppercase' }}>{project.location}</p>}
+        </div>
 
         {/* Navigation Arrows */}
         {images.length > 1 && (
           <>
             <button className="gallery-nav-btn prev" onClick={prevImage} aria-label="Previous image">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
             <button className="gallery-nav-btn next" onClick={nextImage} aria-label="Next image">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
           </>
         )}
 
-        <div className="gallery-hero-content">
-          {/* Title and Description removed from here as per user request */}
-        </div>
-
+        {/* Slider Indicator Dots */}
         {images.length > 1 && (
-          <div className="gallery-slider-dots">
+          <div className="gallery-slider-dots" style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 5 }}>
             {images.map((_, i) => (
               <div
                 key={i}
                 className={`slider-dot ${i === currentIndex ? 'active' : ''}`}
                 onClick={() => setCurrentIndex(i)}
+                style={{
+                  width: i === currentIndex ? '24px' : '8px',
+                  height: '8px',
+                  borderRadius: '4px',
+                  background: i === currentIndex ? '#ffffff' : 'rgba(255,255,255,0.4)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
               />
             ))}
           </div>
         )}
 
-        <button className="close-gallery-floating" onClick={onClose}>
+        <button className="close-gallery-floating" onClick={onClose} style={{ zIndex: 10 }}>
           &times;
         </button>
       </div>
@@ -200,7 +221,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
         </div>
       </div>
 
-      {/* Lightbox / Fullscreen Image View */}
+      {/* Lightbox / Fullscreen Image View with Prev/Next Navigation */}
       <AnimatePresence>
         {fullscreenImage && (
           <m.div
@@ -212,8 +233,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'rgba(255,255,255,0.98)',
-              zIndex: 2000,
+              background: '#ffffffff',
+              zIndex: 2000005,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -221,22 +242,67 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
               padding: '40px'
             }}
           >
-            <OptimizedImage
+            {/* Prev Button */}
+            {images.length > 1 && (
+              <button
+                style={{
+                  position: 'absolute', left: '30px', top: '50%', transform: 'translateY(-50%)',
+                  background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.3)', color: 'white',
+                  width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const currentIdx = images.indexOf(fullscreenImage);
+                  const prevIdx = (currentIdx - 1 + images.length) % images.length;
+                  setFullscreenImage(images[prevIdx]);
+                }}
+              >
+                &#10094;
+              </button>
+            )}
+
+            <img
               src={fullscreenImage}
-              width={1200}
-              height={1200}
-              quality={90}
-              objectFit="contain"
-              noBg={true}
+              alt="Fullscreen View"
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '90vh',
+                objectFit: 'contain'
+              }}
+              onClick={(e) => e.stopPropagation()}
             />
+
+            {/* Next Button */}
+            {images.length > 1 && (
+              <button
+                style={{
+                  position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)',
+                  background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.3)', color: 'white',
+                  width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const currentIdx = images.indexOf(fullscreenImage);
+                  const nextIdx = (currentIdx + 1) % images.length;
+                  setFullscreenImage(images[nextIdx]);
+                }}
+              >
+                &#10098;
+              </button>
+            )}
+
             <button
               style={{
                 position: 'absolute', top: '30px', right: '30px',
-                background: 'white', color: 'black', border: '1px solid rgba(0,0,0,0.1)',
-                width: '40px', height: '40px', borderRadius: '50%',
-                fontSize: '1.5rem', cursor: 'pointer', display: 'flex',
+                background: '#000000', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)',
+                width: '45px', height: '45px', borderRadius: '50%',
+                fontSize: '1.8rem', cursor: 'pointer', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', padding: 0,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 20
               }}
               onClick={() => setFullscreenImage(null)}
             >
@@ -460,7 +526,7 @@ const Portfolio = () => {
             <p>No projects found. Add your first project from the Admin Dashboard.</p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '2.5rem 1rem', justifyItems: 'center' }}>
+          <div className="portfolio-grid">
             {filteredProjects.length > 0 ? (
               <>
                 {filteredProjects.slice(0, visibleCount).map(project => (

@@ -71,18 +71,15 @@ export const uploadImagesToCloudinary = async (files, category) => {
   return Promise.all(Array.from(files).map(f => uploadImageToCloudinary(f, category)));
 };
 
-/**
- * Generates an optimized public URL using Cloudinary Image Transformation.
- */
 export const getOptimizedUrl = (url, options = {}) => {
   if (!url) return '';
   if (!url.includes('cloudinary.com/')) return url;
 
   const {
     width = 800,
-    quality = 'auto',
-    format = 'auto'
+    quality = 'auto:good',
+    format = 'webp'
   } = options;
 
-  return url.replace('/upload/', `/upload/w_${width},q_${quality},f_${format}/`);
+  return url.replace('/upload/', `/upload/w_${width},q_${quality},f_${format},c_limit/`);
 };
