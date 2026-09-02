@@ -117,7 +117,7 @@ const Contact = () => {
             </div>
             <div className="info-block">
               <FadeUp><h3>Phone</h3></FadeUp>
-              <FadeUp><p>+91 90720 47272<br />+91 85470 87690</p></FadeUp>
+              <FadeUp><p>+91 90720 47272<br /></p></FadeUp>
             </div>
           </div>
 
