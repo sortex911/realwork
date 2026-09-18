@@ -104,18 +104,30 @@ His project experience spans residential landscapes, resorts, parks, schools, he
           <div className="about-subtitle" style={{ fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: 'var(--spacing-xl)', letterSpacing: '2px', fontWeight: '500' }}>Design . Construct . Maintain</div>
 
           <FadeUp>
-            <div style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300', display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <p style={{ maxWidth: 'none' }}>
-                Founded in 2009 and based in Thrissur and Kochi, Green Realm Landscape has emerged as one of Kerala’s leading landscape architecture firms. Over the past 15 years, the company has earned a strong reputation for delivering high-quality landscaping solutions with a focus on innovation, sustainability, and complete client satisfaction.
+            <div className="about-text-content" style={{ fontSize: '1.2rem', lineHeight: '1.9', color: 'var(--color-text-light)', fontWeight: '300', display: 'flex', flexDirection: 'column', gap: '25px', textAlign: 'center' }}>
+              <p style={{ maxWidth: '100%', fontWeight: '600', fontSize: '1.25rem', color: 'var(--color-text)' }}>
+                Celebrating Landscapes That Connect People, Nature & Purpose
               </p>
-              <p style={{ maxWidth: 'none' }}>
-                The success of Green Realm Landscape is driven by a dedicated team of experienced, young, energetic, and passionate professionals who bring creativity and technical expertise to every project. The firm comprises skilled Landscape Architects, Landscape Engineers, Botanists, and well-trained landscape workers who work collaboratively to create outdoor environments that are both functional and aesthetically inspiring.
+              <p style={{ maxWidth: '100%' }}>
+                Founded in 2012 and based in Thrissur and Kochi, Green Realm Landscape is a landscape architecture and design practice dedicated to creating meaningful relationships between people, nature, architecture, and place.
               </p>
-              <p style={{ maxWidth: 'none' }}>
-                Green Realm Landscape specializes in a diverse range of projects, including residential landscapes, resorts, children’s parks, educational institutions, and hospitality spaces. Their comprehensive services encompass every stage of landscaping — from conceptual design and construction to long-term maintenance.
+              <p style={{ maxWidth: '100%' }}>
+                Our approach begins with the belief that landscape is not simply an addition to architecture, but an integral part of how a space is experienced, inhabited, and remembered. Each project is shaped through a careful understanding of its site, architecture, climate, ecology, functionality, and the people who use it.
               </p>
-              <p style={{ maxWidth: 'none' }}>
-                In addition to landscape architecture, the company offers expertise in hardscaping, mixed farming, horticulture consultancy, irrigation systems, and hydraulic design and installation. With an unwavering commitment to quality, integrity, and exceptional service, Green Realm Landscape continues to transform outdoor spaces into vibrant, sustainable, and enduring environments.
+              <p style={{ maxWidth: '100%' }}>
+                From intimate residential gardens to resorts, hospitality environments, educational campuses, public spaces, and large-scale landscapes, our work explores the balance between built form and the natural environment. Through thoughtful spatial planning, planting design, materiality, levels, circulation, water, light, and landscape infrastructure, we create spaces that are functional, immersive, and deeply connected to their context.
+              </p>
+              <p style={{ maxWidth: '100%' }}>
+                Our multidisciplinary team of Landscape Architects, Landscape Engineers, Botanists, horticultural specialists, and skilled landscape professionals brings together design thinking, technical knowledge, and practical execution. This integrated approach allows us to develop landscapes from the initial concept and site planning through detailed design, construction, irrigation, planting, and long-term landscape development.
+              </p>
+              <p style={{ maxWidth: '100%' }}>
+                Sustainability is embedded within our design process through climate-responsive planning, responsible water management, context-sensitive planting, native and adaptive species, efficient irrigation, and low-maintenance landscape strategies. Rather than treating greenery as decoration, we use landscape as an architectural medium—shaping microclimates, creating privacy, defining movement, framing views, encouraging interaction, and strengthening the identity of a place.
+              </p>
+              <p style={{ maxWidth: '100%' }}>
+                At Green Realm Landscape, we celebrate landscapes that evolve with time spaces where architecture and nature coexist, where people feel connected to their surroundings, and where every design decision carries a clear purpose.
+              </p>
+              <p style={{ maxWidth: '100%', fontStyle: 'italic' }}>
+                Landscape is not what remains around architecture. It is part of the architecture itself.
               </p>
             </div>
           </FadeUp>

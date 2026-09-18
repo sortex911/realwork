@@ -69,12 +69,10 @@
   line-height: 1.6;
 }
 
+.about-intro p,
 .about-text-content p {
   font-family: var(--font-sans);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  margin-bottom: 18px;
-  color: var(--color-text);
+  max-width: 100% !important;
   text-align: center;
 }
 
