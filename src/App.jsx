@@ -42,9 +42,15 @@ const PublicLayout = () => {
         <Outlet />
       </main>
       
-      {(isHome || isAbout) && (
+      {isHome && (
         <div style={{ marginTop: isMobile ? '20px' : '80px' }}>
-          <ClientLogos />
+          <ClientLogos variant="marquee" title="OUR CLIENTS" />
+        </div>
+      )}
+
+      {isAbout && (
+        <div style={{ marginTop: isMobile ? '20px' : '80px' }}>
+          <ClientLogos variant="wave" title="OUR CLIENTS" />
         </div>
       )}
 

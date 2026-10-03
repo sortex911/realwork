@@ -135,7 +135,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
       </section>
 
       <section>
-        <FadeUp><h2 className="section-title">Our Story</h2></FadeUp>
+        <FadeUp><h2 className="section-title">Our Timeline</h2></FadeUp>
         <div className="timeline">
           <FadeUp className="timeline-item">
             <h3>2012 – The Beginning</h3>

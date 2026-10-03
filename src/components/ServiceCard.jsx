@@ -93,10 +93,7 @@ const ServiceCard = ({ images, title, description, icon }) => {
           </button>
         </div>
 
-        {/* Top Badges */}
-        <div className="service-card-icon-badge">
-          {icon}
-        </div>
+
       </div>
 
       <div className="service-card-content">
