@@ -86,12 +86,20 @@ const ClientLogos = ({ variant = 'marquee', title = 'OUR CLIENTS', interval = 32
   useEffect(() => {
     if (!db) return;
 
-    const q = query(collection(db, 'clients'), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'clients'));
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
-        const logosData = snapshot.docs.map((doc) => doc.data().imageUrl);
-        setLogos(logosData);
+        const docsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        docsData.sort((a, b) => {
+          const orderA = a.order ?? 999;
+          const orderB = b.order ?? 999;
+          if (orderA !== orderB) return orderA - orderB;
+          const timeA = a.createdAt?.seconds ?? 0;
+          const timeB = b.createdAt?.seconds ?? 0;
+          return timeB - timeA;
+        });
+        setLogos(docsData.map(d => d.imageUrl));
         setLoading(false);
       },
       (error) => {

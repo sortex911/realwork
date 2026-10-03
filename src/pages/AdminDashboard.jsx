@@ -92,6 +92,7 @@ const AdminDashboard = () => {
   const [editServiceTarget, setEditServiceTarget] = useState(null);
   const [deleteServiceTarget, setDeleteServiceTarget] = useState(null);
   const [showServiceOrderModal, setShowServiceOrderModal] = useState(false);
+  const [showClientOrderModal, setShowClientOrderModal] = useState(false);
 
   // ── Realtime listeners ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -201,6 +202,18 @@ const AdminDashboard = () => {
       return timeB - timeA;
     });
   }, [services]);
+
+  // ── Clients sorting ─────────────────────────────────────────────────────────
+  const sortedClients = useMemo(() => {
+    return [...clients].sort((a, b) => {
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) return orderA - orderB;
+      const timeA = a.createdAt?.seconds ?? 0;
+      const timeB = b.createdAt?.seconds ?? 0;
+      return timeB - timeA;
+    });
+  }, [clients]);
 
   // ── Logout ──────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
@@ -661,10 +674,20 @@ const AdminDashboard = () => {
               <div className="admin-toolbar-left">
                 <h2 className="admin-page-title">
                   Client Logos
-                  <span className="admin-badge">{clients.length}</span>
+                  <span className="admin-badge">{sortedClients.length}</span>
                 </h2>
               </div>
               <div className="admin-toolbar-right">
+                <button
+                  className="admin-btn-secondary"
+                  onClick={() => setShowClientOrderModal(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '16px' }}>
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                  List / Order
+                </button>
                 <button
                   className="admin-btn-primary"
                   onClick={() => setAddingClientModal(true)}
@@ -674,11 +697,11 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            {clients.length === 0 ? (
+            {sortedClients.length === 0 ? (
               <div className="admin-empty">No client logos yet. Click "+ Add Client Logo" to get started.</div>
             ) : (
               <div className="admin-project-grid">
-                {clients.map(client => (
+                {sortedClients.map(client => (
                   <ClientLogoCard
                     key={client.id}
                     client={client}
@@ -919,6 +942,16 @@ const AdminDashboard = () => {
           services={services}
           onClose={() => setShowServiceOrderModal(false)}
           onSuccess={(msg) => { toast(msg); setShowServiceOrderModal(false); }}
+          onError={(msg) => toast(msg, 'error')}
+        />
+      )}
+
+      {/* ══ Client Order Modal ══ */}
+      {showClientOrderModal && (
+        <ClientOrderModal
+          clients={clients}
+          onClose={() => setShowClientOrderModal(false)}
+          onSuccess={(msg) => { toast(msg); setShowClientOrderModal(false); }}
           onError={(msg) => toast(msg, 'error')}
         />
       )}
@@ -2381,6 +2414,72 @@ const ServiceOrderModal = ({ services, onClose, onSuccess, onError }) => {
               </Reorder.Item>
             ))}
           </Reorder.Group>
+        </div>
+        <div className="modal-actions" style={{ marginTop: '20px' }}>
+          <button className="admin-btn-secondary" onClick={onClose} disabled={saving}>Close</button>
+          <button className="admin-btn-primary" onClick={handleSaveOrder} disabled={saving || items.length < 2}>
+            {saving ? 'Saving...' : 'Save Order'}
+          </button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+// ─── ClientOrderModal ─────────────────────────────────────────────────────────
+const ClientOrderModal = ({ clients, onClose, onSuccess, onError }) => {
+  const [items, setItems] = useState([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const sorted = [...clients].sort((a, b) => {
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0);
+    });
+    setItems(sorted);
+  }, [clients]);
+
+  const handleSaveOrder = async () => {
+    setSaving(true);
+    try {
+      const updates = items.map((item, index) => ({ id: item.id, order: index + 1 }));
+      await updateClientsOrder(updates);
+      onSuccess('Client logos order updated!');
+    } catch (err) {
+      onError('Failed to save order: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title="🏷️ Client Logos Display Order" onClose={onClose}>
+      <div className="admin-form">
+        <p style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '15px' }}>
+          Drag logos up or down to change which client logo appears first on the website.
+        </p>
+        <div className="admin-reorder-list-container" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          {items.length === 0 ? (
+            <div className="admin-empty" style={{ padding: '40px 0' }}>No client logos to reorder.</div>
+          ) : (
+            <Reorder.Group axis="y" values={items} onReorder={setItems} className="admin-reorder-list">
+              {items.map(item => (
+                <Reorder.Item key={item.id} value={item} className="admin-reorder-item">
+                  <div className="reorder-handle">⠿</div>
+                  <div className="reorder-content" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img
+                      src={item.imageUrl}
+                      alt="Client Logo"
+                      style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#ffffff', borderRadius: '6px', padding: '4px' }}
+                    />
+                    <span className="reorder-title">{item.title || item.name || 'Client Logo'}</span>
+                  </div>
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
+          )}
         </div>
         <div className="modal-actions" style={{ marginTop: '20px' }}>
           <button className="admin-btn-secondary" onClick={onClose} disabled={saving}>Close</button>
