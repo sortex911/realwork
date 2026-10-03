@@ -125,6 +125,44 @@ const Home = () => {
         </div>
       </section>
 
+      <section className="family-photo-section">
+        <FadeUp>
+          <div className="family-photo-wrapper">
+            <div className="family-photo-container">
+              <OptimizedImage
+                src="/assets/photos/family.png"
+                alt="Green Realm Family"
+                width="100%"
+                quality={95}
+                objectFit="cover"
+                noBg={true}
+              />
+            </div>
+            <div className="family-photo-content">
+              <h2 className="family-story-title">Our Story</h2>
+              <div className="family-story-text">
+                <p>
+                  Our story did not begin with a company. It began with a family that grew up believing that nature deserves to be understood, respected, and cared for.
+                </p>
+                <p>
+                  Our connection with landscapes comes from three different disciplines united by one shared value. My father, a Landscape Engineer, brought an understanding of how landscapes are built and sustained. My mother, with her background in horticulture, taught us the importance of understanding plants as living systems. I pursued Architecture and later specialized in Landscape Architecture, learning to bring together nature, people, and the built environment.
+                </p>
+                <p>
+                  Over the years, these different perspectives naturally came together. What started as a family’s love for plants gradually became a professional responsibility.
+                </p>
+                <p>
+                  Today, our multidisciplinary practice carries forward the same values that shaped our family: a genuine love for plants, respect for nature, responsibility towards the environment, and the belief that good landscapes should become more meaningful with time.
+                </p>
+                <p className="family-story-highlight">
+                  For us, landscape is more than a profession.<br />
+                  It is a responsibility we inherited, a passion we chose, and a legacy we hope to continue.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeUp>
+      </section>
+
       <section className="concept-section-new">
         <FadeUp>
           <div className="concept-container">
