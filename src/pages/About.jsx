@@ -109,7 +109,7 @@ His project experience spans residential landscapes, resorts, parks, schools, he
                 Celebrating Landscapes That Connect People, Nature & Purpose
               </p>
               <p style={{ maxWidth: '100%' }}>
-                Founded in 2012 and based in Thrissur and Kochi, Green Realm Landscape is a landscape architecture and design practice dedicated to creating meaningful relationships between people, nature, architecture, and place.
+                Founded in 2017 and based in Thrissur and Kochi, Green Realm Landscape is a landscape architecture and design practice dedicated to creating meaningful relationships between people, nature, architecture, and place.
               </p>
               <p style={{ maxWidth: '100%' }}>
                 Our approach begins with the belief that landscape is not simply an addition to architecture, but an integral part of how a space is experienced, inhabited, and remembered. Each project is shaped through a careful understanding of its site, architecture, climate, ecology, functionality, and the people who use it.

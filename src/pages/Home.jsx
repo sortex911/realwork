@@ -125,21 +125,6 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="concept-section-new">
-        <FadeUp>
-          <div className="concept-container">
-            <OptimizedImage
-              src="/assets/home-images/CONCEPT.webp"
-              alt="Landscape Concept"
-              width="100%"
-              quality={90}
-              objectFit={isMobile ? "cover" : "contain"}
-              noBg={true}
-            />
-          </div>
-        </FadeUp>
-      </section>
-
       <section className="family-photo-section">
         <FadeUp>
           <div className="family-photo-wrapper">
@@ -174,6 +159,21 @@ const Home = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </FadeUp>
+      </section>
+
+      <section className="concept-section-new">
+        <FadeUp>
+          <div className="concept-container">
+            <OptimizedImage
+              src="/assets/home-images/CONCEPT.webp"
+              alt="Landscape Concept"
+              width="100%"
+              quality={90}
+              objectFit={isMobile ? "cover" : "contain"}
+              noBg={true}
+            />
           </div>
         </FadeUp>
       </section>
