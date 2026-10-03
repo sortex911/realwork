@@ -88,8 +88,8 @@ const OptimizedImage = ({
 
   const containerStyle = {
     position: 'relative',
-    width: width ? (typeof width === 'number' ? `${width}px` : width) : '100%',
-    height: height ? (typeof height === 'number' ? `${height}px` : height) : '100%',
+    width: width ? (typeof width === 'number' ? '100%' : width) : '100%',
+    height: height ? (typeof height === 'number' ? '100%' : height) : '100%',
     maxWidth: '100%',
     aspectRatio: width && height && typeof width === 'number' && typeof height === 'number' ? `${width}/${height}` : 'auto',
     overflow: 'hidden',

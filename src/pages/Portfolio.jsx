@@ -123,8 +123,8 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
       onWheel={(e) => e.stopPropagation()} // Stop event propagation
     >
       {/* Full Screen Landing Page Top Hero Slider */}
-      <div className="gallery-hero" style={{ height: '100vh', width: '100vw', position: 'relative' }}>
-        <div className="gallery-hero-bg-wrapper" style={{ position: 'absolute', inset: 0 }}>
+      <div className="gallery-hero">
+        <div className="gallery-hero-bg-wrapper">
           <AnimatePresence mode="wait">
             <m.div
               key={currentIndex}
@@ -138,7 +138,7 @@ const GalleryModal = ({ project, onClose, getCatName }) => {
                 src={images[currentIndex]}
                 alt={`${project.title} slide ${currentIndex + 1}`}
                 priority={true}
-                width={1920}
+                width="100%"
                 height="100%"
                 quality={90}
                 className="gallery-hero-bg"

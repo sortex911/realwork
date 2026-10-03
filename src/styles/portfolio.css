@@ -277,12 +277,17 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
   background: #ffffff;
   z-index: 2000000;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   pointer-events: auto !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .project-gallery.active {
@@ -506,14 +511,50 @@
   .gallery-hero {
     height: 60vh !important;
     min-height: 350px;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .gallery-hero-bg-wrapper {
-    padding: 10px;
+    padding: 0;
+  }
+
+  .close-gallery-floating {
+    top: 15px !important;
+    right: 15px !important;
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.5rem !important;
+  }
+
+  .gallery-nav-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .gallery-nav-btn.prev {
+    left: 10px !important;
+  }
+
+  .gallery-nav-btn.next {
+    right: 10px !important;
+  }
+
+  .gallery-hero-content {
+    left: 20px !important;
+    bottom: 20px !important;
+    padding: 10px !important;
+    max-width: calc(100% - 40px) !important;
+  }
+
+  .gallery-hero-content h2 {
+    font-size: 1.6rem !important;
   }
 
   .gallery-body {
     padding: var(--spacing-lg) var(--spacing-md);
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
