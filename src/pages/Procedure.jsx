@@ -119,7 +119,7 @@ const Procedure = () => {
             {
               id: "stage-5",
               title: "Execution",
-              description: "If the client requires both design and execution by our team, and the project is awarded to Green Realm Landscape, 50% of the design fee will be deducted from the contract.",
+              description: "we have a dedicated execution team capable of carrying out the work in accordance with the approved design, drawings, and Bill of Quantities (BOQ), ensuring quality and consistency throughout the project.",
             }
           ].map((phase, index) => (
             <CardSticky
