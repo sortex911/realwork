@@ -171,7 +171,7 @@ const Procedure = () => {
             </p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '30px' }}>
               <a
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
+                href="/assets/pdf/Green%20Realm%20Landscape%20Profile%20and%20Procedure.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -201,7 +201,7 @@ const Procedure = () => {
                 View Procedure
               </a>
               <a
-                href="/assets/pdf/Green%20Realm%20Landscape%20_%20Profile%20and%20Procedure.pdf"
+                href="/assets/pdf/Green%20Realm%20Landscape%20Profile%20and%20Procedure.pdf"
                 download="Green_Realm_Landscape_Procedure.pdf"
                 style={{
                   display: 'inline-flex',
